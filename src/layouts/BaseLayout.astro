@@ -92,9 +92,26 @@ const socialImageURL = new URL(image, Astro.site);
       href="/rss.xml"
     />
 
-    <!-- Theme detection script (FOUC prevention) -->
+    <!-- Theme + terminal detection script (FOUC prevention) -->
     <script is:inline>
       (function() {
+        const root = document.documentElement;
+        let terminalEnabled = false;
+
+        try {
+          const storedTerminal = localStorage.getItem('terminal-mode');
+          terminalEnabled = storedTerminal === '1' || storedTerminal === 'true';
+        } catch (error) {
+          terminalEnabled = false;
+        }
+
+        if (terminalEnabled) {
+          root.setAttribute('data-terminal', 'true');
+          root.style.backgroundColor = '#000000';
+          root.style.color = '#00ff00';
+          root.style.colorScheme = 'dark';
+        }
+
         const getThemePreference = () => {
           if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
             return localStorage.getItem('theme');
@@ -105,20 +122,25 @@ const socialImageURL = new URL(image, Astro.site);
         const theme = getThemePreference();
         const isDark = theme === 'dark';
 
-        document.documentElement.classList.toggle('dark', isDark);
-        document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+        root.classList.toggle('dark', isDark);
+
+        if (!terminalEnabled) {
+          root.style.colorScheme = isDark ? 'dark' : 'light';
+        }
 
         // Prevent FOUC by setting initial background
-        if (isDark) {
-          document.documentElement.style.backgroundColor = '#0a0a0a';
+        if (isDark && !terminalEnabled) {
+          root.style.backgroundColor = '#0a0a0a';
         }
 
         // Listen for system theme changes
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
           if (!localStorage.getItem('theme')) {
             const newTheme = e.matches ? 'dark' : 'light';
-            document.documentElement.classList.toggle('dark', e.matches);
-            document.documentElement.style.colorScheme = newTheme;
+            root.classList.toggle('dark', e.matches);
+            if (!root.hasAttribute('data-terminal')) {
+              root.style.colorScheme = newTheme;
+            }
           }
         });
       })();
@@ -170,12 +192,27 @@ const socialImageURL = new URL(image, Astro.site);
     <!-- Theme transition handler for View Transitions -->
     <script>
       document.addEventListener('astro:after-swap', () => {
+        const root = document.documentElement;
         const theme = localStorage.getItem('theme') ||
-          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         const isDark = theme === 'dark';
 
-        document.documentElement.classList.toggle('dark', isDark);
-        document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+        root.classList.toggle('dark', isDark);
+
+        const terminalValue = localStorage.getItem('terminal-mode');
+        const terminalEnabled = terminalValue === '1' || terminalValue === 'true';
+
+        if (terminalEnabled) {
+          root.setAttribute('data-terminal', 'true');
+          root.style.backgroundColor = '#000000';
+          root.style.color = '#00ff00';
+          root.style.colorScheme = 'dark';
+        } else {
+          root.removeAttribute('data-terminal');
+          root.style.removeProperty('background-color');
+          root.style.removeProperty('color');
+          root.style.colorScheme = isDark ? 'dark' : 'light';
+        }
       });
     </script>
 

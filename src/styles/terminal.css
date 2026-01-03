@@ -20,6 +20,7 @@ html[data-terminal='true'] body * {
   background-color: transparent !important;
   background-image: none !important;
   box-shadow: none !important;
+  font-family: inherit !important;
 }
 
 html[data-terminal='true'] a {

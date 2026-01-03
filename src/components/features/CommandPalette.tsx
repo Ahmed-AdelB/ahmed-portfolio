@@ -13,6 +13,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useStore } from '@nanostores/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search,
@@ -30,8 +31,10 @@ import {
   Check,
   ArrowRight,
   Command,
+  Terminal,
   type LucideIcon,
 } from 'lucide-react';
+import { terminalMode, toggleTerminalMode } from '../../lib/terminalMode';
 
 // Types
 interface CommandItem {
@@ -39,7 +42,7 @@ interface CommandItem {
   label: string;
   description?: string;
   icon: LucideIcon;
-  category: 'navigation' | 'action' | 'theme';
+  category: 'navigation' | 'action' | 'theme' | 'terminal';
   keywords: string[];
   action: () => void;
 }
@@ -111,11 +114,45 @@ function fuzzyMatch(text: string, query: string): boolean {
   return queryIndex === lowerQuery.length;
 }
 
+const terminalRoutes: Record<string, string> = {
+  home: '/',
+  about: '/about',
+  projects: '/projects',
+  contributions: '/contributions',
+  blog: '/blog',
+  resume: '/resume',
+  contact: '/contact',
+};
+
+const terminalFiles: Record<string, string[]> = {
+  'about.txt': [
+    'Ahmed Adel - Incident Response and Threat Intelligence leader.',
+    'Open-source contributor focused on security tooling.',
+  ],
+  'contact.txt': [
+    'Email: contact@ahmedalderai.com',
+  ],
+  'projects.txt': [
+    'Projects live at /projects',
+  ],
+};
+
+const terminalHelp: string[] = [
+  'Available commands:',
+  'ls - list sections',
+  'cat <file> - read a file',
+  'whoami - display current user',
+  'cd <section> - open a section',
+  'help - show this message',
+];
+
 export default function CommandPalette() {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [terminalOutput, setTerminalOutput] = useState<string[] | null>(null);
+  const isTerminalMode = useStore(terminalMode);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -165,6 +202,13 @@ export default function CommandPalette() {
     setIsOpen(false);
   }, []);
 
+  // Terminal mode toggle handler
+  const handleToggleTerminalMode = useCallback(() => {
+    toggleTerminalMode();
+    setTerminalOutput(null);
+    setIsOpen(false);
+  }, [toggleTerminalMode]);
+
   // Copy email handler
   const copyEmail = useCallback(async () => {
     try {
@@ -184,6 +228,79 @@ export default function CommandPalette() {
     setIsOpen(false);
     window.location.href = href;
   }, []);
+
+  const runTerminalCommand = useCallback((input: string): boolean => {
+    const trimmed = input.trim();
+    if (!trimmed) return false;
+
+    const [rawCommand, ...args] = trimmed.split(/\s+/);
+    const command = rawCommand.toLowerCase();
+
+    switch (command) {
+      case 'help':
+        setTerminalOutput(terminalHelp);
+        setQuery('');
+        setSelectedIndex(0);
+        return true;
+      case 'ls':
+        setTerminalOutput([Object.keys(terminalRoutes).join('  ')]);
+        setQuery('');
+        setSelectedIndex(0);
+        return true;
+      case 'whoami':
+        setTerminalOutput(['ahmedadel']);
+        setQuery('');
+        setSelectedIndex(0);
+        return true;
+      case 'cd': {
+        const target = args[0]?.toLowerCase();
+        if (!target) {
+          setTerminalOutput([
+            'usage: cd <section>',
+            `available: ${Object.keys(terminalRoutes).join(', ')}`,
+          ]);
+          setQuery('');
+          setSelectedIndex(0);
+          return true;
+        }
+
+        const route = terminalRoutes[target];
+        if (!route) {
+          setTerminalOutput([`cd: no such directory: ${args[0]}`]);
+          setQuery('');
+          setSelectedIndex(0);
+          return true;
+        }
+
+        navigate(route);
+        return true;
+      }
+      case 'cat': {
+        const target = args[0]?.toLowerCase();
+        if (!target) {
+          setTerminalOutput(['cat: missing file operand', 'try: cat about.txt']);
+          setQuery('');
+          setSelectedIndex(0);
+          return true;
+        }
+
+        const content = terminalFiles[target];
+        if (!content) {
+          setTerminalOutput([`cat: ${args[0]}: No such file`]);
+          setQuery('');
+          setSelectedIndex(0);
+          return true;
+        }
+
+        setTerminalOutput(content);
+        setQuery('');
+        setSelectedIndex(0);
+        return true;
+      }
+      default:
+        return false;
+    }
+  }, [navigate]);
 
   // Command items
   const commands: CommandItem[] = useMemo(() => [
@@ -261,6 +378,15 @@ export default function CommandPalette() {
       keywords: ['copy', 'email', 'clipboard', 'contact'],
       action: copyEmail,
     },
+    {
+      id: 'toggle-terminal-mode',
+      label: 'Toggle Terminal Mode',
+      description: isTerminalMode ? 'Disable terminal theme' : 'Enable terminal theme',
+      icon: Terminal,
+      category: 'action',
+      keywords: ['terminal', 'matrix', 'cli', 'mode', 'theme'],
+      action: handleToggleTerminalMode,
+    },
     // Theme
     {
       id: 'theme-light',
@@ -289,7 +415,64 @@ export default function CommandPalette() {
       keywords: ['system', 'theme', 'auto', 'preference'],
       action: setSystemTheme,
     },
-  ], [navigate, copyEmail, copiedEmail, setLightTheme, setDarkTheme, setSystemTheme]);
+    ...(isTerminalMode ? [
+      {
+        id: 'terminal-help',
+        label: 'help',
+        description: 'List available terminal commands',
+        icon: Terminal,
+        category: 'terminal',
+        keywords: ['help', 'terminal', 'commands', 'man'],
+        action: () => runTerminalCommand('help'),
+      },
+      {
+        id: 'terminal-ls',
+        label: 'ls',
+        description: 'List sections',
+        icon: Terminal,
+        category: 'terminal',
+        keywords: ['ls', 'list', 'dir', 'folders'],
+        action: () => runTerminalCommand('ls'),
+      },
+      {
+        id: 'terminal-cat',
+        label: 'cat',
+        description: 'Read a file (try: cat about.txt)',
+        icon: FileText,
+        category: 'terminal',
+        keywords: ['cat', 'read', 'file'],
+        action: () => runTerminalCommand('cat'),
+      },
+      {
+        id: 'terminal-whoami',
+        label: 'whoami',
+        description: 'Show current user',
+        icon: User,
+        category: 'terminal',
+        keywords: ['whoami', 'user', 'id'],
+        action: () => runTerminalCommand('whoami'),
+      },
+      {
+        id: 'terminal-cd',
+        label: 'cd',
+        description: 'Change section (try: cd projects)',
+        icon: Terminal,
+        category: 'terminal',
+        keywords: ['cd', 'change', 'directory', 'section'],
+        action: () => runTerminalCommand('cd'),
+      },
+    ] : []),
+  ], [
+    navigate,
+    copyEmail,
+    copiedEmail,
+    setLightTheme,
+    setDarkTheme,
+    setSystemTheme,
+    handleToggleTerminalMode,
+    isTerminalMode,
+    runTerminalCommand,
+  ]);
 
   // Filter commands based on query
   const filteredCommands = useMemo(() => {
@@ -307,6 +490,7 @@ export default function CommandPalette() {
       navigation: [],
       action: [],
       theme: [],
+      terminal: [],
     };
 
     filteredCommands.forEach(cmd => {
@@ -318,7 +502,12 @@ export default function CommandPalette() {
 
   // Flat list for keyboard navigation
   const flatCommands = useMemo(() => {
-    return [...groupedCommands.navigation, ...groupedCommands.action, ...groupedCommands.theme];
+    return [
+      ...groupedCommands.navigation,
+      ...groupedCommands.action,
+      ...groupedCommands.theme,
+      ...groupedCommands.terminal,
+    ];
   }, [groupedCommands]);
 
   // Open/close handlers
@@ -326,12 +515,14 @@ export default function CommandPalette() {
     setIsOpen(true);
     setQuery('');
     setSelectedIndex(0);
+    setTerminalOutput(null);
   }, []);
 
   const closePalette = useCallback(() => {
     setIsOpen(false);
     setQuery('');
     setSelectedIndex(0);
+    setTerminalOutput(null);
   }, []);
 
   // Listen for open-search event
@@ -407,6 +598,9 @@ export default function CommandPalette() {
         break;
       case 'Enter':
         e.preventDefault();
+        if (isTerminalMode && query.trim() && runTerminalCommand(query)) {
+          break;
+        }
         if (flatCommands[selectedIndex]) {
           flatCommands[selectedIndex].action();
         }
@@ -416,13 +610,14 @@ export default function CommandPalette() {
         closePalette();
         break;
     }
-  }, [flatCommands, selectedIndex, closePalette]);
+  }, [flatCommands, selectedIndex, closePalette, isTerminalMode, query, runTerminalCommand]);
 
   // Category labels
   const categoryLabels: Record<string, string> = {
     navigation: 'Pages',
     action: 'Actions',
     theme: 'Theme',
+    terminal: 'Terminal',
   };
 
   // Track global index for keyboard navigation
@@ -487,6 +682,14 @@ export default function CommandPalette() {
                 role="listbox"
                 aria-label="Commands"
               >
+                {isTerminalMode && terminalOutput && (
+                  <div className="mb-2 rounded-lg border border-gray-200 px-3 py-2 text-sm font-mono dark:border-gray-700">
+                    <div className="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                      Output
+                    </div>
+                    <pre className="whitespace-pre-wrap">{terminalOutput.join('\n')}</pre>
+                  </div>
+                )}
                 {flatCommands.length === 0 ? (
                   <div className="px-4 py-8 text-center">
                     <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -583,13 +786,13 @@ export default function CommandPalette() {
                     <kbd className="rounded border border-gray-200 bg-gray-100 px-1.5 py-0.5 font-mono dark:border-gray-600 dark:bg-gray-800">
                       <span className="text-[10px]">&#8595;</span>
                     </kbd>
-                    <span className="ml-1">Navigate</span>
+                    <span className="ms-1">Navigate</span>
                   </span>
                   <span className="flex items-center gap-1">
                     <kbd className="rounded border border-gray-200 bg-gray-100 px-1.5 py-0.5 font-mono dark:border-gray-600 dark:bg-gray-800">
                       <span className="text-[10px]">&#9166;</span>
                     </kbd>
-                    <span className="ml-1">Select</span>
+                    <span className="ms-1">Select</span>
                   </span>
                 </div>
 
