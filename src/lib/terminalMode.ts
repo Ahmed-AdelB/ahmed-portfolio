@@ -1,4 +1,4 @@
-import { persistentAtom } from 'nanostores/persistent';
+import { persistentAtom } from '@nanostores/persistent';
 
 const STORAGE_KEY = 'terminal-mode';
 

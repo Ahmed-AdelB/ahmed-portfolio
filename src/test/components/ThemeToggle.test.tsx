@@ -3,29 +3,37 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ThemeToggle from '../../components/ui/ThemeToggle';
 
+type MockFn<Args extends unknown[], Return> = ReturnType<typeof vi.fn<Args, Return>>;
+
 interface StorageMocks {
   storage: Storage;
-  getItem: ReturnType<typeof vi.fn>;
-  setItem: ReturnType<typeof vi.fn>;
-  removeItem: ReturnType<typeof vi.fn>;
-  clear: ReturnType<typeof vi.fn>;
-  key: ReturnType<typeof vi.fn>;
+  getItem: MockFn<[string], string | null>;
+  setItem: MockFn<[string, string], void>;
+  removeItem: MockFn<[string], void>;
+  clear: MockFn<[], void>;
+  key: MockFn<[number], string | null>;
 }
 
 const createLocalStorageMock = (initial: Record<string, string> = {}): StorageMocks => {
   let store: Record<string, string> = { ...initial };
 
-  const getItem = vi.fn((key: string) => (key in store ? store[key] : null));
-  const setItem = vi.fn((key: string, value: string) => {
-    store[key] = value;
-  });
-  const removeItem = vi.fn((key: string) => {
+  const getItem: MockFn<[string], string | null> = vi.fn((key: string) =>
+    key in store ? store[key] : null
+  );
+  const setItem: MockFn<[string, string], void> = vi.fn(
+    (key: string, value: string) => {
+      store[key] = value;
+    }
+  );
+  const removeItem: MockFn<[string], void> = vi.fn((key: string) => {
     delete store[key];
   });
-  const clear = vi.fn(() => {
+  const clear: MockFn<[], void> = vi.fn(() => {
     store = {};
   });
-  const key = vi.fn((index: number) => Object.keys(store)[index] ?? null);
+  const key: MockFn<[number], string | null> = vi.fn(
+    (index: number) => Object.keys(store)[index] ?? null
+  );
 
   const storage: Storage = {
     getItem,
