@@ -1,0 +1,12 @@
+{
+  "project": "click",
+  "title": "Implement dynamic shell completion for nested command groups",
+  "type": "PR",
+  "pr_url": "https://github.com/pallets/click/pull/2634",
+  "impact": "Enhanced CLI developer experience with intelligent auto-completion for complex command hierarchies",
+  "date": "2024-05-19",
+  "status": "Merged",
+  "additions": 456,
+  "deletions": 78,
+  "description": "Click's shell completion did not properly handle dynamically generated subcommands or context-aware option values. Implemented a lazy completion provider that queries command groups at runtime and supports async data fetching for option values. This enables CLI tools to offer intelligent completions based on live data sources like API endpoints or database queries, significantly improving usability for complex CLI applications."
+}

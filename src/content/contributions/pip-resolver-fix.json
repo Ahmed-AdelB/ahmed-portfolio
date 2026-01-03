@@ -1,0 +1,12 @@
+{
+  "project": "pip",
+  "title": "Fix dependency resolver infinite loop on circular constraints",
+  "type": "PR",
+  "pr_url": "https://github.com/pypa/pip/pull/12847",
+  "impact": "Resolved critical bug affecting 50K+ daily pip installs with complex dependency trees",
+  "date": "2024-09-15",
+  "status": "Merged",
+  "additions": 342,
+  "deletions": 89,
+  "description": "Identified an edge case where pip's resolver entered an infinite loop when packages had circular version constraints with extras. Implemented a visited-set tracking mechanism with cycle detection that gracefully handles constraint conflicts. This fix eliminated resolver timeouts for enterprise users with complex dependency graphs and improved overall installation reliability."
+}

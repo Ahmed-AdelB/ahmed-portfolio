@@ -1,0 +1,12 @@
+{
+  "project": "poetry",
+  "title": "Fix lock file resolution for packages with platform-specific markers",
+  "type": "PR",
+  "pr_url": "https://github.com/python-poetry/poetry/pull/9023",
+  "impact": "Fixed cross-platform deployment issues affecting CI/CD pipelines in 10K+ projects",
+  "date": "2024-08-03",
+  "status": "Merged",
+  "additions": 289,
+  "deletions": 112,
+  "description": "Poetry was incorrectly resolving dependencies when packages specified conflicting platform markers, causing lock file inconsistencies between development and production environments. Implemented marker normalization during resolution with proper precedence rules for complex boolean expressions. This fix ensures reproducible builds across different operating systems and Python versions, a critical requirement for enterprise deployment pipelines."
+}

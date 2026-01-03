@@ -1,0 +1,12 @@
+{
+  "project": "pip-tools",
+  "title": "Add support for hash-checking mode with URL-based requirements",
+  "type": "PR",
+  "pr_url": "https://github.com/jazzband/pip-tools/pull/2078",
+  "impact": "Enabled secure dependency pinning for organizations requiring supply chain integrity verification",
+  "date": "2024-04-27",
+  "status": "Merged",
+  "additions": 312,
+  "deletions": 67,
+  "description": "pip-tools could not generate hash digests for packages installed from direct URLs, breaking hash-checking mode for private package repositories. Implemented hash computation for URL-based requirements with caching to avoid redundant downloads. This enables enterprises with private PyPI mirrors to enforce supply chain security policies while maintaining build reproducibility and protecting against dependency confusion attacks."
+}

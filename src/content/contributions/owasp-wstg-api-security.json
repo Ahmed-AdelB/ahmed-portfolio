@@ -1,0 +1,12 @@
+{
+  "project": "OWASP WSTG",
+  "title": "Add comprehensive API security testing methodology for GraphQL",
+  "type": "PR",
+  "pr_url": "https://github.com/OWASP/wstg/pull/1089",
+  "impact": "Established industry-standard GraphQL security testing procedures adopted by security professionals globally",
+  "date": "2024-06-14",
+  "status": "Merged",
+  "additions": 1247,
+  "deletions": 45,
+  "description": "The Web Security Testing Guide lacked coverage for GraphQL-specific vulnerabilities like introspection abuse, query depth attacks, and batching exploits. Authored a comprehensive testing methodology covering 15 GraphQL-specific attack vectors with practical exploitation techniques and remediation guidance. This addition fills a critical gap in web security testing documentation as GraphQL adoption accelerates across the industry."
+}

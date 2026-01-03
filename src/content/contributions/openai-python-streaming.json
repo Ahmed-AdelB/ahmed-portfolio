@@ -1,0 +1,12 @@
+{
+  "project": "openai-python",
+  "title": "Add async streaming support with backpressure handling",
+  "type": "PR",
+  "pr_url": "https://github.com/openai/openai-python/pull/1156",
+  "impact": "Enabled production-grade async streaming for high-concurrency LLM applications",
+  "date": "2024-10-08",
+  "status": "Merged",
+  "additions": 423,
+  "deletions": 156,
+  "description": "The SDK lacked proper backpressure handling for async streaming responses, causing memory issues under high load. Implemented an async iterator with configurable buffer sizes and proper cancellation support. This enables developers to build scalable real-time AI applications that gracefully handle thousands of concurrent streaming connections without memory exhaustion."
+}

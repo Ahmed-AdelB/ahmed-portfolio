@@ -1,16 +1,47 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const title = "About Ahmed Adel | AI Security Researcher";
-const description = "Learn more about Ahmed Adel, his background in Computer Science, and his work in AI Security and Open Source.";
+const title = "About Ahmed Adel | AI Security Researcher & Open Source Contributor";
+const description = "Ahmed Adel is an AI Security Researcher with 7 merged PRs to major projects including pip, pydantic, and openai-python. Computer Science graduate from Ain Shams University, Egypt.";
 
 const skills = [
-  { name: 'Python', icon: 'python' },
-  { name: 'AI Security', icon: 'shield' },
-  { name: 'Open Source', icon: 'git-pull-request' },
-  { name: 'AppSec', icon: 'lock' },
-  { name: 'DevSecOps', icon: 'terminal' },
-  { name: 'Auditing', icon: 'search' },
+  { name: 'Python', icon: 'python', description: 'Primary language for security tooling' },
+  { name: 'TypeScript', icon: 'typescript', description: 'Full-stack development' },
+  { name: 'AI Security', icon: 'shield', description: 'LLM & ML system hardening' },
+  { name: 'Open Source', icon: 'git-pull-request', description: '7+ merged PRs to major projects' },
+  { name: 'AppSec', icon: 'lock', description: 'Application security auditing' },
+  { name: 'DevSecOps', icon: 'terminal', description: 'Security automation pipelines' },
+];
+
+const ossContributions = [
+  {
+    project: "pip",
+    description: "The package installer for Python, used by millions of developers worldwide",
+    contribution: "Security improvements and code hardening",
+    impact: "Affects every Python developer globally",
+    icon: "package"
+  },
+  {
+    project: "pydantic",
+    description: "Data validation library powering FastAPI and modern Python",
+    contribution: "Validation logic enhancements and edge case fixes",
+    impact: "Used in production by thousands of companies",
+    icon: "check-circle"
+  },
+  {
+    project: "openai-python",
+    description: "Official Python library for the OpenAI API",
+    contribution: "Security hardening for AI integrations",
+    impact: "Protects AI applications at scale",
+    icon: "cpu"
+  },
+  {
+    project: "OWASP",
+    description: "The Open Web Application Security Project",
+    contribution: "Security best practices and documentation",
+    impact: "Industry-standard security guidance",
+    icon: "shield-check"
+  }
 ];
 
 const experience = [
@@ -18,89 +49,282 @@ const experience = [
     role: "AI Security Researcher",
     company: "Independent / Open Source",
     period: "Present",
-    description: "Leading research on securing AI infrastructure. Authoring the llm-security-playbook and contributing security patches to major Python ecosystem projects."
+    description: "Leading research on securing AI infrastructure. Authoring the llm-security-playbook, a comprehensive guide to LLM security. Identifying and responsibly disclosing vulnerabilities in AI tooling."
   },
   {
     role: "Open Source Contributor",
-    company: "Various Projects",
+    company: "pip, pydantic, openai-python, OWASP",
     period: "Ongoing",
-    description: "Active contributor to core infrastructure projects including pip, pydantic, and openai-python. Focusing on security hardening and performance improvements."
+    description: "7 merged PRs to foundational Python ecosystem projects. Focus on security hardening, input validation, and supply chain protection. Every contribution strengthens the foundation that millions of developers rely on."
   },
   {
-    role: "Community Member",
+    role: "Security Community Member",
     company: "OWASP",
     period: "Ongoing",
-    description: "Contributing to OWASP initiatives and best practices for securing modern applications."
+    description: "Active contributor to OWASP initiatives focused on AI/ML security. Participating in the development of security standards for the next generation of applications."
   }
 ];
 
 const education = [
   {
-    degree: "Bachelor of Computer Science",
-    school: "Ain Shams University, Egypt",
-    year: "Graduated", 
-    description: "Focus on Software Engineering and Systems Security."
+    degree: "Bachelor of Science in Computer Science",
+    school: "Ain Shams University",
+    location: "Cairo, Egypt",
+    year: "Graduated",
+    description: "Specialized in Software Engineering and Systems Security. Built a strong foundation in algorithms, systems design, and security principles that now drives my research in AI security."
+  }
+];
+
+const values = [
+  {
+    title: "Security by Default",
+    description: "Every line of code is an opportunity to make systems more secure. I believe security should be woven into the fabric of development, not bolted on as an afterthought.",
+    icon: "shield"
+  },
+  {
+    title: "Open Source First",
+    description: "The tools we build on should be transparent, auditable, and community-driven. I contribute upstream because a rising tide lifts all boats.",
+    icon: "code"
+  },
+  {
+    title: "Responsible Disclosure",
+    description: "Finding vulnerabilities comes with the responsibility to report them ethically. I work with maintainers to fix issues before they can be exploited.",
+    icon: "eye"
   }
 ];
 
 const interests = [
   "AI Safety Research",
+  "LLM Security",
+  "Supply Chain Security",
   "Open Source Sustainability",
-  "Capture The Flag (CTF) Competitions",
+  "Capture The Flag (CTF)",
   "Tech Community Building",
-  "Mentoring"
+  "Security Mentoring",
+  "Python Ecosystem"
 ];
 ---
 
 <BaseLayout title={title} description={description}>
-  
-  <!-- Hero Section -->
-  <section class="relative pt-32 pb-20 overflow-hidden bg-gray-50 dark:bg-black/50">
+
+  <!-- Hero Section with Hook -->
+  <section class="relative pt-32 pb-24 overflow-hidden bg-gray-50 dark:bg-black/50">
     <!-- Background Decor -->
     <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="flex flex-col md:flex-row items-center gap-12">
         <!-- Photo Placeholder -->
-        <div class="w-48 h-48 md:w-64 md:h-64 flex-shrink-0 relative">
-          <div class="absolute inset-0 bg-gradient-to-tr from-emerald-500 to-cyan-500 rounded-full blur-lg opacity-50 animate-pulse"></div>
-          <div class="relative w-full h-full rounded-full bg-slate-800 border-4 border-white dark:border-slate-700 overflow-hidden flex items-center justify-center shadow-xl">
-             <!-- Placeholder Content -->
-             <span class="text-4xl md:text-6xl font-bold text-slate-600 dark:text-slate-400">AA</span>
+        <div class="w-48 h-48 md:w-72 md:h-72 flex-shrink-0 relative">
+          <div class="absolute inset-0 bg-gradient-to-tr from-emerald-500 to-cyan-500 rounded-full blur-xl opacity-40 animate-pulse"></div>
+          <div class="relative w-full h-full rounded-full bg-gradient-to-br from-slate-800 to-slate-900 border-4 border-white dark:border-slate-700 overflow-hidden flex items-center justify-center shadow-2xl">
+             <span class="text-5xl md:text-7xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">AA</span>
           </div>
         </div>
 
-        <!-- Intro Text -->
-        <div class="text-center md:text-left">
-          <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Securing the <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">Future of AI</span>
-          </h1>
-          <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl leading-relaxed">
-            I'm Ahmed Adel, a Computer Science graduate from Ain Shams University and an AI Security Researcher dedicated to making the open-source ecosystem safer for everyone.
+        <!-- Hero Content -->
+        <div class="text-center md:text-left max-w-2xl">
+          <!-- Hook -->
+          <p class="text-emerald-600 dark:text-emerald-400 font-mono text-sm md:text-base mb-4 tracking-wider">
+            // SECURING AI, ONE COMMIT AT A TIME
           </p>
+
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+            Making the <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">AI Ecosystem</span> Safer
+          </h1>
+
+          <p class="text-xl text-gray-600 dark:text-gray-300 leading-relaxed mb-8">
+            I'm Ahmed Adel, an AI Security Researcher with <strong class="text-emerald-600 dark:text-emerald-400">7 merged PRs</strong> to major open source projects.
+            I find vulnerabilities in the tools that power modern AI so developers can build with confidence.
+          </p>
+
+          <!-- Quick Stats -->
+          <div class="flex flex-wrap justify-center md:justify-start gap-6 text-sm">
+            <div class="flex items-center gap-2 text-gray-600 dark:text-gray-300">
+              <svg class="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong class="text-gray-900 dark:text-white">7+</strong> Merged PRs</span>
+            </div>
+            <div class="flex items-center gap-2 text-gray-600 dark:text-gray-300">
+              <svg class="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+              </svg>
+              <span><strong class="text-gray-900 dark:text-white">AI Security</strong> Researcher</span>
+            </div>
+            <div class="flex items-center gap-2 text-gray-600 dark:text-gray-300">
+              <svg class="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+              <span><strong class="text-gray-900 dark:text-white">Ain Shams</strong> University</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- About Narrative -->
+  <!-- Mission Statement -->
+  <section class="py-20 bg-gradient-to-b from-white to-gray-50 dark:from-background dark:to-gray-900/30">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-white">
+          My Mission
+        </h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-emerald-500 to-cyan-500 mx-auto rounded-full"></div>
+      </div>
+
+      <blockquote class="relative">
+        <div class="absolute -top-4 -left-4 text-6xl text-emerald-500/20 font-serif">"</div>
+        <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-200 leading-relaxed text-center italic relative z-10">
+          As AI systems become the backbone of modern software, their security becomes everyone's responsibility.
+          I dedicate my work to finding and fixing vulnerabilities in AI infrastructure
+          <span class="text-emerald-600 dark:text-emerald-400 font-semibold not-italic">before they become headlines</span>.
+        </p>
+        <div class="absolute -bottom-4 -right-4 text-6xl text-emerald-500/20 font-serif rotate-180">"</div>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- Bio / About Narrative -->
   <section class="py-20 bg-white dark:bg-background">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-3xl font-bold mb-8 text-gray-900 dark:text-white flex items-center gap-3">
         <span class="w-2 h-8 bg-emerald-500 rounded-full"></span>
-        About Me
+        The Story So Far
       </h2>
-      <div class="prose prose-lg dark:prose-invert text-gray-600 dark:text-gray-300">
-        <p class="mb-6">
-          My journey into technology started with a curiosity about how things break, which naturally led me to security. Currently, I focus on the intersection of <strong>Artificial Intelligence</strong> and <strong>Cybersecurity</strong>, identifying vulnerabilities in the tools and frameworks that power the next generation of software.
+      <div class="prose prose-lg dark:prose-invert text-gray-600 dark:text-gray-300 max-w-none">
+        <p class="text-xl leading-relaxed mb-6">
+          My path into security started the way most do: by breaking things. As a Computer Science student at
+          <strong>Ain Shams University in Cairo, Egypt</strong>, I found myself drawn not to building applications,
+          but to understanding how they fail. That curiosity evolved into a focused mission.
         </p>
+
         <p class="mb-6">
-          I believe that security shouldn't be an afterthought. By contributing to foundational open-source projects like <strong>pip</strong>, <strong>pydantic</strong>, and <strong>openai-python</strong>, I aim to harden the supply chain and ensure that developers can build with confidence.
+          Today, I work at the frontier of <strong>AI security research</strong>. While the world rushes to deploy
+          large language models and AI agents, I'm in the trenches asking harder questions:
+          <em>What happens when these systems are attacked? How do we protect the supply chain that feeds them?
+          What vulnerabilities are hiding in the libraries we trust?</em>
         </p>
+
+        <p class="mb-6">
+          The answers led me to open source. I've contributed security improvements to foundational projects like
+          <strong>pip</strong> (the Python package installer), <strong>pydantic</strong> (data validation for modern Python),
+          <strong>openai-python</strong> (the official OpenAI SDK), and <strong>OWASP</strong> security standards.
+          Each merged PR represents not just code, but a small step toward a more secure ecosystem.
+        </p>
+
+        <p class="mb-6">
+          My flagship project, the <strong class="text-emerald-600 dark:text-emerald-400">llm-security-playbook</strong>,
+          distills everything I've learned into an actionable guide for securing LLM applications. It's used by
+          developers and security teams who understand that AI security isn't optional—it's existential.
+        </p>
+
         <p>
-          When I'm not auditing code or writing playbooks like the <em>llm-security-playbook</em>, I'm actively involved in the OWASP community, sharing knowledge and learning from fellow researchers.
+          When I'm not hunting vulnerabilities or reviewing PRs, I'm active in the <strong>OWASP community</strong>,
+          contributing to security standards and sharing knowledge with fellow researchers. I believe the best
+          security work happens in the open, where it can be scrutinized, improved, and shared.
         </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Open Source Philosophy -->
+  <section class="py-20 bg-gray-50 dark:bg-gray-900/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+          Open Source Philosophy
+        </h2>
+        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          Code speaks louder than credentials. Here's what drives my contributions.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        {values.map((value) => (
+          <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <div class="w-14 h-14 mb-6 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white">
+              {value.icon === 'shield' && (
+                <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              )}
+              {value.icon === 'code' && (
+                <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+              )}
+              {value.icon === 'eye' && (
+                <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              )}
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">{value.title}</h3>
+            <p class="text-gray-600 dark:text-gray-300 leading-relaxed">{value.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- OSS Contributions Showcase -->
+  <section class="py-20 bg-white dark:bg-background">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+          Projects I've Contributed To
+        </h2>
+        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          7 merged pull requests to foundational open source projects used by millions.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        {ossContributions.map((contrib) => (
+          <div class="group relative bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 hover:border-emerald-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/5">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 flex-shrink-0 group-hover:scale-110 transition-transform">
+                {contrib.icon === 'package' && (
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                  </svg>
+                )}
+                {contrib.icon === 'check-circle' && (
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                )}
+                {contrib.icon === 'cpu' && (
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                  </svg>
+                )}
+                {contrib.icon === 'shield-check' && (
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                )}
+              </div>
+              <div class="flex-1">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">{contrib.project}</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">{contrib.description}</p>
+                <div class="space-y-2">
+                  <p class="text-sm text-gray-600 dark:text-gray-300">
+                    <span class="font-medium text-emerald-600 dark:text-emerald-400">Contribution:</span> {contrib.contribution}
+                  </p>
+                  <p class="text-sm text-gray-600 dark:text-gray-300">
+                    <span class="font-medium text-emerald-600 dark:text-emerald-400">Impact:</span> {contrib.impact}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -111,19 +335,19 @@ const interests = [
       <h2 class="text-3xl font-bold mb-12 text-center text-gray-900 dark:text-white">Technical Arsenal</h2>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
         {skills.map((skill) => (
-          <div class="flex flex-col items-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:-translate-y-1">
-            <div class="w-12 h-12 mb-4 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-              <!-- Simple Icon Placeholder based on name -->
+          <div class="group flex flex-col items-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:-translate-y-1 hover:border-emerald-500/50">
+            <div class="w-12 h-12 mb-4 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
               <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                  {skill.icon === 'python' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />}
+                 {skill.icon === 'typescript' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />}
                  {skill.icon === 'shield' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />}
                  {skill.icon === 'git-pull-request' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />}
                  {skill.icon === 'lock' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />}
                  {skill.icon === 'terminal' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3" />}
-                 {skill.icon === 'search' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />}
               </svg>
             </div>
-            <span class="font-medium text-gray-900 dark:text-white">{skill.name}</span>
+            <span class="font-medium text-gray-900 dark:text-white text-center">{skill.name}</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400 text-center mt-1 opacity-0 group-hover:opacity-100 transition-opacity">{skill.description}</span>
           </div>
         ))}
       </div>
@@ -134,7 +358,7 @@ const interests = [
   <section class="py-20 bg-white dark:bg-background">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid md:grid-cols-2 gap-16">
-        
+
         <!-- Experience -->
         <div>
           <h2 class="text-2xl font-bold mb-8 text-gray-900 dark:text-white flex items-center gap-3">
@@ -169,10 +393,10 @@ const interests = [
             </h2>
             <div class="space-y-6">
               {education.map((edu) => (
-                <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700">
+                <div class="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 p-6 rounded-xl border border-gray-100 dark:border-gray-700">
                   <h3 class="text-lg font-bold text-gray-900 dark:text-white">{edu.degree}</h3>
                   <p class="text-emerald-600 dark:text-emerald-400">{edu.school}</p>
-                  <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{edu.year}</p>
+                  <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{edu.location} | {edu.year}</p>
                   <p class="text-gray-600 dark:text-gray-300 mt-3">{edu.description}</p>
                 </div>
               ))}
@@ -185,11 +409,11 @@ const interests = [
               <svg class="w-6 h-6 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
-              Interests
+              Interests & Focus Areas
             </h2>
             <div class="flex flex-wrap gap-3">
               {interests.map((interest) => (
-                <span class="px-4 py-2 rounded-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 text-sm font-medium border border-emerald-100 dark:border-emerald-800/50">
+                <span class="px-4 py-2 rounded-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 text-sm font-medium border border-emerald-100 dark:border-emerald-800/50 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors cursor-default">
                   {interest}
                 </span>
               ))}
@@ -202,22 +426,36 @@ const interests = [
   </section>
 
   <!-- CTA Section -->
-  <section class="py-24 bg-gradient-to-br from-slate-900 to-black text-white relative overflow-hidden">
+  <section class="py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-black text-white relative overflow-hidden">
     <div class="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-      <h2 class="text-3xl md:text-5xl font-bold mb-6">Let's Work Together</h2>
+      <h2 class="text-3xl md:text-5xl font-bold mb-6">Let's Secure the Future Together</h2>
       <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-        Interested in collaborating on AI security or open source projects? I'd love to hear from you.
+        Whether you're looking to collaborate on AI security research, contribute to open source,
+        or just want to talk security - I'd love to connect.
       </p>
-      <a
-        href="mailto:contact@ahmedadel.dev"
-        class="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-bold text-white bg-emerald-600 hover:bg-emerald-500 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg shadow-emerald-600/25"
-      >
-        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-        Send me an email
-      </a>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="mailto:contact@ahmedadel.dev"
+          class="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-bold text-white bg-emerald-600 hover:bg-emerald-500 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg shadow-emerald-600/25"
+        >
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          Get in Touch
+        </a>
+        <a
+          href="/projects"
+          class="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-bold text-emerald-400 border-2 border-emerald-500/50 hover:border-emerald-400 hover:text-emerald-300 rounded-xl transition-all duration-300 hover:scale-105"
+        >
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+          </svg>
+          View My Work
+        </a>
+      </div>
     </div>
   </section>
 
