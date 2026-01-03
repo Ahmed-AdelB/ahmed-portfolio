@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="12" fill="#3775A9"/>
+  <path d="M32 12L48 24V40L32 52L16 40V24L32 12Z" fill="#FFD43B"/>
+  <path d="M32 12L48 24V40L32 28V12Z" fill="#FFC107"/>
+  <text x="32" y="44" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#3775A9">pip</text>
+</svg>

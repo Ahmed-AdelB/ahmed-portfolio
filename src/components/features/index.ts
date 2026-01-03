@@ -4,4 +4,5 @@
 export { default as ProjectCard } from './ProjectCard.astro';
 export { default as FlagshipProject } from './FlagshipProject.astro';
 export { default as ContributionCard } from './ContributionCard.astro';
+export { default as GitHubStats } from './GitHubStats.astro';
 export { default as LogoWall } from './LogoWall.astro';

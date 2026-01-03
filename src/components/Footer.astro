@@ -1,5 +1,5 @@
 ---
-import { Github, Linkedin, Twitter, Send } from 'lucide-react';
+import { Github, Linkedin, Twitter, Send, Rss } from 'lucide-react';
 
 const currentYear = new Date().getFullYear();
 
@@ -18,6 +18,12 @@ const socialLinks = [
     name: 'Twitter',
     url: 'https://twitter.com/ahmedadel', // Placeholder
     icon: Twitter,
+  },
+  {
+    name: 'RSS Feed',
+    url: '/rss.xml',
+    icon: Rss,
+    isInternal: true,
   },
 ];
 
@@ -92,8 +98,7 @@ const navLinks = [
               <li>
                 <a
                   href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  {...(link.isInternal ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
                   class="flex items-center text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                 >
                   <link.icon className="mr-2 h-5 w-5" />

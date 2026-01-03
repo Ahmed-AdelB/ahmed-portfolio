@@ -7,9 +7,11 @@ interface Props {
   publishDate?: Date;
 }
 
-const { title, description, article = false, publishDate } = Astro.props;
+const { title, description, image, article = false, publishDate } = Astro.props;
 
 const siteUrl = import.meta.env.SITE;
+const defaultImage = `${siteUrl}/og-default.svg`;
+const ogImage = image || defaultImage;
 
 const personSchema = {
   "@type": "Person",
@@ -53,8 +55,12 @@ if (article) {
     "@type": "BlogPosting",
     "headline": title,
     "description": description,
+    "image": ogImage,
     "datePublished": publishDate?.toISOString(),
     "author": {
+        "@id": `${siteUrl}#person`
+    },
+    "publisher": {
         "@id": `${siteUrl}#person`
     },
     "mainEntityOfPage": {
@@ -69,6 +75,12 @@ if (article) {
         "url": Astro.url.href,
         "name": title,
         "description": description,
+        "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": ogImage,
+            "width": 1200,
+            "height": 630
+        },
         "isPartOf": {
             "@id": `${siteUrl}#website`
         },

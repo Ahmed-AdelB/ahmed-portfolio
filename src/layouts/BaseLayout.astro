@@ -2,6 +2,7 @@
 import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css';
 import Schema from '../components/seo/Schema.astro';
+import CommandPalette from '../components/features/CommandPalette';
 
 interface Props {
   title: string;
@@ -13,7 +14,7 @@ interface Props {
 const {
   title,
   description,
-  image = '/og-image.png',
+  image = '/og-default.svg',
   article = false,
 } = Astro.props;
 
@@ -49,14 +50,20 @@ const socialImageURL = new URL(image, Astro.site);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${title} - Ahmed Adel Portfolio`} />
     <meta property="og:site_name" content="Ahmed Adel" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={socialImageURL} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ahmedaderai" />
+    <meta name="twitter:creator" content="@ahmedaderai" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageURL} />
+    <meta name="twitter:image:alt" content={`${title} - Ahmed Adel Portfolio`} />
 
     <!-- SEO meta component slot -->
     <slot name="head" />
@@ -101,6 +108,14 @@ const socialImageURL = new URL(image, Astro.site);
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- RSS Feed -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Ahmed Adel - Blog RSS Feed"
+      href="/rss.xml"
+    />
 
     <!-- Theme detection script (FOUC prevention) -->
     <script is:inline>
@@ -173,6 +188,9 @@ const socialImageURL = new URL(image, Astro.site);
     <main id="main-content" tabindex="-1" class="outline-none">
       <slot />
     </main>
+
+    <!-- Command Palette (Cmd+K) -->
+    <CommandPalette client:load />
 
     <!-- Theme transition handler for View Transitions -->
     <script>

