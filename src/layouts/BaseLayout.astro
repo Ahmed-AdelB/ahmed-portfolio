@@ -4,6 +4,8 @@ import '../styles/global.css';
 import '../styles/terminal.css';
 import Schema from '../components/seo/Schema.astro';
 import CommandPalette from '../components/features/CommandPalette';
+import { AIChatbot } from '../components/features/AIChatbot';
+import { TerminalMode } from '../components/features/TerminalMode';
 import BackToTop from '../components/features/BackToTop.astro';
 import CopyCodeButton from '../components/features/CopyCodeButton.astro';
 // Self-hosted fonts
@@ -21,6 +23,7 @@ interface Props {
   description: string;
   image?: string;
   article?: boolean;
+  lang?: string;
 }
 
 const {
@@ -28,14 +31,20 @@ const {
   description,
   image = '/og-default.svg',
   article = false,
+  lang = 'en',
 } = Astro.props;
+
+const isRtl = lang === 'ar';
+const dir = isRtl ? 'rtl' : 'ltr';
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(image, Astro.site);
+const umamiWebsiteId = import.meta.env.UMAMI_WEBSITE_ID;
+const umamiScriptSrc = 'https://analytics.umami.is/script.js';
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang={lang} dir={dir} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -151,6 +160,17 @@ const socialImageURL = new URL(image, Astro.site);
 
     <!-- View Transitions API -->
     <ViewTransitions fallback="swap" />
+
+    {umamiWebsiteId ? (
+      <script
+        defer
+        src={umamiScriptSrc}
+        data-website-id={umamiWebsiteId}
+        data-do-not-track="true"
+        data-exclude-search="true"
+        data-exclude-hash="true"
+      ></script>
+    ) : null}
   </head>
 
   <body
@@ -191,6 +211,12 @@ const socialImageURL = new URL(image, Astro.site);
 
     <!-- Command Palette (Cmd+K) -->
     <CommandPalette client:load />
+
+    <!-- AI Chatbot -->
+    <AIChatbot client:load />
+
+    <!-- Terminal Mode -->
+    <TerminalMode client:load />
     
     <!-- Back to Top Button -->
     <BackToTop />

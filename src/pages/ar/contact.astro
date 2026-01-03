@@ -1,0 +1,284 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { Github, Linkedin, Twitter, Mail, MapPin, Clock, Calendar } from 'lucide-react';
+
+const title = "تواصل | أحمد عادل";
+const description = "تواصل مع أحمد عادل لتدقيق الأمان، التعاون، أو الدعوات للتحدث.";
+
+const socialLinks = [
+  {
+    name: 'GitHub',
+    url: 'https://github.com/Ahmed-AdelB',
+    icon: Github,
+    color: 'hover:text-gray-900 dark:hover:text-white'
+  },
+  {
+    name: 'LinkedIn',
+    url: 'https://linkedin.com/in/ahmedadel1991',
+    icon: Linkedin,
+    color: 'hover:text-[#0077b5]'
+  },
+  {
+    name: 'Email',
+    url: 'mailto:ahmedalderai25@gmail.com',
+    icon: Mail,
+    color: 'hover:text-emerald-500'
+  },
+];
+
+const faqs = [
+  {
+    question: "هل أنت متاح لتدقيق الأمان كمستقل؟",
+    answer: "نعم، أنا متخصص في مراجعات أمن البنية التحتية للذكاء الاصطناعي وتدقيق المعمارية. يرجى تقديم تفاصيل حول التقنيات المستخدمة والجدول الزمني في الرسالة."
+  },
+  {
+    question: "هل تقبل دعوات التحدث؟",
+    answer: "أستمتع بمشاركة المعرفة حول أمن الذكاء الاصطناعي والمصادر المفتوحة. إذا كنت تنظم مؤتمرًا أو لقاءً، لا تتردد في التواصل."
+  },
+  {
+    question: "هل يمكنني استخدام أدواتك مفتوحة المصدر تجاريًا؟",
+    answer: "معظم مشاريعي تحت تراخيص MIT أو Apache 2.0، مما يسمح بالاستخدام التجاري. يرجى التحقق من الترخيص المحدد في المستودع."
+  }
+];
+---
+
+<BaseLayout title={title} description={description} lang="ar">
+  <Header />
+
+  <main class="min-h-screen pt-20">
+    <!-- Hero Section -->
+    <section class="relative py-20 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-background overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl translate-y-1/2 translate-x-1/2"></div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+          لنتواصل <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">معًا</span>
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          لديك سؤال حول أمن الذكاء الاصطناعي، مهتم بالتعاون، أو ترغب فقط في إلقاء التحية؟
+          أنا دائمًا منفتح لمناقشة الفرص الجديدة.
+        </p>
+      </div>
+    </section>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid lg:grid-cols-2 gap-16">
+        
+        <!-- Left Column: Contact Form -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-700 h-fit">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">أرسل رسالة</h2>
+          
+          <form class="space-y-6" id="contact-form" action="https://formspree.io/f/xpwzgkdl" method="POST">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label for="name" class="text-sm font-medium text-gray-700 dark:text-gray-300">الاسم</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  aria-required="true"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none"
+                  placeholder="أحمد علي"
+                />
+              </div>
+              <div class="space-y-2">
+                <label for="email" class="text-sm font-medium text-gray-700 dark:text-gray-300">البريد الإلكتروني</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  aria-required="true"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none"
+                  placeholder="ahmed@example.com"
+                />
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label for="subject" class="text-sm font-medium text-gray-700 dark:text-gray-300">الموضوع</label>
+              <div class="relative">
+                <select
+                  id="subject"
+                  name="subject"
+                  required
+                  aria-required="true"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none appearance-none"
+                >
+                  <option value="" disabled selected>اختر موضوعًا...</option>
+                  <option value="security">استفسار تدقيق أمني</option>
+                  <option value="collaboration">تعاون في مشروع</option>
+                  <option value="speaking">دعوة للتحدث</option>
+                  <option value="general">سؤال عام</option>
+                  <option value="other">آخر</option>
+                </select>
+                <div class="absolute end-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label for="message" class="text-sm font-medium text-gray-700 dark:text-gray-300">الرسالة</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                required
+                aria-required="true"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none resize-y"
+                placeholder="كيف يمكنني مساعدتك؟"
+              ></textarea>
+            </div>
+
+            <input type="hidden" name="_subject" value="New Portfolio Contact" />
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+            <button
+              type="submit"
+              class="w-full py-4 px-6 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 transform hover:-translate-y-0.5 transition-all duration-200"
+            >
+              إرسال الرسالة
+            </button>
+          </form>
+
+          <div id="form-success" class="hidden mt-4 p-4 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-xl">
+            شكرًا لرسالتك! سأقوم بالرد عليك قريبًا.
+          </div>
+          <div id="form-error" class="hidden mt-4 p-4 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-xl">
+            عفوًا! حدث خطأ ما. يرجى المحاولة مرة أخرى أو الإرسال عبر البريد الإلكتروني مباشرة.
+          </div>
+        </div>
+
+        <!-- Right Column: Info & Calendar -->
+        <div class="space-y-8">
+          
+          <!-- Quick Info Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+              <div class="flex items-center gap-4 mb-3">
+                <div class="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
+                  <MapPin className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-900 dark:text-white">الموقع</h3>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">القاهرة، مصر</p>
+                </div>
+              </div>
+              <p class="text-xs text-gray-400 ms-16">GMT+2 / GMT+3 (DST)</p>
+            </div>
+
+            <div class="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+              <div class="flex items-center gap-4 mb-3">
+                <div class="p-3 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg text-emerald-600 dark:text-emerald-400">
+                  <Clock className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-900 dark:text-white">وقت الرد</h3>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">24-48 ساعة</p>
+                </div>
+              </div>
+              <p class="text-xs text-gray-400 ms-16">أيام العمل</p>
+            </div>
+          </div>
+
+          <!-- Social Links -->
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">تواصل عبر الشبكات الاجتماعية</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {socialLinks.map((link) => (
+                <a
+                  href={link.url}
+                  aria-label={link.name}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class={`flex flex-col items-center justify-center p-4 rounded-lg bg-gray-50 dark:bg-gray-900/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors group ${link.color}`}
+                >
+                  <link.icon className="w-6 h-6 mb-2 text-gray-500 dark:text-gray-400 group-hover:text-inherit transition-colors" />
+                  <span class="text-sm font-medium text-gray-600 dark:text-gray-300 group-hover:text-inherit">{link.name}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <!-- Calendly Embed -->
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
+            <div class="flex items-center gap-3 mb-4">
+              <Calendar className="w-5 h-5 text-emerald-500" />
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">حجز اجتماع</h3>
+            </div>
+            <!-- Calendly Inline Widget -->
+            <div 
+              class="calendly-inline-widget w-full h-[400px]" 
+              data-url="https://calendly.com/ahmedadel" 
+              style="min-width:320px;height:400px;" 
+            ></div>
+            <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" crossorigin="anonymous" async></script>
+            <p class="text-xs text-center text-gray-400 mt-2">
+              * يرجى التأكد من وجود أجندة محددة للاجتماع.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="mt-24 max-w-3xl mx-auto">
+        <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">أسئلة شائعة</h2>
+        <div class="space-y-6">
+          {faqs.map((faq) => (
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{faq.question}</h3>
+              <p class="text-gray-600 dark:text-gray-300">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+
+  <script>
+    const form = document.getElementById('contact-form');
+    const successMsg = document.getElementById('form-success');
+    const errorMsg = document.getElementById('form-error');
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+      btn.textContent = 'جاري الإرسال...';
+      btn.disabled = true;
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (response.ok) {
+          form.reset();
+          successMsg?.classList.remove('hidden');
+          errorMsg?.classList.add('hidden');
+        } else {
+          throw new Error('Form submission failed');
+        }
+      } catch (error) {
+        errorMsg?.classList.remove('hidden');
+        successMsg?.classList.add('hidden');
+      } finally {
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,238 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { FileDown, Briefcase, GraduationCap, Award, Shield, Code, Users } from 'lucide-react';
+
+const title = "السيرة الذاتية | أحمد عادل بكر الديرعي";
+const description = "قائد عمليات الأمان واستخبارات التهديدات مع خبرة تزيد عن 12 عامًا. عرض السيرة الذاتية وتحميل PDF.";
+
+const experience = [
+  {
+    title: "خبير ضمان الأمن السيبراني",
+    company: "فودافون العالمية (Vodafone Group)",
+    location: "لندن، المملكة المتحدة",
+    period: "مايو 2018 – الحاضر",
+    highlights: [
+      "توسيع فريق عمليات الأمان من 5 إلى 25 مهندسًا، وإدارة ميزانية سنوية بقيمة 45 مليون دولار",
+      "إدارة تحقيقات الاختراق عبر أكثر من 25 دولة دون أي تسريب للبيانات",
+      "تطوير أكثر من 200 قاعدة كشف (YARA, Sigma) لتحقيق تغطية بنسبة 85% من إطار MITRE ATT&CK",
+      "تقليل متوسط وقت الاحتواء (MTTC) بنسبة 75% من خلال أتمتة SOAR وتطوير كتيبات التشغيل",
+      "قيادة الاستجابة لتدخلات التهديدات المتقدمة المستمرة (APT) التي تؤثر على البنية التحتية للاتصالات في 6 دول"
+    ]
+  },
+  {
+    title: "محلل أول ضمان الأمن",
+    company: "فودافون مصر",
+    location: "القاهرة، مصر",
+    period: "سبتمبر 2016 – مايو 2018",
+    highlights: [
+      "قيادة الاستجابة لحوادث الفدية، مما حسن وقت التعافي بنسبة 50%",
+      "إجراء اختبارات الاختراق باستخدام Burp Suite و Metasploit",
+      "تقليل نواقل الهجوم بنسبة 40% من خلال تقييمات الثغرات"
+    ]
+  },
+  {
+    title: "مسؤول الامتثال",
+    company: "إي-فاينانس (E-Finance)",
+    location: "القاهرة، مصر",
+    period: "مايو 2015 – سبتمبر 2016",
+    highlights: [
+      "قيادة شهادات PCI-DSS و ISO 27001 لأنظمة معاملات بقيمة تزيد عن 2 مليار دولار",
+      "تطوير سياسات وإجراءات أمن المعلومات"
+    ]
+  }
+];
+
+const skills = {
+  leadership: ["استراتيجية الأمان", "إدارة الميزانية (+45M$)", "بناء الفرق", "إدارة مخاطر البائعين", "إدارة الأزمات"],
+  technical: ["الاستجابة للحوادث", "صيد التهديدات", "التحليل الجنائي الرقمي", "تحليل البرمجيات الخبيثة", "هندسة الكشف"],
+  tools: ["Splunk ES", "CrowdStrike Falcon", "Cortex XSOAR", "Volatility", "Zeek", "YARA", "Sigma"],
+  cloud: ["AWS Security Hub", "Azure Sentinel", "GCP Security Command Center"],
+  frameworks: ["MITRE ATT&CK", "NIST CSF", "ISO 27001", "PCI DSS", "Diamond Model"]
+};
+
+const certifications = [
+  { name: "CISSP", status: "تم الاجتياز، بانتظار التوثيق", year: "2024" },
+  { name: "eCPPTv2", status: "مكتملة", year: "2021" },
+  { name: "eWPT", status: "مكتملة", year: "2020" },
+  { name: "Cisco CyberOps Associate", status: "مكتملة", year: "2023" },
+  { name: "CCNA", status: "مكتملة", year: "2022" },
+  { name: "OSCP", status: "قيد التقدم", year: "الربع الأول 2025" }
+];
+
+const education = [
+  {
+    degree: "ماجستير العلوم في علوم الحاسب",
+    school: "جامعة عين شمس",
+    period: "2024 – 2026 (متوقع)",
+    note: "الرسالة: تقنيات الأمان المدعومة بالذكاء الاصطناعي لإنترنت الأشياء في الرعاية الصحية"
+  },
+  {
+    degree: "دبلومة الدراسات العليا في الأمن السيبراني",
+    school: "معهد تكنولوجيا المعلومات (ITI)",
+    period: "2014 – 2015",
+    note: "تم الاختيار من بين أفضل 5% من المتقدمين"
+  },
+  {
+    degree: "بكالوريوس العلوم في علوم الحاسب",
+    school: "الأكاديمية المصرية لعلوم الطيران",
+    period: "2008 – 2012",
+    note: "التقدير: جيد جداً"
+  }
+];
+---
+
+<BaseLayout title={title} description={description} lang="ar">
+  <Header />
+
+  <main class="min-h-screen pt-20 pb-16">
+    <!-- Hero Section -->
+    <section class="relative py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-background">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div>
+            <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+              أحمد عادل بكر الديرعي
+            </h1>
+            <p class="text-xl text-emerald-600 dark:text-emerald-400 font-medium mb-2">
+              قائد عمليات الأمان واستخبارات التهديدات
+            </p>
+            <p class="text-gray-600 dark:text-gray-400">
+              دبلن، أيرلندا • Stamp 4 (لا يحتاج كفالة)
+            </p>
+          </div>
+          <a
+            href="/resume.pdf"
+            download
+            class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-lg transition-colors"
+          >
+            <FileDown className="w-5 h-5" />
+            تحميل PDF
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+
+      <!-- Summary -->
+      <section>
+        <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+          قائد أمن سيبراني استراتيجي يتمتع بخبرة تزيد عن <strong>12 عامًا</strong> في توسيع مراكز عمليات الأمان (SOC) ووظائف الاستجابة للحوادث للمؤسسات العالمية.
+          في فودافون العالمية، وجهت تحقيقات الاختراق عبر <strong>25+ سوقًا</strong>، وأدرت <strong>ميزانية أمنية بقيمة 45 مليون دولار</strong>،
+          وقمت بتوسيع الفرق من <strong>5 إلى 25+ مهندسًا</strong>. قللت متوسط وقت الاحتواء بنسبة <strong>75%</strong> من خلال أتمتة SOAR.
+          خبرة عميقة في التحليل الجنائي الرقمي، وصيد التهديدات، وهندسة الكشف المتوافقة مع MITRE ATT&CK.
+        </p>
+      </section>
+
+      <!-- Experience -->
+      <section>
+        <h2 class="flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-white mb-6">
+          <Briefcase className="w-6 h-6 text-emerald-500" />
+          الخبرة المهنية
+        </h2>
+        <div class="space-y-8">
+          {experience.map((job) => (
+            <div class="border-e-2 border-emerald-500 pe-6">
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{job.title}</h3>
+              <p class="text-emerald-600 dark:text-emerald-400 font-medium">{job.company}</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">{job.location} • {job.period}</p>
+              <ul class="space-y-2">
+                {job.highlights.map((item) => (
+                  <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
+                    <span class="text-emerald-500 mt-1.5">•</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section>
+        <h2 class="flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-white mb-6">
+          <Code className="w-6 h-6 text-emerald-500" />
+          المهارات التقنية
+        </h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700">
+            <h3 class="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+              <Users className="w-4 h-4 text-emerald-500" /> القيادة
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              {skills.leadership.map((skill) => (
+                <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-sm rounded-full">{skill}</span>
+              ))}
+            </div>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700">
+            <h3 class="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+              <Shield className="w-4 h-4 text-emerald-500" /> عمليات الأمان
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              {skills.technical.map((skill) => (
+                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm rounded-full">{skill}</span>
+              ))}
+            </div>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700">
+            <h3 class="font-semibold text-gray-900 dark:text-white mb-3">الأدوات والمنصات</h3>
+            <div class="flex flex-wrap gap-2">
+              {skills.tools.map((skill) => (
+                <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm rounded-full">{skill}</span>
+              ))}
+            </div>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700">
+            <h3 class="font-semibold text-gray-900 dark:text-white mb-3">أطر العمل</h3>
+            <div class="flex flex-wrap gap-2">
+              {skills.frameworks.map((skill) => (
+                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-sm rounded-full">{skill}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Certifications -->
+      <section>
+        <h2 class="flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-white mb-6">
+          <Award className="w-6 h-6 text-emerald-500" />
+          الشهادات
+        </h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {certifications.map((cert) => (
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700">
+              <h3 class="font-semibold text-gray-900 dark:text-white">{cert.name}</h3>
+              <p class="text-sm text-gray-500 dark:text-gray-400">{cert.status} • {cert.year}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Education -->
+      <section>
+        <h2 class="flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-white mb-6">
+          <GraduationCap className="w-6 h-6 text-emerald-500" />
+          التعليم
+        </h2>
+        <div class="space-y-6">
+          {education.map((edu) => (
+            <div class="border-e-2 border-emerald-500 pe-6">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{edu.degree}</h3>
+              <p class="text-emerald-600 dark:text-emerald-400">{edu.school}</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">{edu.period}</p>
+              {edu.note && <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{edu.note}</p>}
+            </div>
+          ))}
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

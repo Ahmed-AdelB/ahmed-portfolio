@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SecurityPlayground } from "../components/features/SecurityPlayground";
+---
+
+<BaseLayout
+  title="Security Playground | Ahmed Adel"
+  description="Interactive prompt injection challenges. Test your skills against simulated AI guardrails."
+>
+  <div class="container mx-auto px-4 py-16 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-4xl text-center mb-12">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 text-sm font-medium mb-4">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+        </span>
+        Interactive Demo
+      </div>
+      
+      <h1 class="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+        LLM Security Playground
+      </h1>
+      
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Understanding vulnerabilities is the first step to securing them. 
+        Try to bypass the guardrails and extract the secret password from the simulated AI.
+      </p>
+    </div>
+
+    <SecurityPlayground client:load />
+
+    <div class="mt-16 mx-auto max-w-3xl prose dark:prose-invert">
+      <h3>Why this matters?</h3>
+      <p>
+        Prompt Injection is a top security risk for Large Language Models (OWASP LLM01). 
+        As an AI Security Researcher, I study these patterns to build more robust defenses.
+      </p>
+      <ul>
+        <li><strong>Direct Injection:</strong> Overriding system instructions directly.</li>
+        <li><strong>Social Engineering:</strong> Tricking the model into roleplaying.</li>
+        <li><strong>Token Smuggling:</strong> Encoding malicious inputs to bypass filters.</li>
+      </ul>
+      <p>
+        Check out my <a href="/projects/llm-security-playbook">LLM Security Playbook</a> for defense strategies.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

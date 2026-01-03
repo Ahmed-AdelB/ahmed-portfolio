@@ -1,0 +1,462 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = "عن أحمد عادل | باحث أمن الذكاء الاصطناعي ومساهم في المصادر المفتوحة";
+const description = "أحمد عادل هو باحث في أمن الذكاء الاصطناعي ولديه 7 مساهمات برمجية مدمجة في مشاريع كبرى مثل pip و pydantic و openai-python. خريج علوم الحاسب من جامعة عين شمس، مصر.";
+
+const skills = [
+  { name: 'Python', icon: 'python', description: 'اللغة الأساسية لأدوات الأمان' },
+  { name: 'TypeScript', icon: 'typescript', description: 'تطوير كامل (Full-stack)' },
+  { name: 'AI Security', icon: 'shield', description: 'تأمين أنظمة الذكاء الاصطناعي' },
+  { name: 'Open Source', icon: 'git-pull-request', description: '7+ مساهمات في مشاريع كبرى' },
+  { name: 'AppSec', icon: 'lock', description: 'تدقيق أمن التطبيقات' },
+  { name: 'DevSecOps', icon: 'terminal', description: 'أتمتة عمليات الأمان' },
+];
+
+const ossContributions = [
+  {
+    project: "pip",
+    description: "مثبت الحزم لبيئة بايثون، يستخدمه الملايين حول العالم",
+    contribution: "تحسينات أمنية وتعزيز الكود",
+    impact: "يؤثر على كل مطور بايثون عالميًا",
+    icon: "package"
+  },
+  {
+    project: "pydantic",
+    description: "مكتبة التحقق من البيانات التي تدعم FastAPI",
+    contribution: "تحسينات في منطق التحقق وإصلاح حالات نادرة",
+    impact: "مستخدم في الإنتاج من قبل آلاف الشركات",
+    icon: "check-circle"
+  },
+  {
+    project: "openai-python",
+    description: "المكتبة الرسمية لواجهة برمجة تطبيقات OpenAI",
+    contribution: "تعزيز الأمان لتكاملات الذكاء الاصطناعي",
+    impact: "يحمي تطبيقات الذكاء الاصطناعي على نطاق واسع",
+    icon: "cpu"
+  },
+  {
+    project: "OWASP",
+    description: "مشروع أمان تطبيقات الويب المفتوح",
+    contribution: "أفضل ممارسات الأمان والتوثيق",
+    impact: "معايير الأمان القياسية في الصناعة",
+    icon: "shield-check"
+  }
+];
+
+const experience = [
+  {
+    role: "باحث أمن الذكاء الاصطناعي",
+    company: "مستقل / مصادر مفتوحة",
+    period: "الحاضر",
+    description: "قائد أبحاث في تأمين البنية التحتية للذكاء الاصطناعي. مؤلف دليل أمن النماذج اللغوية الكبيرة (llm-security-playbook). اكتشاف الثغرات في أدوات الذكاء الاصطناعي والإفصاح عنها بمسؤولية."
+  },
+  {
+    role: "مساهم في المصادر المفتوحة",
+    company: "pip, pydantic, openai-python, OWASP",
+    period: "مستمر",
+    description: "7 طلبات دمج (PRs) مقبولة في مشاريع بايثون الأساسية. التركيز على تعزيز الأمان، والتحقق من المدخلات، وحماية سلسلة التوريد. كل مساهمة تعزز الأساس الذي يعتمد عليه ملايين المطورين."
+  },
+  {
+    role: "عضو مجتمع الأمان",
+    company: "OWASP",
+    period: "مستمر",
+    description: "مساهم نشط في مبادرات OWASP التي تركز على أمن الذكاء الاصطناعي وتعلم الآلة. المشاركة في تطوير معايير الأمان لجيل التطبيقات القادم."
+  }
+];
+
+const education = [
+  {
+    degree: "بكالوريوس العلوم في علوم الحاسب",
+    school: "جامعة عين شمس",
+    location: "القاهرة، مصر",
+    year: "تخرج",
+    description: "تخصص في هندسة البرمجيات وأمن النظم. بناء أساس قوي في الخوارزميات، وتصميم النظم، ومبادئ الأمان التي تقود أبحاثي الآن في أمن الذكاء الاصطناعي."
+  }
+];
+
+const values = [
+  {
+    title: "الأمان كافتراض",
+    description: "كل سطر من الكود هو فرصة لجعل الأنظمة أكثر أمانًا. أؤمن بأن الأمان يجب أن يكون جزءًا لا يتجزأ من نسيج التطوير، وليس مجرد إضافة لاحقة.",
+    icon: "shield"
+  },
+  {
+    title: "المصدر المفتوح أولاً",
+    description: "الأدوات التي نبني عليها يجب أن تكون شفافة وقابلة للتدقيق ومدفوعة بالمجتمع. أساهم في المشاريع الأصلية لأن تحسين الأساس يفيد الجميع.",
+    icon: "code"
+  },
+  {
+    title: "الإفصاح المسؤول",
+    description: "العثور على الثغرات يأتي مع مسؤولية الإبلاغ عنها بشكل أخلاقي. أعمل مع مشرفي المشاريع لإصلاح المشكلات قبل أن يتم استغلالها.",
+    icon: "eye"
+  }
+];
+
+const interests = [
+  "أبحاث سلامة الذكاء الاصطناعي",
+  "أمن النماذج اللغوية الكبيرة",
+  "أمن سلسلة التوريد",
+  "استدامة المصادر المفتوحة",
+  "مسابقات التقاط العلم (CTF)",
+  "بناء المجتمعات التقنية",
+  "التوجيه في مجال الأمان",
+  "نظام بايثون البيئي"
+];
+---
+
+<BaseLayout title={title} description={description} lang="ar">
+
+  <!-- Hero Section with Hook -->
+  <section class="relative pt-32 pb-24 overflow-hidden bg-gray-50 dark:bg-black/50">
+    <!-- Background Decor -->
+    <div class="absolute top-0 left-0 -translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 right-0 translate-y-1/2 translate-x-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="flex flex-col md:flex-row items-center gap-12">
+        <!-- Photo Placeholder -->
+        <div class="w-48 h-48 md:w-72 md:h-72 flex-shrink-0 relative">
+          <div class="absolute inset-0 bg-gradient-to-tr from-emerald-500 to-cyan-500 rounded-full blur-xl opacity-40 animate-pulse"></div>
+          <div class="relative w-full h-full rounded-full bg-gradient-to-br from-slate-800 to-slate-900 border-4 border-white dark:border-slate-700 overflow-hidden flex items-center justify-center shadow-2xl">
+             <span class="text-5xl md:text-7xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">ع</span>
+          </div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="text-center md:text-right max-w-2xl">
+          <!-- Hook -->
+          <p class="text-emerald-600 dark:text-emerald-400 font-mono text-sm md:text-base mb-4 tracking-wider" dir="ltr">
+            // SECURING AI, ONE COMMIT AT A TIME
+          </p>
+
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+            جعل <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">منظومة الذكاء الاصطناعي</span> أكثر أمانًا
+          </h1>
+
+          <p class="text-xl text-gray-600 dark:text-gray-300 leading-relaxed mb-8">
+            أنا أحمد عادل، باحث في أمن الذكاء الاصطناعي ولدي <strong class="text-emerald-600 dark:text-emerald-400">7 مساهمات مدمجة</strong> في مشاريع مفتوحة المصدر كبرى.
+            أقوم باكتشاف الثغرات في الأدوات التي تشغل الذكاء الاصطناعي الحديث ليتمكن المطورون من البناء بثقة.
+          </p>
+
+          <!-- Quick Stats -->
+          <div class="flex flex-wrap justify-center md:justify-start gap-6 text-sm">
+            <div class="flex items-center gap-2 text-gray-600 dark:text-gray-300">
+              <svg class="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span><strong class="text-gray-900 dark:text-white">7+</strong> مساهمات مدمجة</span>
+            </div>
+            <div class="flex items-center gap-2 text-gray-600 dark:text-gray-300">
+              <svg class="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+              </svg>
+              <span><strong class="text-gray-900 dark:text-white">باحث</strong> أمن الذكاء الاصطناعي</span>
+            </div>
+            <div class="flex items-center gap-2 text-gray-600 dark:text-gray-300">
+              <svg class="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+              <span>جامعة <strong class="text-gray-900 dark:text-white">عين شمس</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Statement -->
+  <section class="py-20 bg-gradient-to-b from-white to-gray-50 dark:from-background dark:to-gray-900/30">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-white">
+          مهمتي
+        </h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-emerald-500 to-cyan-500 mx-auto rounded-full"></div>
+      </div>
+
+      <blockquote class="relative">
+        <div class="absolute -top-4 -right-4 text-6xl text-emerald-500/20 font-serif">"</div>
+        <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-200 leading-relaxed text-center italic relative z-10">
+          مع تحول أنظمة الذكاء الاصطناعي إلى العمود الفقري للبرمجيات الحديثة، يصبح أمنها مسؤولية الجميع.
+          أكرس عملي للعثور على الثغرات وإصلاحها في البنية التحتية للذكاء الاصطناعي
+          قبل أن تتحول إلى عناوين أخبار.
+        </p>
+        <div class="absolute -bottom-4 -left-4 text-6xl text-emerald-500/20 font-serif rotate-180">"</div>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- Bio / About Narrative -->
+  <section class="py-20 bg-white dark:bg-background">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold mb-8 text-gray-900 dark:text-white flex items-center gap-3">
+        <span class="w-2 h-8 bg-emerald-500 rounded-full"></span>
+        قصتي حتى الآن
+      </h2>
+      <div class="prose prose-lg dark:prose-invert text-gray-600 dark:text-gray-300 max-w-none">
+        <p class="text-xl leading-relaxed mb-6">
+          بدأ طريقي في مجال الأمن كما يبدأ معظم الناس: من خلال كسر الأشياء. كطالب علوم حاسب في
+          <strong>جامعة عين شمس في القاهرة، مصر</strong>، وجدت نفسي منجذبًا ليس لبناء التطبيقات،
+          بل لفهم كيفية فشلها. تطور هذا الفضول إلى مهمة مركزة.
+        </p>
+
+        <p class="mb-6">
+          اليوم، أعمل في طليعة <strong>أبحاث أمن الذكاء الاصطناعي</strong>. بينما يندفع العالم لنشر
+          النماذج اللغوية الكبيرة ووكلاء الذكاء الاصطناعي، أنا في الخنادق أطرح أسئلة أصعب:
+          <em>ماذا يحدث عندما تتعرض هذه الأنظمة للهجوم؟ كيف نحمي سلسلة التوريد التي تغذيها؟
+          ما هي الثغرات المختبئة في المكتبات التي نثق بها؟</em>
+        </p>
+
+        <p class="mb-6">
+          قادتني الإجابات إلى المصادر المفتوحة. لقد ساهمت بتحسينات أمنية في مشاريع أساسية مثل
+          <strong>pip</strong> (مثبت حزم بايثون)، <strong>pydantic</strong> (التحقق من البيانات لبايثون الحديثة)،
+          <strong>openai-python</strong> (حزمة OpenAI الرسمية)، ومعايير أمان <strong>OWASP</strong>.
+          كل طلب دمج مقبول لا يمثل مجرد كود، بل خطوة صغيرة نحو نظام بيئي أكثر أمانًا.
+        </p>
+
+        <p class="mb-6">
+          مشروعي الرائد، <strong class="text-emerald-600 dark:text-emerald-400">llm-security-playbook</strong>،
+          يلخص كل ما تعلمته في دليل قابل للتنفيذ لتأمين تطبيقات النماذج اللغوية الكبيرة. يستخدمه
+          المطورون وفرق الأمان الذين يدركون أن أمن الذكاء الاصطناعي ليس اختياريًا - بل هو مسألة وجودية.
+        </p>
+
+        <p>
+          عندما لا أكون أبحث عن الثغرات أو أراجع الأكواد، أكون نشطًا في <strong>مجتمع OWASP</strong>،
+          مساهمًا في معايير الأمان ومشاركة المعرفة مع زملائي الباحثين. أؤمن بأن أفضل عمل أمني
+          يحدث في العلن، حيث يمكن تدقيقه وتحسينه ومشاركته.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Open Source Philosophy -->
+  <section class="py-20 bg-gray-50 dark:bg-gray-900/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+          فلسفة المصادر المفتوحة
+        </h2>
+        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          الكود يتحدث بصوت أعلى من الشهادات. إليك ما يحرك مساهماتي.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        {values.map((value) => (
+          <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <div class="w-14 h-14 mb-6 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white">
+              {value.icon === 'shield' && (
+                <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              )}
+              {value.icon === 'code' && (
+                <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+              )}
+              {value.icon === 'eye' && (
+                <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              )}
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">{value.title}</h3>
+            <p class="text-gray-600 dark:text-gray-300 leading-relaxed">{value.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- OSS Contributions Showcase -->
+  <section class="py-20 bg-white dark:bg-background">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+          مشاريع ساهمت فيها
+        </h2>
+        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          7 طلبات دمج مدمجة في مشاريع مفتوحة المصدر أساسية يستخدمها الملايين.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        {ossContributions.map((contrib) => (
+          <div class="group relative bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 hover:border-emerald-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/5">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 flex-shrink-0 group-hover:scale-110 transition-transform">
+                {contrib.icon === 'package' && (
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                  </svg>
+                )}
+                {contrib.icon === 'check-circle' && (
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                )}
+                {contrib.icon === 'cpu' && (
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                  </svg>
+                )}
+                {contrib.icon === 'shield-check' && (
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                )}
+              </div>
+              <div class="flex-1">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">{contrib.project}</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">{contrib.description}</p>
+                <div class="space-y-2">
+                  <p class="text-sm text-gray-600 dark:text-gray-300">
+                    <span class="font-medium text-emerald-600 dark:text-emerald-400">المساهمة:</span> {contrib.contribution}
+                  </p>
+                  <p class="text-sm text-gray-600 dark:text-gray-300">
+                    <span class="font-medium text-emerald-600 dark:text-emerald-400">الأثر:</span> {contrib.impact}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Grid -->
+  <section class="py-20 bg-gray-50 dark:bg-gray-900/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold mb-12 text-center text-gray-900 dark:text-white">الترسانة التقنية</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        {skills.map((skill) => (
+          <div class="group flex flex-col items-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:-translate-y-1 hover:border-emerald-500/50">
+            <div class="w-12 h-12 mb-4 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 {skill.icon === 'python' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />}
+                 {skill.icon === 'typescript' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />}
+                 {skill.icon === 'shield' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />}
+                 {skill.icon === 'git-pull-request' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />}
+                 {skill.icon === 'lock' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />}
+                 {skill.icon === 'terminal' && <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3" />}
+              </svg>
+            </div>
+            <span class="font-medium text-gray-900 dark:text-white text-center">{skill.name}</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400 text-center mt-1 opacity-0 group-hover:opacity-100 transition-opacity">{skill.description}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience & Education Split -->
+  <section class="py-20 bg-white dark:bg-background">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-16">
+
+        <!-- Experience -->
+        <div>
+          <h2 class="text-2xl font-bold mb-8 text-gray-900 dark:text-white flex items-center gap-3">
+            <svg class="w-6 h-6 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            الخبرة
+          </h2>
+          <div class="space-y-8 border-e-2 border-gray-200 dark:border-gray-700 me-3 pe-8 relative">
+            {experience.map((job) => (
+              <div class="relative">
+                <span class="absolute -end-[41px] top-1 w-5 h-5 rounded-full border-4 border-white dark:border-gray-900 bg-emerald-500"></span>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">{job.role}</h3>
+                <p class="text-emerald-600 dark:text-emerald-400 font-medium mb-1">{job.company}</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">{job.period}</p>
+                <p class="text-gray-600 dark:text-gray-300">{job.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Education & Interests -->
+        <div class="space-y-16">
+          <!-- Education -->
+          <div>
+            <h2 class="text-2xl font-bold mb-8 text-gray-900 dark:text-white flex items-center gap-3">
+              <svg class="w-6 h-6 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+              </svg>
+              التعليم
+            </h2>
+            <div class="space-y-6">
+              {education.map((edu) => (
+                <div class="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 p-6 rounded-xl border border-gray-100 dark:border-gray-700">
+                  <h3 class="text-lg font-bold text-gray-900 dark:text-white">{edu.degree}</h3>
+                  <p class="text-emerald-600 dark:text-emerald-400">{edu.school}</p>
+                  <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{edu.location} | {edu.year}</p>
+                  <p class="text-gray-600 dark:text-gray-300 mt-3">{edu.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Interests -->
+          <div>
+            <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white flex items-center gap-3">
+              <svg class="w-6 h-6 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+              الاهتمامات ومجالات التركيز
+            </h2>
+            <div class="flex flex-wrap gap-3">
+              {interests.map((interest) => (
+                <span class="px-4 py-2 rounded-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 text-sm font-medium border border-emerald-100 dark:border-emerald-800/50 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors cursor-default">
+                  {interest}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-black text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-50 dark:opacity-20"></div>
+    <div class="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <h2 class="text-3xl md:text-5xl font-bold mb-6">لنؤمن المستقبل معًا</h2>
+      <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+        سواء كنت تبحث عن تعاون في أبحاث أمن الذكاء الاصطناعي، أو المساهمة في المصادر المفتوحة،
+        أو مجرد الحديث عن الأمان - سأكون سعيدًا بالتواصل.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="mailto:contact@ahmedalderai.com"
+          class="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-bold text-white bg-emerald-600 hover:bg-emerald-500 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg shadow-emerald-600/25"
+        >
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          تواصل معي
+        </a>
+        <a
+          href="/projects"
+          class="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-bold text-emerald-400 border-2 border-emerald-500/50 hover:border-emerald-400 hover:text-emerald-300 rounded-xl transition-all duration-300 hover:scale-105"
+        >
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+          </svg>
+          شاهد أعمالي
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

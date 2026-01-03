@@ -108,6 +108,7 @@ JSON files documenting open source work:
 | `npm run build` | Build for production to `dist/` |
 | `npm run preview` | Preview production build locally |
 | `npm run astro` | Run Astro CLI commands |
+| `npm run pre-launch` | Run launch-day checks (build, links, Lighthouse, headers) |
 
 ## Deployment
 
@@ -122,3 +123,7 @@ Auto-deploys to Vercel on push to main branch.
 **Environment:**
 - Site URL: `https://ahmedalderai.com` (configured in `astro.config.mjs`)
 - No secret env vars required for build
+
+## Launch Day
+
+See `LAUNCH_DAY.md` for the full checklist.

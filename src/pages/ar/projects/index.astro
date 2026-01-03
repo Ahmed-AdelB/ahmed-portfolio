@@ -1,10 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
 
-const title = 'Projects | Ahmed Adel';
+const title = 'المشاريع | أحمد عادل';
 const description =
-  'Explore featured security research, personal builds, and open source contributions.';
+  'استكشف أبحاث الأمان المميزة، والمشاريع الشخصية، والمساهمات في المصادر المفتوحة.';
 
 const projects = await getCollection('projects');
 const contributions = await getCollection('contributions');
@@ -37,7 +37,7 @@ const projectItems = projects.map((project) => {
   const categoryValue = isSecurityProject(project) ? 'security' : 'personal';
   const links = [
     ...(project.data.demo
-      ? [{ label: 'Live Demo', href: project.data.demo, kind: 'demo' }]
+      ? [{ label: 'تجربة حية', href: project.data.demo, kind: 'demo' }]
       : []),
     ...(project.data.github
       ? [{ label: 'GitHub', href: project.data.github, kind: 'github' }]
@@ -46,7 +46,7 @@ const projectItems = projects.map((project) => {
 
   if (links.length === 0) {
     links.push({
-      label: 'Contact',
+      label: 'تواصل',
       href: 'mailto:contact@ahmedalderai.com',
       kind: 'contact',
     });
@@ -59,7 +59,7 @@ const projectItems = projects.map((project) => {
     techStack: project.data.techStack,
     image: project.data.heroImage,
     category: categoryValue,
-    categoryLabel: categoryValue === 'security' ? 'Security' : 'Personal',
+    categoryLabel: categoryValue === 'security' ? 'أمان' : 'شخصي',
     featured: project.data.featured,
     date: project.data.pubDate ? project.data.pubDate.valueOf() : 0,
     links,
@@ -73,16 +73,16 @@ const contributionItems = contributions.map((contribution) => ({
   description:
     contribution.data.impact ||
     contribution.data.description ||
-    'Open source contribution.',
+    'مساهمة مفتوحة المصدر.',
   techStack: ['Open Source', contribution.data.type, contribution.data.status],
   image: undefined,
   category: 'oss',
-  categoryLabel: 'OSS Contributions',
+  categoryLabel: 'مساهمات مفتوحة المصدر',
   featured: false,
   date: contribution.data.date ? contribution.data.date.valueOf() : 0,
   links: [
     {
-      label: contribution.data.type === 'PR' ? 'View PR' : 'View Contribution',
+      label: contribution.data.type === 'PR' ? 'عرض الطلب' : 'عرض المساهمة',
       href: contribution.data.pr_url,
       kind: 'contribution',
     },
@@ -105,39 +105,38 @@ const techTags = Array.from(
 ).sort((a, b) => a.localeCompare(b));
 
 const categories = [
-  { label: 'All', value: 'all' },
-  { label: 'OSS Contributions', value: 'oss' },
-  { label: 'Personal', value: 'personal' },
-  { label: 'Security', value: 'security' },
+  { label: 'الكل', value: 'all' },
+  { label: 'مساهمات مفتوحة المصدر', value: 'oss' },
+  { label: 'شخصي', value: 'personal' },
+  { label: 'أمان', value: 'security' },
 ];
 
 const formatDate = (value) => {
   if (!value) return '';
-  return new Date(value).toLocaleDateString('en-US', {
+  return new Date(value).toLocaleDateString('ar-EG', {
     year: 'numeric',
-    month: 'short',
+    month: 'long',
   });
 };
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} lang="ar">
   <!-- Hero -->
   <section class="relative overflow-hidden bg-gray-50 pb-16 pt-28 dark:bg-black/50">
     <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl"></div>
-      <div class="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl"></div>
+      <div class="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl"></div>
     </div>
     <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl">
         <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">
-          Portfolio
+          معرض الأعمال
         </p>
         <h1 class="mt-4 text-4xl font-bold text-gray-900 dark:text-white md:text-5xl">
-          Projects & Open Source Impact
+          المشاريع وأثر المصادر المفتوحة
         </h1>
         <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
-          A curated view of my security research, personal builds, and meaningful
-          contributions to open source infrastructure.
+          نظرة منسقة على أبحاثي الأمنية، ومشاريعي الشخصية، ومساهماتي ذات الأثر في البنية التحتية للمصادر المفتوحة.
         </p>
       </div>
     </div>
@@ -150,11 +149,10 @@ const formatDate = (value) => {
         <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
-              Featured Projects
+              مشاريع مميزة
             </h2>
             <p class="mt-2 text-gray-600 dark:text-gray-400">
-              Highlighted work that represents my most impactful security and
-              research efforts.
+              أعمال مختارة تمثل جهودي الأكثر تأثيرًا في الأمان والبحث.
             </p>
           </div>
         </div>
@@ -166,7 +164,7 @@ const formatDate = (value) => {
                 <div class="aspect-video w-full overflow-hidden bg-gray-100 dark:bg-gray-900">
                   <img
                     src={project.image}
-                    alt={`Screenshot of ${project.title}`}
+                    alt={`لقطة شاشة لـ ${project.title}`}
                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     loading="lazy"
                   />
@@ -178,7 +176,7 @@ const formatDate = (value) => {
                     {project.title}
                   </h3>
                   <span class="inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
-                    Featured
+                    مميز
                   </span>
                 </div>
                 <p class="mb-4 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
@@ -234,10 +232,10 @@ const formatDate = (value) => {
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
-            All Projects
+            كل المشاريع
           </h2>
           <p class="mt-2 text-gray-600 dark:text-gray-400">
-            Filter by category and technology to explore the full archive.
+            صنف حسب الفئة والتقنية لاستكشاف الأرشيف الكامل.
           </p>
         </div>
         <button
@@ -245,7 +243,7 @@ const formatDate = (value) => {
           id="clear-filters"
           class="inline-flex items-center justify-center rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-emerald-200 hover:text-emerald-600 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:text-emerald-300"
         >
-          Clear filters
+          مسح التصنيفات
         </button>
       </div>
 
@@ -253,7 +251,7 @@ const formatDate = (value) => {
         <aside class="space-y-8">
           <div>
             <h3 class="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-              Category
+              الفئة
             </h3>
             <div
               class="mt-3 flex flex-wrap gap-2"
@@ -276,7 +274,7 @@ const formatDate = (value) => {
 
           <div>
             <h3 class="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-              Technology
+              التقنية
             </h3>
             <div
               class="mt-3 flex flex-wrap gap-2"
@@ -302,7 +300,7 @@ const formatDate = (value) => {
             class="text-sm text-gray-500 dark:text-gray-400"
             aria-live="polite"
           >
-            Showing all projects.
+            عرض جميع المشاريع.
           </p>
         </aside>
 
@@ -322,7 +320,7 @@ const formatDate = (value) => {
                   <div class="aspect-video w-full overflow-hidden bg-gray-100 dark:bg-gray-900">
                     <img
                       src={item.image}
-                      alt={`Screenshot of ${item.title}`}
+                      alt={`لقطة شاشة لـ ${item.title}`}
                       class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                       loading="lazy"
                     />
@@ -395,8 +393,7 @@ const formatDate = (value) => {
             id="no-results"
             class="mt-12 hidden rounded-2xl border border-dashed border-gray-300 bg-white p-10 text-center text-gray-600 dark:border-gray-700 dark:bg-gray-900/60 dark:text-gray-300"
           >
-            No projects match the selected filters. Try clearing or adjusting
-            your selections.
+            لا توجد مشاريع تطابق التصنيفات المحددة. حاول مسح أو تعديل خياراتك.
           </div>
         </div>
       </div>
@@ -405,6 +402,7 @@ const formatDate = (value) => {
 </BaseLayout>
 
 <script>
+  // Same script as English version
   const setupProjectFilters = () => {
     const categoryButtons = Array.from(
       document.querySelectorAll('[data-filter="category"]')
@@ -439,15 +437,15 @@ const formatDate = (value) => {
       if (!activeFilters) return;
       const categoryLabel =
         activeCategory === 'all'
-          ? 'all categories'
+          ? 'جميع الفئات'
           : activeCategory === 'oss'
-          ? 'OSS Contributions'
-          : `${activeCategory.charAt(0).toUpperCase()}${activeCategory.slice(1)}`;
+          ? 'مساهمات مفتوحة المصدر'
+          : `${activeCategory}`;
       const tags = Array.from(activeTags);
       if (tags.length === 0) {
-        activeFilters.textContent = `Showing ${categoryLabel}.`;
+        activeFilters.textContent = `عرض ${categoryLabel}.`;
       } else {
-        activeFilters.textContent = `Showing ${categoryLabel} tagged with ${tags.join(
+        activeFilters.textContent = `عرض ${categoryLabel} المصنفة بـ ${tags.join(
           ', '
         )}.`;
       }
@@ -513,6 +511,7 @@ const formatDate = (value) => {
 </script>
 
 <style>
+  /* Same style as English version */
   .filter-button,
   .tag-button {
     border-radius: 9999px;

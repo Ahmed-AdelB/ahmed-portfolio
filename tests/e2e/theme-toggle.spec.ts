@@ -7,12 +7,20 @@ test('dark mode toggle works', async ({ page }) => {
 
   await page.emulateMedia({ colorScheme: 'light' });
   await page.goto('/');
+  await page.waitForLoadState('networkidle');
 
-  const toggle = page.getByRole('button', { name: /current theme/i });
+  // Wait for client-side hydration
+  await page.waitForTimeout(500);
+
+  // Find toggle button by aria-label pattern
+  const toggle = page.locator('button[aria-label*="theme"]').first();
   await expect(toggle).toBeVisible();
 
   await toggle.click();
-  await page.getByRole('option', { name: /dark/i }).click();
+
+  // Click on dark theme option in the listbox
+  const darkOption = page.locator('[role="listbox"] [role="option"]', { hasText: /dark/i });
+  await darkOption.click();
 
   await expect(page.locator('html')).toHaveClass(/dark/);
 
