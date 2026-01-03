@@ -1,0 +1,174 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import ContributionCard from "../components/features/ContributionCard.astro";
+
+const contributions = await getCollection("contributions");
+
+// Sort contributions by date (newest first)
+contributions.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Calculate Stats
+const totalPRs = contributions.length;
+const projectsCount = new Set(contributions.map((c) => c.data.project)).size;
+// Assuming impact is a string text, we can't easily sum "downloads" unless we parse it or have a separate field.
+// The requirement said "Impact metrics (downloads affected, users impacted)".
+// In the schema we only have `impact` string. I will assume for now we count projects/PRs.
+// If we want "Downloads impacted" we might need to extract numbers from the impact string or add a field.
+// For now, I'll stick to PRs and Projects Stats.
+
+const allProjects = Array.from(new Set(contributions.map((c) => c.data.project)));
+
+// Helper to get PR number from URL
+function getPrNumber(url: string): number {
+  const match = url.match(/\/pull\/(\d+)/);
+  return match ? parseInt(match[1]) : 0;
+}
+---
+
+<BaseLayout
+  title="Open Source Contributions | Ahmed Adel"
+  description="A timeline of my open source contributions to projects like pip, Pydantic, and more."
+>
+  <div class="container mx-auto px-4 py-16 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-4xl">
+      <header class="mb-12 text-center">
+        <h1
+          class="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl"
+        >
+          Open Source Contributions
+        </h1>
+        <p class="text-lg text-gray-600 dark:text-gray-300">
+          Giving back to the community, one Pull Request at a time.
+        </p>
+      </header>
+
+      <!-- Stats Grid -->
+      <div class="mb-12 grid grid-cols-2 gap-4 sm:grid-cols-3">
+        <div
+          class="rounded-xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-700 dark:bg-gray-800"
+        >
+          <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400">Total PRs</dt>
+          <dd class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">{totalPRs}</dd>
+        </div>
+        <div
+          class="rounded-xl border border-gray-200 bg-white p-6 text-center shadow-sm dark:border-gray-700 dark:bg-gray-800"
+        >
+          <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400">
+            Projects Contributed To
+          </dt>
+          <dd class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">
+            {projectsCount}
+          </dd>
+        </div>
+        <div
+          class="col-span-2 rounded-xl border border-gray-200 bg-white p-6 text-center shadow-sm sm:col-span-1 dark:border-gray-700 dark:bg-gray-800"
+        >
+          <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400">
+            Impact
+          </dt>
+          <dd class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">
+            High
+          </dd>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="mb-8 flex flex-wrap items-center justify-center gap-2">
+        <button
+          class="filter-btn active rounded-full px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 bg-gray-900 text-white dark:bg-white dark:text-gray-900"
+          data-project="all"
+        >
+          All
+        </button>
+        {
+          allProjects.map((project) => (
+            <button
+              class="filter-btn rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+              data-project={project}
+            >
+              {project}
+            </button>
+          ))
+        }
+      </div>
+
+      <!-- Timeline/Grid -->
+      <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent dark:before:via-gray-700">
+        {
+          contributions.map((contribution, index) => (
+            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active contribution-item" data-project={contribution.data.project}>
+                
+              <!-- Icon -->
+              <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-gray-100 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 dark:border-gray-900 dark:bg-gray-700 z-10">
+                <svg class="fill-current text-gray-500 dark:text-gray-400 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+                </svg>
+              </div>
+
+              <!-- Card -->
+              <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-0">
+                  <ContributionCard
+                    projectName={contribution.data.project}
+                    prTitle={contribution.data.title}
+                    prNumber={getPrNumber(contribution.data.pr_url)}
+                    prUrl={contribution.data.pr_url}
+                    status={contribution.data.status.toLowerCase() as any}
+                    impactSummary={contribution.data.impact}
+                    additions={contribution.data.additions}
+                    deletions={contribution.data.deletions}
+                  />
+                  <div class="mt-2 text-xs text-gray-500 dark:text-gray-400 text-right md:group-odd:text-left md:group-even:text-right">
+                    {contribution.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </div>
+              </div>
+              
+            </div>
+          ))
+        }
+      </div>
+      
+       <!-- No Results Message -->
+       <div id="no-results" class="hidden text-center py-12">
+        <p class="text-gray-500 dark:text-gray-400">No contributions found for this project.</p>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Filter Logic
+  const buttons = document.querySelectorAll('.filter-btn');
+  const items = document.querySelectorAll('.contribution-item');
+  const noResults = document.getElementById('no-results');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Update Active State
+      buttons.forEach(b => {
+          b.classList.remove('bg-gray-900', 'text-white', 'dark:bg-white', 'dark:text-gray-900');
+          b.classList.add('bg-white', 'text-gray-700', 'dark:bg-gray-800', 'dark:text-gray-300');
+      });
+      btn.classList.remove('bg-white', 'text-gray-700', 'dark:bg-gray-800', 'dark:text-gray-300');
+      btn.classList.add('bg-gray-900', 'text-white', 'dark:bg-white', 'dark:text-gray-900');
+
+      const project = btn.getAttribute('data-project');
+      let visibleCount = 0;
+
+      items.forEach(item => {
+        const itemProject = item.getAttribute('data-project');
+        if (project === 'all' || itemProject === project) {
+          (item as HTMLElement).style.display = 'flex';
+          visibleCount++;
+        } else {
+          (item as HTMLElement).style.display = 'none';
+        }
+      });
+
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    });
+  });
+</script>

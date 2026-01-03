@@ -1,0 +1,432 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const title = 'Blog | Ahmed Adel';
+const description =
+  'Writing on AI security, open source, and software engineering. Insights, notes, and research updates.';
+
+const allPosts = await getCollection('blog');
+const publishedPosts = allPosts
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const estimateReadingTime = (body: string) => {
+  const words = body.trim().split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.round(words / 200));
+  return minutes;
+};
+
+const posts = publishedPosts.map((post) => {
+  const readingTime = estimateReadingTime(post.body ?? '');
+  const tags = post.data.tags ?? [];
+
+  return {
+    slug: post.slug,
+    title: post.data.title,
+    description: post.data.description,
+    pubDate: post.data.pubDate,
+    heroImage: post.data.heroImage,
+    tags,
+    readingTime,
+    searchText: `${post.data.title} ${post.data.description} ${tags.join(' ')}`.toLowerCase(),
+  };
+});
+
+const categories = Array.from(new Set(posts.flatMap((post) => post.tags))).sort((a, b) =>
+  a.localeCompare(b)
+);
+---
+
+<BaseLayout title={title} description={description}>
+  <main id="main-content" class="min-h-screen">
+    <!-- Hero -->
+    <section class="relative overflow-hidden bg-gray-50 pb-16 pt-32 dark:bg-black/50">
+      <div class="absolute right-0 top-0 h-80 w-80 -translate-y-1/3 translate-x-1/3 rounded-full bg-emerald-500/10 blur-3xl"></div>
+      <div class="absolute bottom-0 left-0 h-80 w-80 translate-y-1/3 -translate-x-1/3 rounded-full bg-blue-500/10 blur-3xl"></div>
+
+      <div class="relative z-10 mx-auto flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div class="space-y-4">
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">
+              Writing
+            </p>
+            <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white md:text-5xl">
+              Blog and Research Notes
+            </h1>
+            <p class="max-w-2xl text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+              {description}
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div class="rounded-xl bg-white/70 px-4 py-3 text-sm font-medium text-gray-600 shadow-sm ring-1 ring-gray-200 backdrop-blur dark:bg-gray-900/70 dark:text-gray-300 dark:ring-gray-700">
+              <span class="text-gray-900 dark:text-white">{posts.length}</span> posts published
+            </div>
+            <a
+              href="/rss.xml"
+              class="inline-flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700 transition-colors hover:border-emerald-300 hover:bg-emerald-100 dark:border-emerald-500/40 dark:bg-emerald-500/10 dark:text-emerald-200"
+            >
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M5 3a16 16 0 0116 16h-3A13 13 0 005 6V3zm0 7a9 9 0 019 9h-3a6 6 0 00-6-6v-3zm0 7a2 2 0 012 2 2 2 0 11-4 0 2 2 0 012-2z" />
+              </svg>
+              RSS feed
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="bg-white py-10 dark:bg-background">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div class="lg:col-span-2">
+            <label for="blog-search" class="text-sm font-semibold text-gray-700 dark:text-gray-200">
+              Search posts
+            </label>
+            <div class="relative mt-2">
+              <input
+                id="blog-search"
+                name="q"
+                type="search"
+                placeholder="Search by title, excerpt, or tag"
+                class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 shadow-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:ring-emerald-500/30"
+              />
+              <button
+                type="button"
+                data-clear
+                class="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-500 transition hover:border-emerald-400 hover:text-emerald-600 dark:border-gray-700 dark:text-gray-400 dark:hover:text-emerald-300"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label for="category-filter" class="text-sm font-semibold text-gray-700 dark:text-gray-200">
+              Category
+            </label>
+            <select
+              id="category-filter"
+              name="category"
+              class="mt-2 w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 shadow-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:ring-emerald-500/30"
+            >
+              <option value="all">All categories</option>
+              {categories.map((category) => (
+                <option value={category}>{category}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-col gap-2 text-sm text-gray-500 dark:text-gray-400 sm:flex-row sm:items-center sm:justify-between">
+          <p id="results-count" class="font-medium" role="status" aria-live="polite">
+            {posts.length} posts found
+          </p>
+          <p id="page-status" class="font-medium"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Posts -->
+    <section class="bg-gray-50 py-12 dark:bg-black/50">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div id="posts-grid" class="grid grid-cols-1 gap-8 md:grid-cols-2">
+          {posts.map((post) => (
+            <article
+              data-post
+              data-tags={post.tags.join('|')}
+              data-search={post.searchText}
+              class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
+            >
+              <div class="aspect-video w-full overflow-hidden bg-gray-100 dark:bg-gray-900">
+                {post.heroImage ? (
+                  <img
+                    src={post.heroImage}
+                    alt={post.title}
+                    class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-emerald-100 via-white to-blue-100 text-emerald-500 dark:from-emerald-900/30 dark:via-gray-900 dark:to-blue-900/30 dark:text-emerald-300">
+                    <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M4 5h16a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1zm3 9l2.5-3 3 4 2-2 3.5 5"
+                      />
+                      <circle cx="9" cy="9" r="1.5" />
+                    </svg>
+                  </div>
+                )}
+              </div>
+
+              <div class="flex flex-1 flex-col p-6">
+                <div class="flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                  <time datetime={post.pubDate.toISOString()}>
+                    {post.pubDate.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </time>
+                  <span aria-hidden="true">&middot;</span>
+                  <span>{post.readingTime} min read</span>
+                </div>
+
+                <h2 class="mt-4 text-2xl font-bold text-gray-900 transition-colors group-hover:text-emerald-600 dark:text-white dark:group-hover:text-emerald-400">
+                  <a href={`/blog/${post.slug}`}>
+                    <span class="absolute inset-0"></span>
+                    {post.title}
+                  </a>
+                </h2>
+
+                <p class="mt-3 line-clamp-3 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                  {post.description}
+                </p>
+
+                <div class="mt-4 flex flex-wrap gap-2" role="list" aria-label="Post categories">
+                  {post.tags.length ? (
+                    post.tags.map((tag) => (
+                      <span
+                        role="listitem"
+                        class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200"
+                      >
+                        {tag}
+                      </span>
+                    ))
+                  ) : (
+                    <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-500 dark:bg-gray-700 dark:text-gray-300">
+                      Uncategorized
+                    </span>
+                  )}
+                </div>
+
+                <div class="mt-auto flex items-center gap-2 pt-6 text-sm font-semibold text-emerald-600 transition-colors group-hover:text-emerald-500 dark:text-emerald-400 dark:group-hover:text-emerald-300">
+                  Read article
+                  <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div id="empty-state" class="mt-12 hidden rounded-2xl border border-dashed border-gray-300 bg-white p-10 text-center dark:border-gray-700 dark:bg-gray-900">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">No posts match your search</h3>
+          <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            Try a different keyword or reset the filters.
+          </p>
+          <button
+            type="button"
+            data-clear
+            class="mt-6 inline-flex items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700 transition-colors hover:bg-emerald-100 dark:border-emerald-500/40 dark:bg-emerald-500/10 dark:text-emerald-200"
+          >
+            Reset filters
+          </button>
+        </div>
+
+        <nav
+          id="pagination"
+          class="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row"
+          aria-label="Pagination"
+        >
+          <button
+            id="page-prev"
+            type="button"
+            class="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition-colors hover:border-emerald-300 hover:text-emerald-600 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:text-gray-300"
+          >
+            Prev
+          </button>
+
+          <div id="page-buttons" class="flex items-center gap-2"></div>
+
+          <button
+            id="page-next"
+            type="button"
+            class="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition-colors hover:border-emerald-300 hover:text-emerald-600 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:text-gray-300"
+          >
+            Next
+          </button>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const posts = Array.from(document.querySelectorAll('[data-post]'));
+    const searchInput = document.getElementById('blog-search');
+    const categorySelect = document.getElementById('category-filter');
+    const clearButtons = document.querySelectorAll('[data-clear]');
+    const resultsCount = document.getElementById('results-count');
+    const pageStatus = document.getElementById('page-status');
+    const pagination = document.getElementById('pagination');
+    const pageButtons = document.getElementById('page-buttons');
+    const prevButton = document.getElementById('page-prev');
+    const nextButton = document.getElementById('page-next');
+    const emptyState = document.getElementById('empty-state');
+
+    const POSTS_PER_PAGE = 10;
+    let currentPage = 1;
+
+    const normalize = (value) => value.trim().toLowerCase();
+
+    const getFilteredPosts = () => {
+      const query = normalize(searchInput.value || '');
+      const category = categorySelect.value;
+
+      return posts.filter((post) => {
+        const searchText = post.dataset.search || '';
+        const tags = (post.dataset.tags || '').split('|').filter(Boolean);
+        const matchesQuery = query === '' || searchText.includes(query);
+        const matchesCategory = category === 'all' || tags.includes(category);
+        return matchesQuery && matchesCategory;
+      });
+    };
+
+    const buildPageButton = (page, isActive) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.page = String(page);
+      button.textContent = String(page);
+      button.className =
+        'min-w-[2.5rem] rounded-xl border px-3 py-2 text-sm font-semibold transition-colors ' +
+        (isActive
+          ? 'border-emerald-500 bg-emerald-500 text-white'
+          : 'border-gray-200 text-gray-600 hover:border-emerald-300 hover:text-emerald-600 dark:border-gray-700 dark:text-gray-300');
+      if (isActive) {
+        button.setAttribute('aria-current', 'page');
+      }
+      return button;
+    };
+
+    const renderPageButtons = (totalPages) => {
+      pageButtons.innerHTML = '';
+      if (totalPages <= 1) return;
+
+      const maxButtons = 5;
+      let start = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+      let end = Math.min(totalPages, start + maxButtons - 1);
+      start = Math.max(1, end - maxButtons + 1);
+
+      for (let page = start; page <= end; page += 1) {
+        pageButtons.appendChild(buildPageButton(page, page === currentPage));
+      }
+    };
+
+    const updateQueryString = (query, category, page) => {
+      const url = new URL(window.location.href);
+      if (query) {
+        url.searchParams.set('q', query);
+      } else {
+        url.searchParams.delete('q');
+      }
+      if (category && category !== 'all') {
+        url.searchParams.set('category', category);
+      } else {
+        url.searchParams.delete('category');
+      }
+      if (page > 1) {
+        url.searchParams.set('page', String(page));
+      } else {
+        url.searchParams.delete('page');
+      }
+      window.history.replaceState({}, '', url);
+    };
+
+    const render = () => {
+      const filtered = getFilteredPosts();
+      const totalPages = Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+      const endIndex = startIndex + POSTS_PER_PAGE;
+      const visible = new Set(filtered.slice(startIndex, endIndex));
+
+      posts.forEach((post) => {
+        post.hidden = !visible.has(post);
+      });
+
+      resultsCount.textContent = `${filtered.length} post${filtered.length === 1 ? '' : 's'} found`;
+      pageStatus.textContent =
+        filtered.length === 0 ? '' : `Page ${currentPage} of ${totalPages}`;
+
+      emptyState.hidden = filtered.length !== 0;
+      pagination.hidden = filtered.length === 0 || totalPages === 1;
+
+      prevButton.disabled = currentPage === 1;
+      nextButton.disabled = currentPage === totalPages;
+
+      renderPageButtons(totalPages);
+      updateQueryString(searchInput.value.trim(), categorySelect.value, currentPage);
+    };
+
+    const syncFromQuery = () => {
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get('q');
+      const category = params.get('category');
+      const page = Number(params.get('page'));
+
+      if (query) searchInput.value = query;
+      if (category && Array.from(categorySelect.options).some((option) => option.value === category)) {
+        categorySelect.value = category;
+      }
+      if (page && page > 0) currentPage = page;
+    };
+
+    searchInput.addEventListener('input', () => {
+      currentPage = 1;
+      render();
+    });
+
+    categorySelect.addEventListener('change', () => {
+      currentPage = 1;
+      render();
+    });
+
+    clearButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        searchInput.value = '';
+        categorySelect.value = 'all';
+        currentPage = 1;
+        render();
+        searchInput.focus();
+      });
+    });
+
+    prevButton.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage -= 1;
+        render();
+      }
+    });
+
+    nextButton.addEventListener('click', () => {
+      const filtered = getFilteredPosts();
+      const totalPages = Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
+      if (currentPage < totalPages) {
+        currentPage += 1;
+        render();
+      }
+    });
+
+    pageButtons.addEventListener('click', (event) => {
+      const target = event.target;
+      if (target instanceof HTMLButtonElement && target.dataset.page) {
+        currentPage = Number(target.dataset.page);
+        render();
+      }
+    });
+
+    syncFromQuery();
+    render();
+  </script>
+</BaseLayout>

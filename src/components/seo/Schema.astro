@@ -1,0 +1,82 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  article?: boolean;
+  publishDate?: Date;
+}
+
+const { title, description, article = false, publishDate } = Astro.props;
+
+const siteUrl = import.meta.env.SITE;
+
+const personSchema = {
+  "@type": "Person",
+  "@id": `${siteUrl}#person`,
+  "name": "Ahmed Adel",
+  "url": siteUrl,
+  "jobTitle": "AI Security Researcher",
+  "description": "AI Security Researcher and Python Open Source Contributor based in Ireland.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Dublin",
+    "addressCountry": "IE"
+  },
+  "sameAs": [
+    "https://github.com/Ahmed-AdelB"
+  ]
+};
+
+const websiteSchema = {
+  "@type": "WebSite",
+  "@id": `${siteUrl}#website`,
+  "url": siteUrl,
+  "name": "Ahmed Adel Portfolio",
+  "description": "Portfolio of Ahmed Adel, specializing in AI Security and Python development.",
+  "publisher": {
+    "@id": `${siteUrl}#person`
+  },
+  "inLanguage": "en-US"
+};
+
+const schema: any = {
+  "@context": "https://schema.org",
+  "@graph": [
+    personSchema,
+    websiteSchema
+  ]
+};
+
+if (article) {
+  schema["@graph"].push({
+    "@type": "BlogPosting",
+    "headline": title,
+    "description": description,
+    "datePublished": publishDate?.toISOString(),
+    "author": {
+        "@id": `${siteUrl}#person`
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": Astro.url.href
+    }
+  });
+} else {
+    schema["@graph"].push({
+        "@type": "WebPage",
+        "@id": Astro.url.href,
+        "url": Astro.url.href,
+        "name": title,
+        "description": description,
+        "isPartOf": {
+            "@id": `${siteUrl}#website`
+        },
+        "about": {
+            "@id": `${siteUrl}#person`
+        }
+    });
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

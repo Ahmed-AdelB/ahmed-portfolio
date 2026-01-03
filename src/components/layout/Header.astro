@@ -1,0 +1,300 @@
+---
+/**
+ * Header/Navigation Component
+ *
+ * Features:
+ * - Sticky header with blur backdrop
+ * - Logo/name on left
+ * - Navigation links with active highlighting
+ * - Theme toggle (light/dark/system)
+ * - Mobile hamburger menu
+ * - Cmd+K search trigger
+ * - Smooth show/hide on scroll
+ */
+
+import ThemeToggle from '../ui/ThemeToggle';
+import MobileNav from './MobileNav';
+
+interface NavLink {
+  href: string;
+  label: string;
+}
+
+const navLinks: NavLink[] = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/contributions', label: 'Contributions' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/resume', label: 'Resume' },
+  { href: '/contact', label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header
+  id="main-header"
+  class="fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ease-in-out"
+  role="banner"
+>
+  <div
+    class="backdrop-blur-lg bg-white/80 dark:bg-gray-900/80 border-b border-gray-200/50 dark:border-gray-700/50 supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-gray-900/60"
+  >
+    <nav
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      role="navigation"
+      aria-label="Main navigation"
+    >
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo/Name -->
+        <div class="flex-shrink-0">
+          <a
+            href="/"
+            class="group flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white transition-colors hover:text-blue-600 dark:hover:text-blue-400"
+            aria-label="Ahmed Adel - Home"
+          >
+            <span class="relative">
+              <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Ahmed
+              </span>
+              <span class="text-gray-900 dark:text-white ml-1">Adel</span>
+            </span>
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden lg:flex lg:items-center lg:gap-1">
+          {navLinks.map((link) => {
+            const isActive = currentPath === link.href ||
+              (link.href !== '/' && currentPath.startsWith(link.href));
+            return (
+              <a
+                href={link.href}
+                class:list={[
+                  'relative px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200',
+                  'hover:bg-gray-100 dark:hover:bg-gray-800',
+                  'focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900',
+                  isActive
+                    ? 'text-blue-600 dark:text-blue-400'
+                    : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white',
+                ]}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                {link.label}
+                {isActive && (
+                  <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-blue-600 dark:bg-blue-400 rounded-full" />
+                )}
+              </a>
+            );
+          })}
+        </div>
+
+        <!-- Right Side Actions -->
+        <div class="flex items-center gap-2">
+          <!-- Search Trigger (Cmd+K) -->
+          <button
+            id="search-trigger"
+            type="button"
+            class="hidden sm:flex items-center gap-2 px-3 py-1.5 text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-700 dark:hover:text-gray-200 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            aria-label="Open search dialog (Cmd+K)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-search"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.3-4.3"></path>
+            </svg>
+            <span class="hidden md:inline">Search...</span>
+            <kbd class="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs font-mono bg-gray-200 dark:bg-gray-700 rounded">
+              <span class="text-xs">&#8984;</span>K
+            </kbd>
+          </button>
+
+          <!-- Mobile Search Button -->
+          <button
+            id="mobile-search-trigger"
+            type="button"
+            class="sm:hidden p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            aria-label="Open search"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.3-4.3"></path>
+            </svg>
+          </button>
+
+          <!-- Theme Toggle -->
+          <ThemeToggle client:load />
+
+          <!-- Mobile Menu Button -->
+          <button
+            id="mobile-menu-button"
+            type="button"
+            class="lg:hidden p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            aria-label="Open mobile menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <svg
+              id="menu-icon-open"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-menu"
+              aria-hidden="true"
+            >
+              <line x1="4" x2="20" y1="12" y2="12"></line>
+              <line x1="4" x2="20" y1="6" y2="6"></line>
+              <line x1="4" x2="20" y1="18" y2="18"></line>
+            </svg>
+            <svg
+              id="menu-icon-close"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-x hidden"
+              aria-hidden="true"
+            >
+              <path d="M18 6 6 18"></path>
+              <path d="m6 6 12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <MobileNav
+    client:load
+    navLinks={navLinks}
+    currentPath={currentPath}
+  />
+</header>
+
+<!-- Spacer to prevent content from hiding under fixed header -->
+<div class="h-16" aria-hidden="true"></div>
+
+<script>
+  // Scroll behavior for show/hide header
+  let lastScrollY = 0;
+  let ticking = false;
+  const header = document.getElementById('main-header');
+
+  function updateHeader() {
+    const currentScrollY = window.scrollY;
+
+    if (header) {
+      // Always show header when at top
+      if (currentScrollY < 10) {
+        header.style.transform = 'translateY(0)';
+      }
+      // Hide header when scrolling down, show when scrolling up
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        header.style.transform = 'translateY(-100%)';
+      } else {
+        header.style.transform = 'translateY(0)';
+      }
+    }
+
+    lastScrollY = currentScrollY;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // Mobile menu toggle
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const menuIconOpen = document.getElementById('menu-icon-open');
+  const menuIconClose = document.getElementById('menu-icon-close');
+
+  mobileMenuButton?.addEventListener('click', () => {
+    const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+    mobileMenuButton.setAttribute('aria-expanded', (!isExpanded).toString());
+    menuIconOpen?.classList.toggle('hidden');
+    menuIconClose?.classList.toggle('hidden');
+
+    // Dispatch custom event for MobileNav component
+    window.dispatchEvent(new CustomEvent('toggle-mobile-menu', {
+      detail: { isOpen: !isExpanded }
+    }));
+  });
+
+  // Keyboard shortcut for search (Cmd/Ctrl + K)
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      // Dispatch custom event for search dialog
+      window.dispatchEvent(new CustomEvent('open-search'));
+    }
+  });
+
+  // Search trigger buttons
+  const searchTrigger = document.getElementById('search-trigger');
+  const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
+
+  [searchTrigger, mobileSearchTrigger].forEach(btn => {
+    btn?.addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('open-search'));
+    });
+  });
+
+  // Close mobile menu on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const isExpanded = mobileMenuButton?.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) {
+        mobileMenuButton?.click();
+      }
+    }
+  });
+
+  // Close mobile menu when clicking outside
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    const isExpanded = mobileMenuButton?.getAttribute('aria-expanded') === 'true';
+
+    if (isExpanded && !target.closest('#main-header')) {
+      mobileMenuButton?.click();
+    }
+  });
+</script>

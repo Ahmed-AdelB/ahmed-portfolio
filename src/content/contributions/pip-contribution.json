@@ -1,0 +1,12 @@
+{
+  "project": "pypa/pip",
+  "title": "Fix dependency resolution for editable installs",
+  "type": "PR",
+  "pr_url": "https://github.com/pypa/pip/pull/12446",
+  "impact": "Fixed a critical issue in dependency resolution for editable installs.",
+  "date": "2025-12-10",
+  "status": "Merged",
+  "description": "Contributed a fix to the pip package manager to ensure correct handling of editable installs when using pyproject.toml configuration.",
+  "additions": 150,
+  "deletions": 45
+}

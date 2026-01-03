@@ -1,0 +1,252 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  features: string[];
+  techStack: string[];
+  githubUrl: string;
+  demoUrl?: string;
+  stars?: number;
+  forks?: number;
+  contributors?: number;
+  ctaText?: string;
+  ctaUrl?: string;
+}
+
+const {
+  title,
+  description,
+  image,
+  features,
+  techStack,
+  githubUrl,
+  demoUrl,
+  stars,
+  forks,
+  contributors,
+  ctaText = "View Project",
+  ctaUrl,
+} = Astro.props;
+
+const finalCtaUrl = ctaUrl || demoUrl || githubUrl;
+---
+
+<article
+  class="group relative overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 shadow-md transition-all duration-300 hover:shadow-xl dark:border-gray-700 dark:from-gray-800 dark:to-gray-900"
+>
+  <div class="grid gap-6 p-6 md:grid-cols-2 md:gap-8 md:p-8 lg:p-10">
+    <!-- Content Section -->
+    <div class="flex flex-col justify-center">
+      <!-- Badge -->
+      <span
+        class="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-blue-700 dark:bg-blue-900/40 dark:text-blue-400"
+      >
+        <svg
+          class="h-3.5 w-3.5"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          aria-hidden="true"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        Flagship Project
+      </span>
+
+      <!-- Title -->
+      <h3
+        class="mb-4 text-2xl font-bold text-gray-900 transition-colors md:text-3xl dark:text-white"
+      >
+        {title}
+      </h3>
+
+      <!-- Description -->
+      <p class="mb-6 text-base leading-relaxed text-gray-600 dark:text-gray-300">
+        {description}
+      </p>
+
+      <!-- Key Features -->
+      <div class="mb-6">
+        <h4 class="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+          Key Features
+        </h4>
+        <ul class="space-y-2" role="list">
+          {
+            features.map((feature) => (
+              <li class="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+                <svg
+                  class="mt-0.5 h-5 w-5 shrink-0 text-green-500 dark:text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span>{feature}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Tech Stack -->
+      <div class="mb-6 flex flex-wrap gap-2" role="list" aria-label="Technologies used">
+        {
+          techStack.map((tech) => (
+            <span
+              role="listitem"
+              class="inline-block rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+            >
+              {tech}
+            </span>
+          ))
+        }
+      </div>
+
+      <!-- GitHub Stats -->
+      <div class="mb-6 flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
+        {
+          stars !== undefined && (
+            <span class="inline-flex items-center gap-1.5">
+              <svg
+                class="h-4 w-4 text-amber-500"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                aria-hidden="true"
+              >
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <span class="font-medium">{stars.toLocaleString()}</span> stars
+            </span>
+          )
+        }
+
+        {
+          forks !== undefined && (
+            <span class="inline-flex items-center gap-1.5">
+              <svg
+                class="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+                />
+              </svg>
+              <span class="font-medium">{forks.toLocaleString()}</span> forks
+            </span>
+          )
+        }
+
+        {
+          contributors !== undefined && (
+            <span class="inline-flex items-center gap-1.5">
+              <svg
+                class="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                />
+              </svg>
+              <span class="font-medium">{contributors}</span> contributors
+            </span>
+          )
+        }
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap gap-3">
+        <a
+          href={finalCtaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-offset-gray-900"
+        >
+          {ctaText}
+          <svg
+            class="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M14 5l7 7m0 0l-7 7m7-7H3"
+            />
+          </svg>
+        </a>
+
+        <a
+          href={githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition-all hover:bg-gray-50 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700 dark:focus:ring-offset-gray-900"
+        >
+          <svg
+            class="h-5 w-5"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          View Source
+        </a>
+      </div>
+    </div>
+
+    <!-- Image Section -->
+    {
+      image && (
+        <div class="relative order-first md:order-last">
+          <div class="overflow-hidden rounded-xl bg-gray-100 shadow-lg dark:bg-gray-900">
+            <img
+              src={image}
+              alt={`Screenshot of ${title}`}
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+              loading="lazy"
+            />
+          </div>
+          <!-- Decorative gradient blob -->
+          <div
+            class="absolute -right-4 -top-4 -z-10 h-24 w-24 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 opacity-20 blur-2xl dark:opacity-30"
+            aria-hidden="true"
+          />
+          <div
+            class="absolute -bottom-4 -left-4 -z-10 h-32 w-32 rounded-full bg-gradient-to-br from-green-400 to-blue-500 opacity-20 blur-2xl dark:opacity-30"
+            aria-hidden="true"
+          />
+        </div>
+      )
+    }
+  </div>
+</article>

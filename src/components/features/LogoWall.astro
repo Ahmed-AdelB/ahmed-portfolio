@@ -1,0 +1,171 @@
+---
+interface Project {
+  name: string;
+  logo: string;
+  url: string;
+  alt?: string;
+}
+
+interface Props {
+  projects?: Project[];
+  tagline?: string;
+  title?: string;
+}
+
+const {
+  projects = [
+    {
+      name: "pip",
+      logo: "/images/logos/pip.svg",
+      url: "https://github.com/pypa/pip",
+      alt: "pip - Python package installer",
+    },
+    {
+      name: "Poetry",
+      logo: "/images/logos/poetry.svg",
+      url: "https://github.com/python-poetry/poetry",
+      alt: "Poetry - Python dependency management",
+    },
+    {
+      name: "Pydantic",
+      logo: "/images/logos/pydantic.svg",
+      url: "https://github.com/pydantic/pydantic",
+      alt: "Pydantic - Data validation library",
+    },
+    {
+      name: "Click",
+      logo: "/images/logos/click.svg",
+      url: "https://github.com/pallets/click",
+      alt: "Click - CLI creation toolkit",
+    },
+    {
+      name: "OWASP",
+      logo: "/images/logos/owasp.svg",
+      url: "https://github.com/OWASP",
+      alt: "OWASP - Open Web Application Security Project",
+    },
+    {
+      name: "openai-python",
+      logo: "/images/logos/openai.svg",
+      url: "https://github.com/openai/openai-python",
+      alt: "OpenAI Python SDK",
+    },
+    {
+      name: "pip-tools",
+      logo: "/images/logos/pip-tools.svg",
+      url: "https://github.com/jazzband/pip-tools",
+      alt: "pip-tools - Dependency management utilities",
+    },
+  ],
+  tagline = "150M+ combined monthly downloads",
+  title = "Projects I've Contributed To",
+} = Astro.props;
+---
+
+<section
+  class="relative overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 px-6 py-10 dark:border-gray-700 dark:from-gray-800 dark:to-gray-900 md:px-10 md:py-14"
+>
+  <!-- Background decoration -->
+  <div
+    class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.05),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(139,92,246,0.05),transparent_50%)]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <!-- Header -->
+  <header class="mb-10 text-center">
+    <h2 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white md:text-3xl">
+      {title}
+    </h2>
+    <p
+      class="inline-flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+    >
+      <svg
+        class="h-5 w-5 text-green-500"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 10V3L4 14h7v7l9-11h-7z"
+        />
+      </svg>
+      {tagline}
+    </p>
+  </header>
+
+  <!-- Logo Grid -->
+  <div
+    class="grid grid-cols-3 gap-6 sm:grid-cols-4 md:grid-cols-7 md:gap-8"
+    role="list"
+    aria-label="Open source projects"
+  >
+    {
+      projects.map((project) => (
+        <a
+          href={project.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          role="listitem"
+          class="group flex flex-col items-center gap-3 rounded-xl p-4 transition-all duration-300 hover:bg-gray-100/80 dark:hover:bg-gray-700/50"
+          title={project.alt || project.name}
+        >
+          <div class="relative h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16">
+            <img
+              src={project.logo}
+              alt={project.alt || `${project.name} logo`}
+              class="h-full w-full object-contain grayscale transition-all duration-300 group-hover:grayscale-0 dark:brightness-90 dark:group-hover:brightness-100"
+              loading="lazy"
+            />
+          </div>
+          <span class="text-xs font-medium text-gray-500 transition-colors group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white sm:text-sm">
+            {project.name}
+          </span>
+        </a>
+      ))
+    }
+  </div>
+
+  <!-- Footer CTA (Optional) -->
+  <div class="mt-10 flex justify-center">
+    <a
+      href="https://github.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-2 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+    >
+      View all contributions on GitHub
+      <svg
+        class="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M14 5l7 7m0 0l-7 7m7-7H3"
+        />
+      </svg>
+    </a>
+  </div>
+</section>
+
+<style>
+  /* Ensure smooth grayscale to color transition */
+  .group:hover img {
+    filter: grayscale(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .group img {
+      transition: none;
+    }
+  }
+</style>
