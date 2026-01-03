@@ -25,6 +25,20 @@ A professional portfolio and personal website showcasing projects, blog posts, a
 - **Sitemap & Robots.txt** - Search engine discoverability
 - **Performance** - 100 Lighthouse scores, optimized images
 
+## Security
+
+This portfolio implements several security measures:
+
+- **Rate Limiting**: API endpoints protected with Upstash Redis (10 req/min chat, 5 req/min newsletter)
+- **Input Validation**: All user inputs validated with Zod schemas
+- **Prompt Injection Protection**: AI chatbot includes regex guardrails against injection attacks
+- **CSP Headers**: Content Security Policy configured via Vercel
+- **Dependency Scanning**: Daily Dependabot updates for security patches
+
+### Reporting Vulnerabilities
+
+To report security vulnerabilities, please email security @ahmedaderai.dev or open a confidential issue.
+
 ## Getting Started
 
 ### Prerequisites
