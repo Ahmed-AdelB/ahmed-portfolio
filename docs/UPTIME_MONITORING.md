@@ -35,11 +35,11 @@ GET https://ahmedalderai.com/api/health
 
 ### Status Codes
 
-| Status | HTTP Code | Meaning |
-|--------|-----------|---------|
-| healthy | 200 | All systems operational |
-| degraded | 200 | Some non-critical issues |
-| unhealthy | 503 | Service unavailable |
+| Status    | HTTP Code | Meaning                  |
+| --------- | --------- | ------------------------ |
+| healthy   | 200       | All systems operational  |
+| degraded  | 200       | Some non-critical issues |
+| unhealthy | 503       | Service unavailable      |
 
 ---
 
@@ -62,25 +62,25 @@ Create two monitors for comprehensive coverage:
 
 #### Monitor 1: Homepage (HTTP)
 
-| Setting | Value |
-|---------|-------|
-| Monitor Type | HTTP(s) |
-| Friendly Name | Ahmed Portfolio - Homepage |
-| URL | `https://ahmedalderai.com` |
-| Monitoring Interval | 5 minutes |
-| Monitor Timeout | 30 seconds |
-| Keyword | (optional) `Ahmed` |
+| Setting             | Value                      |
+| ------------------- | -------------------------- |
+| Monitor Type        | HTTP(s)                    |
+| Friendly Name       | Ahmed Portfolio - Homepage |
+| URL                 | `https://ahmedalderai.com` |
+| Monitoring Interval | 5 minutes                  |
+| Monitor Timeout     | 30 seconds                 |
+| Keyword             | (optional) `Ahmed`         |
 
 #### Monitor 2: Health Endpoint (HTTP)
 
-| Setting | Value |
-|---------|-------|
-| Monitor Type | HTTP(s) |
-| Friendly Name | Ahmed Portfolio - Health API |
-| URL | `https://ahmedalderai.com/api/health` |
-| Monitoring Interval | 5 minutes |
-| Monitor Timeout | 30 seconds |
-| HTTP Method | GET |
+| Setting             | Value                                 |
+| ------------------- | ------------------------------------- |
+| Monitor Type        | HTTP(s)                               |
+| Friendly Name       | Ahmed Portfolio - Health API          |
+| URL                 | `https://ahmedalderai.com/api/health` |
+| Monitoring Interval | 5 minutes                             |
+| Monitor Timeout     | 30 seconds                            |
+| HTTP Method         | GET                                   |
 
 ### Alert Contacts
 
@@ -106,12 +106,14 @@ Create two monitors for comprehensive coverage:
 [Freshping](https://www.freshworks.com/website-monitoring/) by Freshworks.
 
 **Free tier includes:**
+
 - 50 monitors
 - 1-minute check intervals
 - Multi-location checks
 - Public status page
 
 **Setup:**
+
 1. Sign up at freshping.io
 2. Add monitor with URL: `https://ahmedalderai.com`
 3. Configure alert channels
@@ -121,12 +123,14 @@ Create two monitors for comprehensive coverage:
 [Better Uptime](https://betteruptime.com/) offers modern monitoring.
 
 **Free tier includes:**
+
 - 10 monitors
 - 3-minute intervals
 - Slack/Teams integration
 - Incident management
 
 **Setup:**
+
 1. Sign up at betteruptime.com
 2. Create monitor for `https://ahmedalderai.com`
 3. Create monitor for `https://ahmedalderai.com/api/health`
@@ -166,6 +170,7 @@ All services support email notifications. Configure your primary email as the al
 ### Slack Integration
 
 For UptimeRobot:
+
 1. Create Slack Incoming Webhook
 2. Add as alert contact in UptimeRobot
 3. Select for monitors
@@ -215,10 +220,10 @@ openssl s_client -connect ahmedalderai.com:443 -servername ahmedalderai.com
 
 For a personal portfolio, this setup provides good coverage:
 
-| Service | Purpose | Interval |
-|---------|---------|----------|
-| UptimeRobot | Homepage monitoring | 5 min |
-| UptimeRobot | Health API | 5 min |
+| Service          | Purpose                | Interval  |
+| ---------------- | ---------------------- | --------- |
+| UptimeRobot      | Homepage monitoring    | 5 min     |
+| UptimeRobot      | Health API             | 5 min     |
 | Vercel Analytics | Performance monitoring | Real-time |
 
 **Total cost: $0/month**

@@ -1,5 +1,5 @@
-import { type FC, useCallback, useEffect, useState } from 'react';
-import { ArrowUp } from 'lucide-react';
+import { type FC, useCallback, useEffect, useState } from "react";
+import { ArrowUp } from "lucide-react";
 
 const VISIBILITY_THRESHOLD_PX = 300;
 
@@ -26,10 +26,10 @@ function useScrollVisibility(thresholdPx: number): boolean {
       }
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     updateVisibility();
 
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, [updateVisibility]);
 
   return isVisible;
@@ -43,12 +43,17 @@ function useScrollVisibility(thresholdPx: number): boolean {
  */
 interface BackToTopProps {}
 
-export const BackToTop: FC<BackToTopProps> = (): JSX.Element => {
+export const BackToTop: FC<BackToTopProps> = () => {
   const isVisible = useScrollVisibility(VISIBILITY_THRESHOLD_PX);
 
   const handleClick = useCallback((): void => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    window.scrollTo({
+      top: 0,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
   }, []);
 
   return (
@@ -63,7 +68,7 @@ export const BackToTop: FC<BackToTopProps> = (): JSX.Element => {
           hover:-translate-y-0.5 hover:shadow-xl
           focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2
           dark:border-gray-700/70 dark:bg-gray-900/80 dark:text-white dark:focus-visible:ring-emerald-400 dark:focus-visible:ring-offset-gray-900
-          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}
+          ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}
           motion-reduce:transition-none motion-reduce:transform-none
         `}
         aria-label="Back to top"

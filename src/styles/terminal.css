@@ -3,18 +3,20 @@
   --terminal-bg: #000000;
 }
 
-html[data-terminal='true'] {
+html[data-terminal="true"] {
   color-scheme: dark;
   background-color: var(--terminal-bg);
 }
 
-html[data-terminal='true'] body {
+html[data-terminal="true"] body {
   background-color: var(--terminal-bg) !important;
   color: var(--terminal-green) !important;
-  font-family: "JetBrains Mono", "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+  font-family:
+    "JetBrains Mono", "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo,
+    Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
 }
 
-html[data-terminal='true'] body * {
+html[data-terminal="true"] body * {
   color: inherit !important;
   border-color: var(--terminal-green) !important;
   background-color: transparent !important;
@@ -23,22 +25,258 @@ html[data-terminal='true'] body * {
   font-family: inherit !important;
 }
 
-html[data-terminal='true'] a {
+html[data-terminal="true"] a {
   color: var(--terminal-green) !important;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-html[data-terminal='true'] input,
-html[data-terminal='true'] textarea,
-html[data-terminal='true'] select {
+html[data-terminal="true"] input,
+html[data-terminal="true"] textarea,
+html[data-terminal="true"] select {
   background-color: var(--terminal-bg) !important;
   color: var(--terminal-green) !important;
   border-color: var(--terminal-green) !important;
   caret-color: var(--terminal-green);
 }
 
-html[data-terminal='true'] ::selection {
+html[data-terminal="true"] ::selection {
   background: rgba(0, 255, 0, 0.2);
   color: var(--terminal-green);
+}
+
+/* Terminal Mode UI */
+.terminal-shell {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-family:
+    "JetBrains Mono", "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo,
+    Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.terminal-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 9999px;
+  border: 1px solid var(--terminal-green);
+  background-color: var(--terminal-bg);
+  color: var(--terminal-green);
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.terminal-toggle[data-enabled="true"] {
+  background-color: rgba(0, 255, 0, 0.08);
+  box-shadow: 0 10px 24px rgba(0, 255, 0, 0.15);
+}
+
+.terminal-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.45);
+}
+
+.terminal-toggle__label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.terminal-panel {
+  width: min(520px, calc(100vw - 3rem));
+  max-height: min(60vh, 520px);
+  border-radius: 18px;
+  border: 1px solid var(--terminal-green);
+  background-color: var(--terminal-bg);
+  color: var(--terminal-green);
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.terminal-panel[data-open="true"] {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(0, 255, 0, 0.25);
+  background-color: rgba(0, 255, 0, 0.08);
+}
+
+.terminal-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.terminal-status-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background-color: var(--terminal-green);
+  box-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
+}
+
+.terminal-status {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.terminal-output {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.terminal-line {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.terminal-line--command {
+  color: rgba(0, 255, 0, 0.85);
+}
+
+.terminal-line--system {
+  color: rgba(0, 255, 0, 0.7);
+}
+
+.terminal-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1rem;
+  border-top: 1px solid rgba(0, 255, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.terminal-prompt {
+  font-size: 0.8rem;
+  color: rgba(0, 255, 0, 0.85);
+  white-space: nowrap;
+}
+
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  color: inherit;
+  border: none;
+  outline: none;
+  font-size: 0.85rem;
+  min-width: 0;
+}
+
+.terminal-input:disabled {
+  opacity: 0.6;
+}
+
+.terminal-submit {
+  border: 1px solid rgba(0, 255, 0, 0.35);
+  background: rgba(0, 255, 0, 0.12);
+  color: inherit;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 0.25rem 0.7rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.terminal-submit:hover {
+  background: rgba(0, 255, 0, 0.2);
+}
+
+.terminal-submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.terminal-caret {
+  display: inline-block;
+  width: 0.6ch;
+  animation: terminal-blink 1s steps(2, start) infinite;
+}
+
+@keyframes terminal-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .terminal-shell {
+    left: 1rem;
+    bottom: 1rem;
+  }
+
+  .terminal-panel {
+    width: min(92vw, 420px);
+  }
+
+  .terminal-toggle__label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-panel,
+  .terminal-toggle {
+    transition: none;
+  }
+
+  .terminal-caret {
+    animation: none;
+  }
+}
+
+html[data-terminal="true"] .terminal-panel,
+html[data-terminal="true"] .terminal-toggle {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-green) !important;
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.7) !important;
+}
+
+html[data-terminal="true"] .terminal-header,
+html[data-terminal="true"] .terminal-input-row {
+  background-color: rgba(0, 255, 0, 0.06) !important;
 }

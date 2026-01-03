@@ -6,13 +6,13 @@ This document serves as a comprehensive reference for all configurations used in
 
 The project uses the following environment variables. Create a `.env` file in the root directory based on `.env.example`.
 
-| Variable | Description | Required? | Default |
-|----------|-------------|-----------|---------|
-| `ANTHROPIC_API_KEY` | API key for Anthropic (Claude), used for the AI Chat feature. | **Yes** (for Chat) | - |
-| `BUTTONDOWN_API_KEY` | API key for Buttondown, used for Newsletter subscriptions. | **Yes** (for Newsletter) | - |
-| `UMAMI_WEBSITE_ID` | Tracking ID for Umami Analytics. | No | - |
-| `PLAYWRIGHT_BASE_URL` | Base URL for running E2E tests. | No | `http://127.0.0.1:4321` |
-| `CI` | Indicates a Continuous Integration environment. | No | - |
+| Variable              | Description                                                   | Required?                | Default                 |
+| --------------------- | ------------------------------------------------------------- | ------------------------ | ----------------------- |
+| `ANTHROPIC_API_KEY`   | API key for Anthropic (Claude), used for the AI Chat feature. | **Yes** (for Chat)       | -                       |
+| `BUTTONDOWN_API_KEY`  | API key for Buttondown, used for Newsletter subscriptions.    | **Yes** (for Newsletter) | -                       |
+| `UMAMI_WEBSITE_ID`    | Tracking ID for Umami Analytics.                              | No                       | -                       |
+| `PLAYWRIGHT_BASE_URL` | Base URL for running E2E tests.                               | No                       | `http://127.0.0.1:4321` |
+| `CI`                  | Indicates a Continuous Integration environment.               | No                       | -                       |
 
 > **Note:** `import.meta.env.SITE` is automatically populated by Astro based on the `site` config in `astro.config.mjs` or the `--site` flag. `VERCEL_GIT_COMMIT_SHA` is automatically provided by Vercel.
 
@@ -48,12 +48,14 @@ The project is configured for deployment on **Vercel** via `vercel.json`.
 ## Testing Configuration
 
 ### Unit Testing (`vitest.config.ts`)
+
 - **Framework:** Vitest
 - **Environment:** happy-dom
 - **Setup:** `src/test/setup.ts`
 - **Excludes:** E2E tests directory
 
 ### E2E Testing (`playwright.config.ts`)
+
 - **Framework:** Playwright
 - **Projects:**
   - Desktop: Chromium, Firefox, WebKit, Edge
@@ -72,4 +74,5 @@ The project is configured for deployment on **Vercel** via `vercel.json`.
 - **Scheduling:** Calendly (allowed in CSP)
 
 ---
-*Documented by Ahmed Adel Bakr Alderai*
+
+_Documented by Ahmed Adel Bakr Alderai_

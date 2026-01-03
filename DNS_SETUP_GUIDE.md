@@ -3,12 +3,15 @@
 This guide outlines the DNS configuration required to deploy the portfolio to Vercel and ensure all services (Email, Site) work correctly.
 
 ## 1. Domain Registration
+
 Ensure the domain `ahmedalderai.com` is registered and you have access to the DNS management panel (e.g., Namecheap, GoDaddy, Google Domains, or Vercel if bought there).
 
 ## 2. Vercel Configuration
+
 The project is configured to enforce `ahmedalderai.com` as the canonical domain, redirecting `www` to the root.
 
 ### Expected Vercel Project Settings:
+
 - **Production Domain:** `ahmedalderai.com` (Primary)
 - **Redirect Domain:** `www.ahmedalderai.com` (Redirects to `ahmedalderai.com`)
 
@@ -20,25 +23,26 @@ Add the following records to your domain's DNS settings.
 
 If you are using Vercel's nameservers, these are automatic. If using an external DNS provider:
 
-| Type | Name | Value | TTL | Notes |
-|------|------|-------|-----|-------|
-| **A** | `@` (Root) | `76.76.21.21` | Auto/3600 | Points root domain to Vercel |
-| **CNAME** | `www` | `cname.vercel-dns.com` | Auto/3600 | Points sub-domain to Vercel |
+| Type      | Name       | Value                  | TTL       | Notes                        |
+| --------- | ---------- | ---------------------- | --------- | ---------------------------- |
+| **A**     | `@` (Root) | `76.76.21.21`          | Auto/3600 | Points root domain to Vercel |
+| **CNAME** | `www`      | `cname.vercel-dns.com` | Auto/3600 | Points sub-domain to Vercel  |
 
 ### B. Email Forwarding (Optional/Recommended)
+
 Since you are using `contact@ahmedalderai.com` and `ahmed@ahmedalderai.com` in the codebase, you need an email service.
 
 **Option 1: ImprovMX / ForwardEmail (Free Forwarding)**
-*Forward all `@ahmedalderai.com` emails to your personal Gmail.*
+_Forward all `@ahmedalderai.com` emails to your personal Gmail._
 
-| Type | Name | Value | Priority |
-|------|------|-------|----------|
-| **MX** | `@` | `mx1.improvmx.com` | 10 |
-| **MX** | `@` | `mx2.improvmx.com` | 20 |
-| **TXT** | `@` | `v=spf1 include:spf.improvmx.com ~all` | - |
+| Type    | Name | Value                                  | Priority |
+| ------- | ---- | -------------------------------------- | -------- |
+| **MX**  | `@`  | `mx1.improvmx.com`                     | 10       |
+| **MX**  | `@`  | `mx2.improvmx.com`                     | 20       |
+| **TXT** | `@`  | `v=spf1 include:spf.improvmx.com ~all` | -        |
 
 **Option 2: Google Workspace / Zoho Mail (Paid/Dedicated)**
-*Follow the specific instructions provided by your mail host.*
+_Follow the specific instructions provided by your mail host._
 
 ## 4. Verification Steps
 
@@ -54,7 +58,9 @@ Since you are using `contact@ahmedalderai.com` and `ahmed@ahmedalderai.com` in t
     Send a test email to `contact@ahmedalderai.com` and confirm receipt.
 
 ## 5. Codebase References
+
 The following files rely on this configuration. If the domain changes, update these:
+
 - `astro.config.mjs` (`site` property)
 - `vercel.json` (redirect rules)
 - `src/pages/rss.xml.ts` (channel metadata)
@@ -62,5 +68,6 @@ The following files rely on this configuration. If the domain changes, update th
 - `public/og-default.svg` (visual asset)
 
 ## 6. Post-Launch
+
 - **Sitemap:** Automatically generated at `https://ahmedalderai.com/sitemap-index.xml` (or `/sitemap-0.xml`).
 - **Robots.txt:** Ensure it points to the correct sitemap URL.

@@ -1,7 +1,7 @@
-import React, { type FC, useCallback, useId, useMemo, useState } from 'react';
-import { Loader2, Send } from 'lucide-react';
+import React, { type FC, useCallback, useId, useMemo, useState } from "react";
+import { Loader2, Send } from "lucide-react";
 
-type SubmissionState = 'idle' | 'success' | 'error';
+type SubmissionState = "idle" | "success" | "error";
 
 interface SubmissionStatus {
   state: SubmissionState;
@@ -27,25 +27,25 @@ interface NewsletterFormProps {
   className?: string;
 }
 
-const DEFAULT_ENDPOINT = '/api/newsletter';
+const DEFAULT_ENDPOINT = "/api/newsletter";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const DEFAULT_COPY = {
-  placeholder: 'Enter your email',
-  submitLabel: 'Subscribe',
-  successMessage: 'Thanks for subscribing! Please check your inbox to confirm.',
-  errorMessage: 'Something went wrong. Please try again.',
-  requiredEmailMessage: 'Email is required.',
-  invalidEmailMessage: 'Please enter a valid email address.',
+  placeholder: "Enter your email",
+  submitLabel: "Subscribe",
+  successMessage: "Thanks for subscribing! Please check your inbox to confirm.",
+  errorMessage: "Something went wrong. Please try again.",
+  requiredEmailMessage: "Email is required.",
+  invalidEmailMessage: "Please enter a valid email address.",
 } as const;
 
 const buildClassName = (...classes: Array<string | undefined>): string =>
-  classes.filter(Boolean).join(' ');
+  classes.filter(Boolean).join(" ");
 
 const validateEmail = (
   value: string,
   requiredMessage: string,
-  invalidMessage: string
+  invalidMessage: string,
 ): string | null => {
   if (!value.trim()) {
     return requiredMessage;
@@ -57,15 +57,15 @@ const validateEmail = (
 };
 
 const readMessage = (payload: unknown): string | null => {
-  if (typeof payload !== 'object' || payload === null) return null;
+  if (typeof payload !== "object" || payload === null) return null;
   const record = payload as Record<string, unknown>;
-  return typeof record.message === 'string' ? record.message : null;
+  return typeof record.message === "string" ? record.message : null;
 };
 
 const readSuccess = (payload: unknown): boolean | null => {
-  if (typeof payload !== 'object' || payload === null) return null;
+  if (typeof payload !== "object" || payload === null) return null;
   const record = payload as Record<string, unknown>;
-  return typeof record.success === 'boolean' ? record.success : null;
+  return typeof record.success === "boolean" ? record.success : null;
 };
 
 interface NewsletterFormState {
@@ -85,16 +85,19 @@ const useNewsletterForm = (options: {
   requiredEmailMessage: string;
   invalidEmailMessage: string;
 }): NewsletterFormState => {
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
   const [emailError, setEmailError] = useState<string | null>(null);
-  const [status, setStatus] = useState<SubmissionStatus>({ state: 'idle', message: '' });
+  const [status, setStatus] = useState<SubmissionStatus>({
+    state: "idle",
+    message: "",
+  });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleEmailChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>): void => {
       setEmail(event.target.value);
       if (emailError) setEmailError(null);
-      if (status.state !== 'idle') setStatus({ state: 'idle', message: '' });
+      if (status.state !== "idle") setStatus({ state: "idle", message: "" });
     },
     [emailError, status.state],
   );
@@ -124,12 +127,12 @@ const useNewsletterForm = (options: {
       }
 
       setIsSubmitting(true);
-      setStatus({ state: 'idle', message: '' });
+      setStatus({ state: "idle", message: "" });
 
       try {
         const response = await fetch(options.endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: email.trim() }),
         });
 
@@ -139,20 +142,20 @@ const useNewsletterForm = (options: {
 
         if (response.ok && (apiSuccess === null || apiSuccess)) {
           setStatus({
-            state: 'success',
+            state: "success",
             message: apiMessage ?? options.successMessage,
           });
-          setEmail('');
+          setEmail("");
           setEmailError(null);
         } else {
           setStatus({
-            state: 'error',
+            state: "error",
             message: apiMessage ?? options.errorMessage,
           });
         }
       } catch (error) {
-        console.error('Newsletter subscription failed:', error);
-        setStatus({ state: 'error', message: options.errorMessage });
+        console.error("Newsletter subscription failed:", error);
+        setStatus({ state: "error", message: options.errorMessage });
       } finally {
         setIsSubmitting(false);
       }
@@ -218,12 +221,12 @@ export const NewsletterForm: FC<NewsletterFormProps> = ({
   const describedBy = useMemo<string | undefined>(() => {
     const ids: string[] = [];
     if (emailError) ids.push(errorId);
-    if (status.state !== 'idle') ids.push(statusId);
-    return ids.length > 0 ? ids.join(' ') : undefined;
+    if (status.state !== "idle") ids.push(statusId);
+    return ids.length > 0 ? ids.join(" ") : undefined;
   }, [emailError, errorId, status.state, statusId]);
 
   return (
-    <div className={buildClassName('mt-4', className)}>
+    <div className={buildClassName("mt-4", className)}>
       <form className="sm:flex sm:max-w-md" onSubmit={handleSubmit} noValidate>
         <label htmlFor={inputId} className="sr-only">
           Email address
@@ -238,7 +241,7 @@ export const NewsletterForm: FC<NewsletterFormProps> = ({
           onBlur={handleEmailBlur}
           required
           aria-required="true"
-          aria-invalid={emailError ? 'true' : 'false'}
+          aria-invalid={emailError ? "true" : "false"}
           aria-describedby={describedBy}
           placeholder={placeholder}
           disabled={isSubmitting}
@@ -264,21 +267,25 @@ export const NewsletterForm: FC<NewsletterFormProps> = ({
 
       <div className="mt-2 space-y-2">
         {emailError && (
-          <p id={errorId} className="text-sm text-red-600 dark:text-red-400" role="alert">
+          <p
+            id={errorId}
+            className="text-sm text-red-600 dark:text-red-400"
+            role="alert"
+          >
             {emailError}
           </p>
         )}
 
-        {status.state !== 'idle' && (
+        {status.state !== "idle" && (
           <div
             id={statusId}
-            role={status.state === 'error' ? 'alert' : 'status'}
-            aria-live={status.state === 'error' ? 'assertive' : 'polite'}
+            role={status.state === "error" ? "alert" : "status"}
+            aria-live={status.state === "error" ? "assertive" : "polite"}
             className={buildClassName(
-              'rounded-md px-3 py-2 text-sm',
-              status.state === 'error'
-                ? 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300'
-                : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300',
+              "rounded-md px-3 py-2 text-sm",
+              status.state === "error"
+                ? "bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300"
+                : "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
             )}
           >
             {status.message}

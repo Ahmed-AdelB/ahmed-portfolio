@@ -1,10 +1,10 @@
 ---
-title: 'Launching My New Portfolio: A Deep Dive into the Tech Stack'
-description: 'Announcing the launch of my personal portfolio built with Astro 5, React 19, and Tailwind CSS 4. A look at the architecture, features, and the journey of building a modern developer portfolio.'
-pubDate: '2026-01-03'
-tags: ['portfolio', 'astro', 'react', 'web-development', 'open-source']
+title: "Launching My New Portfolio: A Deep Dive into the Tech Stack"
+description: "Announcing the launch of my personal portfolio built with Astro 5, React 19, and Tailwind CSS 4. A look at the architecture, features, and the journey of building a modern developer portfolio."
+pubDate: "2026-01-03"
+tags: ["portfolio", "astro", "react", "web-development", "open-source"]
 draft: false
-heroImage: '../../assets/images/blog/blog-placeholder-1.svg'
+heroImage: "../../assets/images/blog/blog-placeholder-1.svg"
 ---
 
 # Launching My New Portfolio
@@ -112,15 +112,16 @@ Astro's Content Collections provide type-safe access to all content. The schema 
 
 ```typescript
 const blog = defineCollection({
-  type: 'content',
-  schema: ({ image }) => z.object({
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.coerce.date(),
-    tags: z.array(z.string()).default([]),
-    draft: z.boolean().default(false),
-    heroImage: image().optional(),
-  }),
+  type: "content",
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      pubDate: z.coerce.date(),
+      tags: z.array(z.string()).default([]),
+      draft: z.boolean().default(false),
+      heroImage: image().optional(),
+    }),
 });
 ```
 
@@ -153,4 +154,4 @@ Thanks for reading, and welcome to my corner of the internet.
 
 ---
 
-*Building something similar? Feel free to explore the source code and reach out if you'd like to discuss the architecture.*
+_Building something similar? Feel free to explore the source code and reach out if you'd like to discuss the architecture._

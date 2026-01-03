@@ -102,12 +102,12 @@ JSON files documenting open source work:
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production to `dist/` |
-| `npm run preview` | Preview production build locally |
-| `npm run astro` | Run Astro CLI commands |
+| Command              | Description                                               |
+| -------------------- | --------------------------------------------------------- |
+| `npm run dev`        | Start development server                                  |
+| `npm run build`      | Build for production to `dist/`                           |
+| `npm run preview`    | Preview production build locally                          |
+| `npm run astro`      | Run Astro CLI commands                                    |
 | `npm run pre-launch` | Run launch-day checks (build, links, Lighthouse, headers) |
 
 ## Deployment
@@ -115,12 +115,14 @@ JSON files documenting open source work:
 Auto-deploys to Vercel on push to main branch.
 
 **Configuration:**
+
 - Framework: Astro
 - Build: `npm run build`
 - Output: `dist`
 - Domain: `ahmedalderai.com`
 
 **Environment:**
+
 - Site URL: `https://ahmedalderai.com` (configured in `astro.config.mjs`)
 - No secret env vars required for build
 

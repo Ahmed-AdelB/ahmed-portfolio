@@ -20,7 +20,9 @@ const pages: PageCase[] = [
 
 test.describe("WCAG 2.1 AA", () => {
   for (const pageInfo of pages) {
-    test(`should have no accessibility violations on ${pageInfo.name}`, async ({ page }) => {
+    test(`should have no accessibility violations on ${pageInfo.name}`, async ({
+      page,
+    }) => {
       await page.goto(pageInfo.path, { waitUntil: "networkidle" });
 
       const results = await new AxeBuilder({ page })

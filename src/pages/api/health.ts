@@ -1,67 +1,76 @@
-import type { APIRoute } from 'astro';
+import type { APIRoute } from "astro";
+import { z } from "zod";
 
-interface HealthResponse {
-  status: 'healthy' | 'degraded' | 'unhealthy';
-  timestamp: string;
-  version: string;
-  uptime: number;
-  checks: {
-    name: string;
-    status: 'pass' | 'fail';
-    message?: string;
-  }[];
-}
+const HealthCheckSchema = z.object({
+  name: z.string(),
+  status: z.enum(["pass", "fail"]),
+  message: z.string().optional(),
+});
+
+const HealthResponseSchema = z.object({
+  status: z.enum(["healthy", "degraded", "unhealthy"]),
+  timestamp: z.string(),
+  version: z.string(),
+  uptime: z.number(),
+  checks: z.array(HealthCheckSchema),
+});
+
+type HealthResponse = z.infer<typeof HealthResponseSchema>;
 
 const startTime = Date.now();
 
 const getVersion = (): string => {
-  return process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? 'local';
+  return process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? "local";
 };
 
 const jsonResponse = (status: number, payload: HealthResponse): Response =>
   new Response(JSON.stringify(payload, null, 2), {
     status,
     headers: {
-      'Content-Type': 'application/json',
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      "Content-Type": "application/json",
+      "Cache-Control": "no-cache, no-store, must-revalidate",
     },
   });
 
 export const GET: APIRoute = async () => {
-  const checks: HealthResponse['checks'] = [];
-  let overallStatus: HealthResponse['status'] = 'healthy';
+  const checks: HealthResponse["checks"] = [];
+  let overallStatus: HealthResponse["status"] = "healthy";
 
   // Check 1: Basic runtime check
   checks.push({
-    name: 'runtime',
-    status: 'pass',
-    message: 'Astro runtime operational',
+    name: "runtime",
+    status: "pass",
+    message: "Astro runtime operational",
   });
 
   // Check 2: Environment check
-  const envCheck = typeof process !== 'undefined';
+  const envCheck = typeof process !== "undefined";
   checks.push({
-    name: 'environment',
-    status: envCheck ? 'pass' : 'fail',
-    message: envCheck ? 'Node environment available' : 'Environment not available',
+    name: "environment",
+    status: envCheck ? "pass" : "fail",
+    message: envCheck
+      ? "Node environment available"
+      : "Environment not available",
   });
 
   // Check 3: Memory check (if available)
   try {
-    if (typeof process !== 'undefined' && process.memoryUsage) {
+    if (typeof process !== "undefined" && process.memoryUsage) {
       const memory = process.memoryUsage();
       const heapUsedMB = Math.round(memory.heapUsed / 1024 / 1024);
       const heapTotalMB = Math.round(memory.heapTotal / 1024 / 1024);
-      const usagePercent = Math.round((memory.heapUsed / memory.heapTotal) * 100);
+      const usagePercent = Math.round(
+        (memory.heapUsed / memory.heapTotal) * 100,
+      );
 
       checks.push({
-        name: 'memory',
-        status: usagePercent < 90 ? 'pass' : 'fail',
+        name: "memory",
+        status: usagePercent < 90 ? "pass" : "fail",
         message: `Heap: ${heapUsedMB}MB / ${heapTotalMB}MB (${usagePercent}%)`,
       });
 
       if (usagePercent >= 90) {
-        overallStatus = 'degraded';
+        overallStatus = "degraded";
       }
     }
   } catch {
@@ -69,9 +78,10 @@ export const GET: APIRoute = async () => {
   }
 
   // Determine if any checks failed
-  const failedChecks = checks.filter((c) => c.status === 'fail');
+  const failedChecks = checks.filter((c) => c.status === "fail");
   if (failedChecks.length > 0) {
-    overallStatus = failedChecks.length === checks.length ? 'unhealthy' : 'degraded';
+    overallStatus =
+      failedChecks.length === checks.length ? "unhealthy" : "degraded";
   }
 
   const response: HealthResponse = {
@@ -82,7 +92,15 @@ export const GET: APIRoute = async () => {
     checks,
   };
 
-  const httpStatus = overallStatus === 'unhealthy' ? 503 : 200;
+  // Validate response against schema in development for extra safety
+  if (import.meta.env.DEV) {
+    const result = HealthResponseSchema.safeParse(response);
+    if (!result.success) {
+      console.error("Health check response validation failed:", result.error);
+    }
+  }
+
+  const httpStatus = overallStatus === "unhealthy" ? 503 : 200;
   return jsonResponse(httpStatus, response);
 };
 
@@ -91,7 +109,7 @@ export const HEAD: APIRoute = async () => {
   return new Response(null, {
     status: 200,
     headers: {
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      "Cache-Control": "no-cache, no-store, must-revalidate",
     },
   });
 };

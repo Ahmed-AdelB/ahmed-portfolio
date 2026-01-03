@@ -1,12 +1,12 @@
-import React, { type FC, useCallback, useEffect, useId, useState } from 'react';
-import { Calendar, ExternalLink, Loader2 } from 'lucide-react';
+import React, { type FC, useCallback, useEffect, useId, useState } from "react";
+import { Calendar, ExternalLink, Loader2 } from "lucide-react";
 
 /**
  * Display mode for the Calendly widget
  * - inline: Embeds the full scheduling widget directly in the page
  * - popup: Shows a button that opens Calendly in a popup/modal
  */
-type CalendlyMode = 'inline' | 'popup';
+type CalendlyMode = "inline" | "popup";
 
 interface CalendlyEmbedProps {
   /** Calendly scheduling URL (e.g., https://calendly.com/username/meeting-type) */
@@ -35,8 +35,10 @@ interface CalendlyEmbedProps {
   backgroundColor?: string;
 }
 
-const CALENDLY_WIDGET_SCRIPT = 'https://assets.calendly.com/assets/external/widget.js';
-const CALENDLY_WIDGET_CSS = 'https://assets.calendly.com/assets/external/widget.css';
+const CALENDLY_WIDGET_SCRIPT =
+  "https://assets.calendly.com/assets/external/widget.js";
+const CALENDLY_WIDGET_CSS =
+  "https://assets.calendly.com/assets/external/widget.css";
 
 /**
  * Builds the Calendly URL with optional query parameters for customization
@@ -50,33 +52,33 @@ const buildCalendlyUrl = (
     primaryColor?: string;
     textColor?: string;
     backgroundColor?: string;
-  }
+  },
 ): string => {
   const url = new URL(baseUrl);
 
   if (options.hideBranding) {
-    url.searchParams.set('hide_gdpr_banner', '1');
-    url.searchParams.set('hide_event_type_details', '0');
+    url.searchParams.set("hide_gdpr_banner", "1");
+    url.searchParams.set("hide_event_type_details", "0");
   }
 
   if (options.prefillName) {
-    url.searchParams.set('name', options.prefillName);
+    url.searchParams.set("name", options.prefillName);
   }
 
   if (options.prefillEmail) {
-    url.searchParams.set('email', options.prefillEmail);
+    url.searchParams.set("email", options.prefillEmail);
   }
 
   if (options.primaryColor) {
-    url.searchParams.set('primary_color', options.primaryColor);
+    url.searchParams.set("primary_color", options.primaryColor);
   }
 
   if (options.textColor) {
-    url.searchParams.set('text_color', options.textColor);
+    url.searchParams.set("text_color", options.textColor);
   }
 
   if (options.backgroundColor) {
-    url.searchParams.set('background_color', options.backgroundColor);
+    url.searchParams.set("background_color", options.backgroundColor);
   }
 
   return url.toString();
@@ -90,33 +92,37 @@ const useCalendlyScript = (): boolean => {
 
   useEffect(() => {
     // Check if script is already loaded
-    const existingScript = document.querySelector(`script[src="${CALENDLY_WIDGET_SCRIPT}"]`);
+    const existingScript = document.querySelector(
+      `script[src="${CALENDLY_WIDGET_SCRIPT}"]`,
+    );
     if (existingScript) {
       setIsLoaded(true);
       return;
     }
 
     // Load CSS
-    const existingCss = document.querySelector(`link[href="${CALENDLY_WIDGET_CSS}"]`);
+    const existingCss = document.querySelector(
+      `link[href="${CALENDLY_WIDGET_CSS}"]`,
+    );
     if (!existingCss) {
-      const link = document.createElement('link');
+      const link = document.createElement("link");
       link.href = CALENDLY_WIDGET_CSS;
-      link.rel = 'stylesheet';
+      link.rel = "stylesheet";
       document.head.appendChild(link);
     }
 
     // Load script
-    const script = document.createElement('script');
+    const script = document.createElement("script");
     script.src = CALENDLY_WIDGET_SCRIPT;
     script.async = true;
-    script.crossOrigin = 'anonymous';
+    script.crossOrigin = "anonymous";
 
     script.onload = () => {
       setIsLoaded(true);
     };
 
     script.onerror = () => {
-      console.error('Failed to load Calendly widget script');
+      console.error("Failed to load Calendly widget script");
     };
 
     document.head.appendChild(script);
@@ -143,7 +149,11 @@ const CalendlyInline: FC<{
     if (!isScriptLoaded) return;
 
     // Initialize the inline widget using Calendly's API
-    const calendly = (window as unknown as { Calendly?: { initInlineWidget: (opts: object) => void } }).Calendly;
+    const calendly = (
+      window as unknown as {
+        Calendly?: { initInlineWidget: (opts: object) => void };
+      }
+    ).Calendly;
     if (calendly?.initInlineWidget) {
       calendly.initInlineWidget({
         url,
@@ -175,7 +185,7 @@ const CalendlyInline: FC<{
           minWidth: `${minWidth}px`,
           height: `${height}px`,
           opacity: isScriptLoaded ? 1 : 0,
-          transition: 'opacity 0.3s ease-in-out',
+          transition: "opacity 0.3s ease-in-out",
         }}
       />
     </div>
@@ -191,12 +201,16 @@ const CalendlyPopup: FC<{
   isScriptLoaded: boolean;
 }> = ({ url, buttonText, isScriptLoaded }) => {
   const handleClick = useCallback(() => {
-    const calendly = (window as unknown as { Calendly?: { initPopupWidget: (opts: { url: string }) => void } }).Calendly;
+    const calendly = (
+      window as unknown as {
+        Calendly?: { initPopupWidget: (opts: { url: string }) => void };
+      }
+    ).Calendly;
     if (calendly?.initPopupWidget) {
       calendly.initPopupWidget({ url });
     } else {
       // Fallback: open in new tab if popup widget isn't available
-      window.open(url, '_blank', 'noopener,noreferrer');
+      window.open(url, "_blank", "noopener,noreferrer");
     }
   }, [url]);
 
@@ -254,10 +268,10 @@ const CalendlyPopup: FC<{
  */
 export const CalendlyEmbed: FC<CalendlyEmbedProps> = ({
   url,
-  mode = 'inline',
+  mode = "inline",
   height = 400,
   minWidth = 320,
-  buttonText = 'Schedule a Meeting',
+  buttonText = "Schedule a Meeting",
   className,
   hideBranding,
   prefillName,
@@ -280,7 +294,7 @@ export const CalendlyEmbed: FC<CalendlyEmbedProps> = ({
 
   return (
     <div className={className}>
-      {mode === 'inline' ? (
+      {mode === "inline" ? (
         <CalendlyInline
           url={calendlyUrl}
           height={height}

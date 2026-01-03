@@ -12,14 +12,14 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
 
 ### Overall Assessment: **Good with Opportunities for Improvement**
 
-| Category | Status | Notes |
-|----------|--------|-------|
-| Bundle Size | Needs Attention | ~400KB total JS |
-| Font Loading | Good | Self-hosted, but many weights |
-| Image Optimization | Excellent | Minimal images, optimized formats |
-| CSS | Good | Tailwind purging active |
-| SEO | Excellent | Complete meta tags, schema markup |
-| Accessibility | Excellent | Skip links, ARIA, focus management |
+| Category           | Status          | Notes                              |
+| ------------------ | --------------- | ---------------------------------- |
+| Bundle Size        | Needs Attention | ~400KB total JS                    |
+| Font Loading       | Good            | Self-hosted, but many weights      |
+| Image Optimization | Excellent       | Minimal images, optimized formats  |
+| CSS                | Good            | Tailwind purging active            |
+| SEO                | Excellent       | Complete meta tags, schema markup  |
+| Accessibility      | Excellent       | Skip links, ARIA, focus management |
 
 ---
 
@@ -27,16 +27,16 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
 
 ### Bundle Size Summary
 
-| File | Size (Uncompressed) | Size (Gzip) | Component |
-|------|---------------------|-------------|-----------|
-| `client.*.js` | 182.74 KB | 57.61 KB | React + React-DOM |
-| `proxy.*.js` | 112.23 KB | 36.97 KB | Framer Motion |
-| `CommandPalette.*.js` | 58.55 KB | 19.25 KB | cmdk library |
-| `SecurityPlayground.*.js` | 25.65 KB | 7.02 KB | Security demo |
-| `ClientRouter.*.js` | 15.33 KB | 5.27 KB | View Transitions |
-| `AIChatbot.*.js` | 12.20 KB | 4.72 KB | AI Chat interface |
-| Other components | ~50 KB | ~15 KB | Various |
-| **Total JavaScript** | **~456 KB** | **~146 KB** | - |
+| File                      | Size (Uncompressed) | Size (Gzip) | Component         |
+| ------------------------- | ------------------- | ----------- | ----------------- |
+| `client.*.js`             | 182.74 KB           | 57.61 KB    | React + React-DOM |
+| `proxy.*.js`              | 112.23 KB           | 36.97 KB    | Framer Motion     |
+| `CommandPalette.*.js`     | 58.55 KB            | 19.25 KB    | cmdk library      |
+| `SecurityPlayground.*.js` | 25.65 KB            | 7.02 KB     | Security demo     |
+| `ClientRouter.*.js`       | 15.33 KB            | 5.27 KB     | View Transitions  |
+| `AIChatbot.*.js`          | 12.20 KB            | 4.72 KB     | AI Chat interface |
+| Other components          | ~50 KB              | ~15 KB      | Various           |
+| **Total JavaScript**      | **~456 KB**         | **~146 KB** | -                 |
 
 ### Key Findings
 
@@ -51,13 +51,13 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
 
 ### Recommendations
 
-| Priority | Recommendation | Impact |
-|----------|----------------|--------|
-| High | Change `client:load` to `client:idle` for non-critical components | -50-100KB initial load |
-| High | Lazy load CommandPalette on demand | -58KB initial load |
-| Medium | Consider replacing Framer Motion with CSS animations | -112KB total |
-| Medium | Code-split large page components | Better caching |
-| Low | Enable Astro's experimental optimizations | ~10% improvement |
+| Priority | Recommendation                                                    | Impact                 |
+| -------- | ----------------------------------------------------------------- | ---------------------- |
+| High     | Change `client:load` to `client:idle` for non-critical components | -50-100KB initial load |
+| High     | Lazy load CommandPalette on demand                                | -58KB initial load     |
+| Medium   | Consider replacing Framer Motion with CSS animations              | -112KB total           |
+| Medium   | Code-split large page components                                  | Better caching         |
+| Low      | Enable Astro's experimental optimizations                         | ~10% improvement       |
 
 ---
 
@@ -65,8 +65,8 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
 
 ### Current State
 
-| File | Size | Notes |
-|------|------|-------|
+| File          | Size  | Notes                             |
+| ------------- | ----- | --------------------------------- |
 | `about.*.css` | 65 KB | Main stylesheet (Tailwind output) |
 
 ### Observations
@@ -89,11 +89,11 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
 
 ### Current Fonts
 
-| Font | Weights | Files | Total Size |
-|------|---------|-------|------------|
-| Space Grotesk | 300, 400, 500, 600, 700 | 10 files | ~160 KB |
-| JetBrains Mono | 400, 500, 600 | 6 files | ~100 KB |
-| **Total** | **8 weights** | **16 files** | **~260 KB** |
+| Font           | Weights                 | Files        | Total Size  |
+| -------------- | ----------------------- | ------------ | ----------- |
+| Space Grotesk  | 300, 400, 500, 600, 700 | 10 files     | ~160 KB     |
+| JetBrains Mono | 400, 500, 600           | 6 files      | ~100 KB     |
+| **Total**      | **8 weights**           | **16 files** | **~260 KB** |
 
 ### Font Loading Features
 
@@ -105,11 +105,11 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
 
 ### Recommendations
 
-| Priority | Recommendation | Savings |
-|----------|----------------|---------|
-| High | Reduce to 3-4 weights (400, 500, 700) | ~100 KB |
-| Medium | Add `font-display: swap` for faster LCP | Improved LCP |
-| Low | Subset fonts for Latin only | ~30 KB |
+| Priority | Recommendation                          | Savings      |
+| -------- | --------------------------------------- | ------------ |
+| High     | Reduce to 3-4 weights (400, 500, 700)   | ~100 KB      |
+| Medium   | Add `font-display: swap` for faster LCP | Improved LCP |
+| Low      | Subset fonts for Latin only             | ~30 KB       |
 
 ---
 
@@ -117,12 +117,12 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
 
 ### Current State: **Excellent**
 
-| Type | Count | Format | Status |
-|------|-------|--------|--------|
-| Favicons | 4 | PNG, SVG | Optimized |
-| OG Image | 1 | SVG | Optimal |
-| Logos directory | Empty | - | N/A |
-| Blog placeholders | 1 | SVG | Optimal |
+| Type              | Count | Format   | Status    |
+| ----------------- | ----- | -------- | --------- |
+| Favicons          | 4     | PNG, SVG | Optimized |
+| OG Image          | 1     | SVG      | Optimal   |
+| Logos directory   | Empty | -        | N/A       |
+| Blog placeholders | 1     | SVG      | Optimal   |
 
 ### Observations
 
@@ -137,24 +137,26 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
 
 ### Estimated Scores (based on static analysis)
 
-| Metric | Estimated | Target | Status |
-|--------|-----------|--------|--------|
-| LCP (Largest Contentful Paint) | ~2.0s | < 2.5s | Good |
-| FID (First Input Delay) | ~50ms | < 100ms | Good |
-| CLS (Cumulative Layout Shift) | ~0.05 | < 0.1 | Good |
-| FCP (First Contentful Paint) | ~1.5s | < 1.8s | Good |
-| TTFB (Time to First Byte) | ~100ms | < 200ms | Excellent |
+| Metric                         | Estimated | Target  | Status    |
+| ------------------------------ | --------- | ------- | --------- |
+| LCP (Largest Contentful Paint) | ~2.0s     | < 2.5s  | Good      |
+| FID (First Input Delay)        | ~50ms     | < 100ms | Good      |
+| CLS (Cumulative Layout Shift)  | ~0.05     | < 0.1   | Good      |
+| FCP (First Contentful Paint)   | ~1.5s     | < 1.8s  | Good      |
+| TTFB (Time to First Byte)      | ~100ms    | < 200ms | Excellent |
 
 ### LCP Analysis
 
 **Primary LCP Element**: Hero section heading
 
 **Factors affecting LCP:**
+
 1. Font loading (Space Grotesk must load first)
 2. CSS blocking render
 3. JavaScript execution
 
 **Optimizations in place:**
+
 - [x] FOUC prevention script (inline)
 - [x] Critical CSS inlined
 - [x] Self-hosted fonts
@@ -163,15 +165,18 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
 ### FID/INP Analysis
 
 **Interactive elements:**
+
 - Theme toggle (React)
 - Mobile navigation (React)
 - Command palette (React)
 - AI Chatbot (React)
 
 **Current loading strategy:**
+
 - All components use `client:load` (blocks interactivity)
 
 **Recommendation:** Use `client:idle` or `client:visible` for:
+
 - CommandPalette
 - AIChatbot
 - TerminalMode
@@ -180,11 +185,13 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
 ### CLS Analysis
 
 **Layout stability factors:**
+
 1. Fixed header (correctly positioned)
 2. Fonts (may cause shift on load)
 3. Dynamic content (properly reserved)
 
 **Current protections:**
+
 - [x] Header spacer (h-16)
 - [x] Font fallbacks configured
 - [x] Fixed-height containers
@@ -206,11 +213,11 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
 
 ### Third-Party Resources
 
-| Resource | Purpose | Impact |
-|----------|---------|--------|
+| Resource        | Purpose              | Impact            |
+| --------------- | -------------------- | ----------------- |
 | Umami Analytics | Analytics (optional) | Deferred, minimal |
-| Anthropic API | AI Chat | On-demand only |
-| Calendly | Scheduling | Iframe, lazy |
+| Anthropic API   | AI Chat              | On-demand only    |
+| Calendly        | Scheduling           | Iframe, lazy      |
 
 ---
 
@@ -219,6 +226,7 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
 ### High Priority (Immediate Impact)
 
 1. **Lazy Load Non-Critical Components**
+
    ```astro
    <!-- Before -->
    <CommandPalette client:load />
@@ -235,7 +243,13 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
 
 3. **Add Font Preloading**
    ```html
-   <link rel="preload" href="/fonts/space-grotesk-400.woff2" as="font" type="font/woff2" crossorigin>
+   <link
+     rel="preload"
+     href="/fonts/space-grotesk-400.woff2"
+     as="font"
+     type="font/woff2"
+     crossorigin
+   />
    ```
 
 ### Medium Priority (Good to Have)
@@ -245,9 +259,10 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
    - Keep Framer Motion only for complex animations
 
 5. **Implement Dynamic Imports**
+
    ```typescript
    // Only load when needed
-   const CommandPalette = await import('./CommandPalette');
+   const CommandPalette = await import("./CommandPalette");
    ```
 
 6. **Enable Astro Image Optimization**
@@ -289,21 +304,21 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
 
 ### Tools for Ongoing Monitoring
 
-| Tool | Purpose | Frequency |
-|------|---------|-----------|
-| PageSpeed Insights | Core Web Vitals | Monthly |
-| WebPageTest | Detailed waterfall | Before releases |
-| Lighthouse CI | Regression testing | Per PR |
-| Vercel Analytics | Real User Metrics | Continuous |
+| Tool               | Purpose            | Frequency       |
+| ------------------ | ------------------ | --------------- |
+| PageSpeed Insights | Core Web Vitals    | Monthly         |
+| WebPageTest        | Detailed waterfall | Before releases |
+| Lighthouse CI      | Regression testing | Per PR          |
+| Vercel Analytics   | Real User Metrics  | Continuous      |
 
 ### Performance Budget
 
-| Metric | Budget | Current |
-|--------|--------|---------|
-| Total JS | < 300 KB | ~456 KB |
-| Total CSS | < 100 KB | ~65 KB |
-| LCP | < 2.5s | ~2.0s |
-| TTI | < 3.8s | ~3.5s |
+| Metric    | Budget   | Current |
+| --------- | -------- | ------- |
+| Total JS  | < 300 KB | ~456 KB |
+| Total CSS | < 100 KB | ~65 KB  |
+| LCP       | < 2.5s   | ~2.0s   |
+| TTI       | < 3.8s   | ~3.5s   |
 
 ---
 
@@ -312,6 +327,7 @@ This document provides a comprehensive performance audit of the ahmed-portfolio 
 The ahmed-portfolio site is well-architected with many performance best practices already in place:
 
 **Strengths:**
+
 - Self-hosted fonts (no external font requests)
 - Minimal image usage with optimized formats
 - FOUC prevention
@@ -320,11 +336,13 @@ The ahmed-portfolio site is well-architected with many performance best practice
 - Comprehensive print styles
 
 **Areas for Improvement:**
+
 - JavaScript bundle size (~456 KB total)
 - Client hydration strategy (all components load immediately)
 - Font weight reduction opportunity
 
 **Estimated Improvement Potential:**
+
 - Implementing all high-priority recommendations: **20-30% faster LCP**
 - Full optimization: **40-50% reduction in initial JavaScript**
 
@@ -342,4 +360,4 @@ Total build size: 2.9 MB
 
 ---
 
-*Report generated as part of GitHub Issue #179*
+_Report generated as part of GitHub Issue #179_

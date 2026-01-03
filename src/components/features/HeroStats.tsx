@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion, useInView, useSpring, useTransform } from 'framer-motion';
+import { useState, useEffect, useRef } from "react";
+import { motion, useInView, useSpring, useTransform } from "framer-motion";
 
 interface GitHubStats {
   prsmerged: number;
@@ -15,9 +15,15 @@ interface StatItemProps {
 }
 
 // Animated counter component
-function AnimatedCounter({ value, delay = 0 }: { value: number; delay?: number }) {
+function AnimatedCounter({
+  value,
+  delay = 0,
+}: {
+  value: number;
+  delay?: number;
+}) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
   const [hasAnimated, setHasAnimated] = useState(false);
 
   const spring = useSpring(0, {
@@ -50,7 +56,7 @@ function AnimatedCounter({ value, delay = 0 }: { value: number; delay?: number }
   );
 }
 
-function StatItem({ label, value, suffix = '', delay = 0 }: StatItemProps) {
+function StatItem({ label, value, suffix = "", delay = 0 }: StatItemProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -95,20 +101,20 @@ export default function HeroStats() {
     async function fetchGitHubStats() {
       try {
         // Attempt to fetch from GitHub API
-        const username = 'aadel';
+        const username = "aadel";
 
         // Fetch user events to count PRs
         const eventsResponse = await fetch(
           `https://api.github.com/users/${username}/events?per_page=100`,
           {
             headers: {
-              'Accept': 'application/vnd.github.v3+json',
+              Accept: "application/vnd.github.v3+json",
             },
-          }
+          },
         );
 
         if (!eventsResponse.ok) {
-          throw new Error('Failed to fetch GitHub data');
+          throw new Error("Failed to fetch GitHub data");
         }
 
         const events = await eventsResponse.json();
@@ -116,12 +122,13 @@ export default function HeroStats() {
         // Count merged PRs from events
         const prEvents = events.filter(
           (event: { type: string; payload?: { action?: string } }) =>
-            event.type === 'PullRequestEvent' && event.payload?.action === 'closed'
+            event.type === "PullRequestEvent" &&
+            event.payload?.action === "closed",
         );
 
         // Get unique repos contributed to
         const repos = new Set(
-          events.map((event: { repo?: { name?: string } }) => event.repo?.name)
+          events.map((event: { repo?: { name?: string } }) => event.repo?.name),
         );
 
         // Fetch user's starred repos for stars count
@@ -129,9 +136,9 @@ export default function HeroStats() {
           `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`,
           {
             headers: {
-              'Accept': 'application/vnd.github.v3+json',
+              Accept: "application/vnd.github.v3+json",
             },
-          }
+          },
         );
 
         let totalStars = 0;
@@ -140,18 +147,21 @@ export default function HeroStats() {
           totalStars = reposData.reduce(
             (acc: number, repo: { stargazers_count?: number }) =>
               acc + (repo.stargazers_count || 0),
-            0
+            0,
           );
         }
 
         setStats({
           prsmerged: Math.max(prEvents.length, fallbackStats.prsmerged),
-          reposContributed: Math.max(repos.size, fallbackStats.reposContributed),
+          reposContributed: Math.max(
+            repos.size,
+            fallbackStats.reposContributed,
+          ),
           totalStars: Math.max(totalStars, fallbackStats.totalStars),
         });
       } catch (err) {
-        console.warn('Using fallback GitHub stats:', err);
-        setError('Using cached stats');
+        console.warn("Using fallback GitHub stats:", err);
+        setError("Using cached stats");
         setStats(fallbackStats);
       } finally {
         setLoading(false);
@@ -229,8 +239,18 @@ export default function HeroStats() {
       {error && (
         <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-slate-500">
           <span className="flex items-center gap-1">
-            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              className="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
             Cached data
           </span>

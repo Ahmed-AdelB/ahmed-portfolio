@@ -10,6 +10,7 @@ npm run pre-launch
 ```
 
 The script performs:
+
 - Build verification
 - Link checking
 - Lighthouse audit (report saved to `./lighthouse-report.html`)

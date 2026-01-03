@@ -20,6 +20,7 @@ This guide provides comprehensive instructions for setting up email forwarding f
 Email forwarding allows you to receive emails sent to `contact@yourdomain.com` in your existing personal email inbox (e.g., Gmail). This is ideal for portfolio sites where you don't need a full email hosting solution.
 
 **Current Setup:**
+
 - **Contact Form:** Uses [Formspree](https://formspree.io) to handle form submissions
 - **Direct Email:** Forward `contact@ahmedaderai.dev` to personal Gmail
 - **Destination:** `ahmedalderai25@gmail.com`
@@ -31,6 +32,7 @@ Email forwarding allows you to receive emails sent to `contact@yourdomain.com` i
 Cloudflare offers free email routing if your domain uses Cloudflare DNS.
 
 ### Prerequisites
+
 - Domain DNS managed by Cloudflare
 - Cloudflare account (free tier works)
 
@@ -59,15 +61,17 @@ Cloudflare offers free email routing if your domain uses Cloudflare DNS.
 5. **Verify DNS Records**
    Cloudflare automatically adds these records:
 
-   | Type | Name | Content | Priority |
-   |------|------|---------|----------|
-   | MX | @ | `route1.mx.cloudflare.net` | 69 |
-   | MX | @ | `route2.mx.cloudflare.net` | 2 |
-   | MX | @ | `route3.mx.cloudflare.net` | 49 |
-   | TXT | @ | `v=spf1 include:_spf.mx.cloudflare.net ~all` | - |
+   | Type | Name | Content                                      | Priority |
+   | ---- | ---- | -------------------------------------------- | -------- |
+   | MX   | @    | `route1.mx.cloudflare.net`                   | 69       |
+   | MX   | @    | `route2.mx.cloudflare.net`                   | 2        |
+   | MX   | @    | `route3.mx.cloudflare.net`                   | 49       |
+   | TXT  | @    | `v=spf1 include:_spf.mx.cloudflare.net ~all` | -        |
 
 ### Catch-All Option
+
 To forward ALL emails (any-address@yourdomain.com):
+
 - Go to **Email Routing** > **Routing rules**
 - Enable "Catch-all address"
 - Select your destination email
@@ -88,11 +92,11 @@ To forward ALL emails (any-address@yourdomain.com):
 2. **Add DNS Records**
    Add these records to your domain's DNS:
 
-   | Type | Name | Value | Priority |
-   |------|------|-------|----------|
-   | MX | @ | `mx1.improvmx.com` | 10 |
-   | MX | @ | `mx2.improvmx.com` | 20 |
-   | TXT | @ | `v=spf1 include:spf.improvmx.com ~all` | - |
+   | Type | Name | Value                                  | Priority |
+   | ---- | ---- | -------------------------------------- | -------- |
+   | MX   | @    | `mx1.improvmx.com`                     | 10       |
+   | MX   | @    | `mx2.improvmx.com`                     | 20       |
+   | TXT  | @    | `v=spf1 include:spf.improvmx.com ~all` | -        |
 
 3. **Verify Domain**
    - Return to ImprovMX dashboard
@@ -104,6 +108,7 @@ To forward ALL emails (any-address@yourdomain.com):
    - `hello@ahmedaderai.dev` -> `ahmedalderai25@gmail.com`
 
 ### Limitations (Free Tier)
+
 - 25 email aliases
 - 500 emails/day
 - 10MB attachment limit
@@ -118,15 +123,16 @@ To forward ALL emails (any-address@yourdomain.com):
 
 1. **Add DNS Records**
 
-   | Type | Name | Value | Priority |
-   |------|------|-------|----------|
-   | MX | @ | `mx1.forwardemail.net` | 10 |
-   | MX | @ | `mx2.forwardemail.net` | 20 |
-   | TXT | @ | `forward-email=ahmedalderai25@gmail.com` | - |
-   | TXT | @ | `v=spf1 include:spf.forwardemail.net ~all` | - |
+   | Type | Name | Value                                      | Priority |
+   | ---- | ---- | ------------------------------------------ | -------- |
+   | MX   | @    | `mx1.forwardemail.net`                     | 10       |
+   | MX   | @    | `mx2.forwardemail.net`                     | 20       |
+   | TXT  | @    | `forward-email=ahmedalderai25@gmail.com`   | -        |
+   | TXT  | @    | `v=spf1 include:spf.forwardemail.net ~all` | -        |
 
 2. **For Specific Address Forwarding**
    To forward only `contact@`:
+
    ```
    TXT @ forward-email=contact:ahmedalderai25@gmail.com
    ```
@@ -182,6 +188,7 @@ TXT @ v=spf1 include:_spf.google.com include:spf.improvmx.com ~all
 DKIM adds a digital signature to outgoing emails. Most forwarding services handle this automatically.
 
 **For ImprovMX:**
+
 ```
 TXT @ improvmx._domainkey.improvmx.com
 ```
@@ -198,6 +205,7 @@ TXT _dmarc v=DMARC1; p=none; rua=mailto:ahmedalderai25@gmail.com
 ```
 
 **DMARC Policies:**
+
 - `p=none` - Monitor only, don't reject
 - `p=quarantine` - Send to spam folder
 - `p=reject` - Block completely
@@ -208,13 +216,13 @@ TXT _dmarc v=DMARC1; p=none; rua=mailto:ahmedalderai25@gmail.com
 
 For a domain using Cloudflare Email Routing:
 
-| Type | Name | Value | TTL |
-|------|------|-------|-----|
-| MX | @ | `route1.mx.cloudflare.net` | Auto |
-| MX | @ | `route2.mx.cloudflare.net` | Auto |
-| MX | @ | `route3.mx.cloudflare.net` | Auto |
-| TXT | @ | `v=spf1 include:_spf.mx.cloudflare.net ~all` | Auto |
-| TXT | _dmarc | `v=DMARC1; p=none; rua=mailto:ahmedalderai25@gmail.com` | Auto |
+| Type | Name    | Value                                                   | TTL  |
+| ---- | ------- | ------------------------------------------------------- | ---- |
+| MX   | @       | `route1.mx.cloudflare.net`                              | Auto |
+| MX   | @       | `route2.mx.cloudflare.net`                              | Auto |
+| MX   | @       | `route3.mx.cloudflare.net`                              | Auto |
+| TXT  | @       | `v=spf1 include:_spf.mx.cloudflare.net ~all`            | Auto |
+| TXT  | \_dmarc | `v=DMARC1; p=none; rua=mailto:ahmedalderai25@gmail.com` | Auto |
 
 ---
 
@@ -305,6 +313,7 @@ dig TXT _dmarc.ahmedaderai.dev +short
 ### Bounce Messages
 
 Common causes:
+
 - **Invalid destination:** Verify forwarding email address
 - **Mailbox full:** Check destination inbox storage
 - **Rate limiting:** Free tiers have daily limits
@@ -316,10 +325,12 @@ Common causes:
 The portfolio contact form uses Formspree for form submissions. Formspree sends notification emails directly to your configured email address, independent of domain email forwarding.
 
 **Current Formspree Configuration:**
+
 - Form endpoint: `https://formspree.io/f/xpwzgkdl`
 - Notifications sent to: Account email on Formspree
 
 **To update Formspree notification email:**
+
 1. Log in to [Formspree Dashboard](https://formspree.io/)
 2. Select your form
 3. Go to Settings > Email
@@ -329,14 +340,15 @@ The portfolio contact form uses Formspree for form submissions. Formspree sends 
 
 ## Summary
 
-| Provider | Best For | Cost | Setup Difficulty |
-|----------|----------|------|------------------|
-| Cloudflare | Domains on Cloudflare DNS | Free | Easy |
-| ImprovMX | Quick setup, reliable | Free/Paid | Easy |
-| ForwardEmail | Open source, privacy | Free | Medium |
-| Namecheap | Namecheap domains | Included | Easy |
+| Provider     | Best For                  | Cost      | Setup Difficulty |
+| ------------ | ------------------------- | --------- | ---------------- |
+| Cloudflare   | Domains on Cloudflare DNS | Free      | Easy             |
+| ImprovMX     | Quick setup, reliable     | Free/Paid | Easy             |
+| ForwardEmail | Open source, privacy      | Free      | Medium           |
+| Namecheap    | Namecheap domains         | Included  | Easy             |
 
 **Recommended Setup:**
+
 1. Use Cloudflare Email Routing (if domain uses Cloudflare DNS)
 2. Configure SPF, DKIM, and DMARC for deliverability
 3. Test thoroughly before relying on it for important communications

@@ -26,11 +26,13 @@ Overall, the portfolio content is well-written with professional tone and minima
 **Issue:** Orphaned closing `</span>` tag with no corresponding opening tag
 
 **Before:**
+
 ```html
 before they become headlines</span>.
 ```
 
 **After:**
+
 ```html
 before they become headlines.
 ```
@@ -44,6 +46,7 @@ before they become headlines.
 ### 1. LinkedIn URL Inconsistency
 
 **Files Affected:**
+
 - `/src/components/features/Hero.astro` (line 18): `https://linkedin.com/in/ahmedadel1991`
 - `/src/pages/contact.astro` (line 25): `https://linkedin.com/in/ahmedadel1991`
 - `/src/pages/index.astro` (line 207): `https://linkedin.com/in/ahmedaderai`
@@ -53,6 +56,7 @@ before they become headlines.
 ### 2. Domain Name Inconsistency
 
 **Files Affected:**
+
 - `/README.md` (line 121-124): References `ahmedalderai.com`
 - `/public/.well-known/security.txt`: References `ahmedaderai.dev`
 
@@ -61,6 +65,7 @@ before they become headlines.
 ### 3. Email Address Variations
 
 **Usage:**
+
 - Personal Gmail: `ahmedalderai25@gmail.com` (Hero, Contact page)
 - Domain email: `contact@ahmedalderai.com` (Index page CTA)
 
@@ -79,20 +84,20 @@ before they become headlines.
 
 ### Blog Posts
 
-| File | Status | Notes |
-|------|--------|-------|
-| `hello-world.mdx` | OK | Good introduction, clear structure |
-| `portfolio-launch.mdx` | OK | Comprehensive tech stack explanation |
-| `securing-llm-applications.mdx` | OK | Excellent technical depth |
-| `supply-chain-security-python.mdx` | OK | Well-researched, actionable content |
+| File                               | Status | Notes                                |
+| ---------------------------------- | ------ | ------------------------------------ |
+| `hello-world.mdx`                  | OK     | Good introduction, clear structure   |
+| `portfolio-launch.mdx`             | OK     | Comprehensive tech stack explanation |
+| `securing-llm-applications.mdx`    | OK     | Excellent technical depth            |
+| `supply-chain-security-python.mdx` | OK     | Well-researched, actionable content  |
 
 ### Project Case Studies
 
-| File | Status | Notes |
-|------|--------|-------|
-| `llm-security-playbook.mdx` | OK | Concise and clear |
-| `openai-python-security.mdx` | OK | Detailed case study with code examples |
-| `pip-security-contribution.mdx` | OK | Thorough technical explanation |
+| File                            | Status | Notes                                  |
+| ------------------------------- | ------ | -------------------------------------- |
+| `llm-security-playbook.mdx`     | OK     | Concise and clear                      |
+| `openai-python-security.mdx`    | OK     | Detailed case study with code examples |
+| `pip-security-contribution.mdx` | OK     | Thorough technical explanation         |
 
 ### Contribution Records
 
@@ -109,11 +114,13 @@ No spelling or grammatical errors found in the reviewed content. The writing mai
 ## Terminology Consistency
 
 ### Verified Consistent:
+
 - "AI Security" terminology used correctly
 - Technical terms (LLM, RAG, MITM) properly capitalized
 - Product names (pip, pydantic, OpenAI) correctly cased
 
 ### Professional Role Titles:
+
 - About page: "AI Security Researcher"
 - Resume page: "Senior Security Operations & Threat Intelligence Leader"
 
@@ -124,6 +131,7 @@ No spelling or grammatical errors found in the reviewed content. The writing mai
 ## Placeholder References (Expected)
 
 The following placeholder images are referenced (not broken links - by design):
+
 - `../../assets/images/blog/blog-placeholder-1.svg`
 - `../../assets/images/projects/project-placeholder-1.svg`
 - `../../assets/images/projects/project-placeholder-2.svg`
@@ -161,4 +169,4 @@ The following external links should be manually verified:
 
 ---
 
-*Report generated as part of Issue #181 - Content Proofreading*
+_Report generated as part of Issue #181 - Content Proofreading_

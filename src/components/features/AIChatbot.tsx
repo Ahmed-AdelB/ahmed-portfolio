@@ -1,25 +1,25 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Sparkles, Loader2 } from 'lucide-react';
-import { ChatMessage, type Message, type MessageRole } from './ChatMessage';
-import { INITIAL_QUESTIONS } from '../../lib/chatContext';
+import React, { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { MessageCircle, X, Send, Sparkles, Loader2 } from "lucide-react";
+import { ChatMessage, type Message, type MessageRole } from "./ChatMessage";
+import { INITIAL_QUESTIONS } from "../../lib/chatContext";
 
 export const AIChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Load messages from localStorage on mount
   useEffect(() => {
-    const savedMessages = localStorage.getItem('ahmed-ai-chat-history');
+    const savedMessages = localStorage.getItem("ahmed-ai-chat-history");
     if (savedMessages) {
       try {
         setMessages(JSON.parse(savedMessages));
       } catch (e) {
-        console.error('Failed to parse chat history', e);
+        console.error("Failed to parse chat history", e);
       }
     }
   }, []);
@@ -27,12 +27,12 @@ export const AIChatbot = () => {
   // Save messages to localStorage whenever they change
   useEffect(() => {
     if (messages.length > 0) {
-      localStorage.setItem('ahmed-ai-chat-history', JSON.stringify(messages));
+      localStorage.setItem("ahmed-ai-chat-history", JSON.stringify(messages));
     }
   }, [messages]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -50,41 +50,46 @@ export const AIChatbot = () => {
 
     const userMsg: Message = {
       id: Date.now().toString(),
-      role: 'user',
+      role: "user",
       content: content,
       timestamp: Date.now(),
     };
 
     setMessages((prev) => [...prev, userMsg]);
-    setInputValue('');
+    setInputValue("");
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content })),
+          messages: [...messages, userMsg].map((m) => ({
+            role: m.role,
+            content: m.content,
+          })),
         }),
       });
 
-      if (!response.ok) throw new Error('Failed to fetch response');
+      if (!response.ok) throw new Error("Failed to fetch response");
 
       const data = await response.json();
-      
+
       const botMsg: Message = {
         id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: data.response || "I'm having trouble connecting right now. Please try again later.",
+        role: "assistant",
+        content:
+          data.response ||
+          "I'm having trouble connecting right now. Please try again later.",
         timestamp: Date.now(),
       };
 
       setMessages((prev) => [...prev, botMsg]);
     } catch (error) {
-      console.error('Chat error:', error);
+      console.error("Chat error:", error);
       const errorMsg: Message = {
         id: (Date.now() + 1).toString(),
-        role: 'assistant',
+        role: "assistant",
         content: "Sorry, I encountered an error. Please try again.",
         timestamp: Date.now(),
       };
@@ -95,7 +100,7 @@ export const AIChatbot = () => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage(inputValue);
     }
@@ -119,8 +124,12 @@ export const AIChatbot = () => {
                     <Sparkles size={16} />
                   </div>
                   <div>
-                    <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Ahmed AI</h3>
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400">Ask about my portfolio</p>
+                    <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+                      Ahmed AI
+                    </h3>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                      Ask about my portfolio
+                    </p>
                   </div>
                 </div>
                 <button
@@ -161,14 +170,14 @@ export const AIChatbot = () => {
                     ))}
                     {isLoading && (
                       <div className="flex w-full gap-2 mb-4 flex-row">
-                         <div className="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-full border shadow-sm bg-zinc-100 text-zinc-900 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-100 dark:border-zinc-700">
-                           <Sparkles size={16} />
-                         </div>
-                         <div className="flex items-center gap-1 rounded-lg bg-zinc-100 px-4 py-3 dark:bg-zinc-800">
-                           <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-400 [animation-delay:-0.3s]"></span>
-                           <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-400 [animation-delay:-0.15s]"></span>
-                           <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-400"></span>
-                         </div>
+                        <div className="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-full border shadow-sm bg-zinc-100 text-zinc-900 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-100 dark:border-zinc-700">
+                          <Sparkles size={16} />
+                        </div>
+                        <div className="flex items-center gap-1 rounded-lg bg-zinc-100 px-4 py-3 dark:bg-zinc-800">
+                          <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-400 [animation-delay:-0.3s]"></span>
+                          <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-400 [animation-delay:-0.15s]"></span>
+                          <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-400"></span>
+                        </div>
                       </div>
                     )}
                   </>
@@ -195,7 +204,11 @@ export const AIChatbot = () => {
                     className="rounded-lg bg-blue-600 p-1.5 text-white transition-colors hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
                     aria-label="Send message"
                   >
-                    {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+                    {isLoading ? (
+                      <Loader2 size={16} className="animate-spin" />
+                    ) : (
+                      <Send size={16} />
+                    )}
                   </button>
                 </div>
               </div>
@@ -208,12 +221,12 @@ export const AIChatbot = () => {
           onClick={() => setIsOpen(!isOpen)}
           className={`flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
             isOpen
-              ? 'bg-zinc-200 text-zinc-600 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'
-              : 'bg-blue-600 text-white hover:bg-blue-700'
+              ? "bg-zinc-200 text-zinc-600 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+              : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          aria-label={isOpen ? 'Close chat' : 'Open chat'}
+          aria-label={isOpen ? "Close chat" : "Open chat"}
         >
           {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
         </motion.button>

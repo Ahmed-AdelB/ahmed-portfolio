@@ -2,7 +2,7 @@
  * Theme Toggle Component
  *
  * A React component that allows users to switch between light, dark, and system themes.
- * Uses localStorage for persistence and respects system preferences.
+ * Uses global theme store for persistence and state management.
  *
  * Features:
  * - Three-state toggle: light, dark, system
@@ -11,10 +11,10 @@
  * - ARIA labels for screen readers
  */
 
-import { useState, useEffect, useCallback } from 'react';
-import { Sun, Moon, Monitor } from 'lucide-react';
-
-type Theme = 'light' | 'dark' | 'system';
+import { useState, useEffect } from "react";
+import { useStore } from "@nanostores/react";
+import { Sun, Moon, Monitor } from "lucide-react";
+import { themeStore, setTheme, type Theme } from "../../stores/theme";
 
 interface ThemeOption {
   value: Theme;
@@ -23,92 +23,38 @@ interface ThemeOption {
 }
 
 const themeOptions: ThemeOption[] = [
-  { value: 'light', label: 'Light theme', icon: Sun },
-  { value: 'dark', label: 'Dark theme', icon: Moon },
-  { value: 'system', label: 'System theme', icon: Monitor },
+  { value: "light", label: "Light theme", icon: Sun },
+  { value: "dark", label: "Dark theme", icon: Moon },
+  { value: "system", label: "System theme", icon: Monitor },
 ];
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>('system');
+  const theme = useStore(themeStore);
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Get the effective theme (resolving 'system' to actual theme)
-  const getEffectiveTheme = useCallback((currentTheme: Theme): 'light' | 'dark' => {
-    if (currentTheme === 'system') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light';
-    }
-    return currentTheme;
-  }, []);
-
-  // Apply theme to document
-  const applyTheme = useCallback(
-    (newTheme: Theme) => {
-      const effectiveTheme = getEffectiveTheme(newTheme);
-      const root = document.documentElement;
-
-      if (effectiveTheme === 'dark') {
-        root.classList.add('dark');
-      } else {
-        root.classList.remove('dark');
-      }
-
-      // Update meta theme-color for mobile browsers
-      const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-      if (metaThemeColor) {
-        metaThemeColor.setAttribute(
-          'content',
-          effectiveTheme === 'dark' ? '#111827' : '#ffffff'
-        );
-      }
-    },
-    [getEffectiveTheme]
-  );
-
-  // Initialize theme from localStorage or system preference
+  // Initialize mounted state to prevent hydration mismatch
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    const initialTheme = savedTheme || 'system';
-    setTheme(initialTheme);
-    applyTheme(initialTheme);
     setMounted(true);
-  }, [applyTheme]);
-
-  // Listen for system preference changes
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-    const handleChange = () => {
-      if (theme === 'system') {
-        applyTheme('system');
-      }
-    };
-
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, [theme, applyTheme]);
+  }, []);
 
   // Handle theme change
   const handleThemeChange = (newTheme: Theme) => {
     setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-    applyTheme(newTheme);
     setIsOpen(false);
   };
 
   // Close dropdown on escape
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setIsOpen(false);
       }
     };
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      return () => document.removeEventListener('keydown', handleEscape);
+      document.addEventListener("keydown", handleEscape);
+      return () => document.removeEventListener("keydown", handleEscape);
     }
   }, [isOpen]);
 
@@ -116,14 +62,14 @@ export default function ThemeToggle() {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (!target.closest('[data-theme-toggle]')) {
+      if (!target.closest("[data-theme-toggle]")) {
         setIsOpen(false);
       }
     };
 
     if (isOpen) {
-      document.addEventListener('click', handleClickOutside);
-      return () => document.removeEventListener('click', handleClickOutside);
+      document.addEventListener("click", handleClickOutside);
+      return () => document.removeEventListener("click", handleClickOutside);
     }
   }, [isOpen]);
 
@@ -190,8 +136,8 @@ export default function ThemeToggle() {
                   w-full flex items-center gap-3 px-3 py-2 text-sm transition-colors
                   ${
                     isSelected
-                      ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                      ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   }
                   focus:outline-none focus-visible:bg-gray-100 dark:focus-visible:bg-gray-700
                 `}

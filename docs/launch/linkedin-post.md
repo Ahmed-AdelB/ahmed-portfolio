@@ -20,16 +20,17 @@ Seeing my code merged into tools used by **150M+ developers** and systems worldw
 
 ### 📚 Featured on the Site
 
-*   **LLM Security Playbook:** A comprehensive guide for developers building secure AI applications.
-*   **Security Research:** Deep dives into vulnerabilities and "Security by Default" principles.
-*   **Open Source Timeline:** A chronicle of my contributions to the Python ecosystem.
+- **LLM Security Playbook:** A comprehensive guide for developers building secure AI applications.
+- **Security Research:** Deep dives into vulnerabilities and "Security by Default" principles.
+- **Open Source Timeline:** A chronicle of my contributions to the Python ecosystem.
 
 ### 🛠️ Built With
 
 The portfolio itself is a modern web experiment, built with:
-*   **Astro 5.16** for blazing fast static performance.
-*   **React 19** & **Tailwind CSS 4** for a polished UI.
-*   **Dark Mode** & **Command Palette** for a developer-first experience.
+
+- **Astro 5.16** for blazing fast static performance.
+- **React 19** & **Tailwind CSS 4** for a polished UI.
+- **Dark Mode** & **Command Palette** for a developer-first experience.
 
 ### 🤝 Let's Connect
 
@@ -42,4 +43,4 @@ Check out the site and let me know what you think! 👇
 ---
 
 **Ahmed Adel Bakr Alderai**
-*AI Security Researcher & Open Source Contributor*
+_AI Security Researcher & Open Source Contributor_

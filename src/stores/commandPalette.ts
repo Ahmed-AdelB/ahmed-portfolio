@@ -1,7 +1,8 @@
-import { atom } from 'nanostores';
+import { atom } from "nanostores";
 
 export const isCommandPaletteOpen = atom(false);
 
 export const openCommandPalette = () => isCommandPaletteOpen.set(true);
 export const closeCommandPalette = () => isCommandPaletteOpen.set(false);
-export const toggleCommandPalette = () => isCommandPaletteOpen.set(!isCommandPaletteOpen.get());
+export const toggleCommandPalette = () =>
+  isCommandPaletteOpen.set(!isCommandPaletteOpen.get());

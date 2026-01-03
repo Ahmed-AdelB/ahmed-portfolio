@@ -7,7 +7,7 @@
 **Tweet 1: The Hook**
 🚀 It's live! I’ve officially launched my new portfolio, and it’s not just a static site.
 
-It's a showcase of modern web dev, AI integration, and security engineering. 
+It's a showcase of modern web dev, AI integration, and security engineering.
 
 Built with the bleeding edge: Astro 5, React 19, and Tailwind 4.
 
@@ -20,7 +20,7 @@ Check it out here: [LINK]
 **Tweet 2: The Vision**
 Why build another portfolio? 🤔
 
-I wanted a digital home that truly reflects who I am: an AI Security Researcher & Python OSS contributor. 
+I wanted a digital home that truly reflects who I am: an AI Security Researcher & Python OSS contributor.
 
 I didn't want templates. I wanted performance, interactivity, and a playground to demonstrate what's possible when you pair human creativity with AI agents.
 
@@ -42,9 +42,9 @@ Performance was non-negotiable. It scores 100s across the board on Lighthouse. �
 **Tweet 4: Feature Spotlight - Terminal Mode**
 💻 For the fellow geeks:
 
-I implemented a fully interactive **Terminal Mode**. You can navigate the entire site using CLI commands. 
+I implemented a fully interactive **Terminal Mode**. You can navigate the entire site using CLI commands.
 
-Hit `Cmd+K` (or `Ctrl+K`) to open the Command Palette. It feels just like your local dev environment. 
+Hit `Cmd+K` (or `Ctrl+K`) to open the Command Palette. It feels just like your local dev environment.
 
 Try running `help` to see what it can do!
 

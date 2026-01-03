@@ -17,6 +17,7 @@ Templates for posting portfolio launch across relevant subreddits.
 ## r/webdev
 
 **Subreddit Rules Compliance:**
+
 - Showoff Saturday required for portfolio posts
 - No self-promotion outside designated threads
 - Must be ready to discuss technical implementation
@@ -26,11 +27,13 @@ Templates for posting portfolio launch across relevant subreddits.
 **Best Time to Post:** Saturday 9-11 AM EST (Showoff Saturday thread)
 
 ### Title
+
 ```
 [Showoff Saturday] Built my developer portfolio with Astro 5, React 19, and Tailwind CSS 4
 ```
 
 ### Body
+
 ```
 Hey r/webdev!
 
@@ -73,6 +76,7 @@ Happy to discuss any technical decisions or answer questions about the stack!
 ## r/Python
 
 **Subreddit Rules Compliance:**
+
 - No pure self-promotion; must provide value
 - Project showcase in comments or as discussion
 - Focus on Python contribution, not portfolio
@@ -82,11 +86,13 @@ Happy to discuss any technical decisions or answer questions about the stack!
 **Best Time to Post:** Tuesday-Thursday 10 AM - 2 PM EST
 
 ### Title
+
 ```
 Contributed a fix to pip's dependency resolution - my first contribution to a major Python tool
 ```
 
 ### Body
+
 ```
 I recently had my first PR merged into pip (the package manager we all use daily), and I wanted to share the experience for anyone thinking about contributing to Python's core tooling.
 
@@ -122,6 +128,7 @@ Has anyone else here contributed to pip or other PyPA tools? Would love to hear 
 ## r/cscareerquestions
 
 **Subreddit Rules Compliance:**
+
 - Career-focused discussion only
 - No pure portfolio showcase posts
 - Frame as seeking advice or sharing lessons
@@ -131,11 +138,13 @@ Has anyone else here contributed to pip or other PyPA tools? Would love to hear 
 **Best Time to Post:** Monday-Wednesday 9 AM - 12 PM EST
 
 ### Title
+
 ```
 After 3 years as a backend dev, I built a portfolio site. Here's what I wish I knew earlier about showcasing work.
 ```
 
 ### Body
+
 ```
 I've been a backend developer for about 3 years now, and I finally got around to building a proper portfolio site. Not here to just show it off - I wanted to share some realizations I had about what actually matters when presenting your work.
 
@@ -179,6 +188,7 @@ Built with Astro + React. Happy to share the GitHub if anyone wants to fork it a
 ## r/sideproject
 
 **Subreddit Rules Compliance:**
+
 - Building in public encouraged
 - Share journey, not just end result
 - Engage with community feedback
@@ -188,11 +198,13 @@ Built with Astro + React. Happy to share the GitHub if anyone wants to fork it a
 **Best Time to Post:** Weekend mornings or Tuesday evenings EST
 
 ### Title
+
 ```
 Launched my developer portfolio after months of scope creep - here's the journey
 ```
 
 ### Body
+
 ```
 Finally shipped! My developer portfolio is live after what was supposed to be a "quick weekend project."
 
@@ -249,12 +261,12 @@ Would love feedback from the community! What would you add to a developer portfo
 
 ## Posting Schedule
 
-| Subreddit | Day | Time (EST) | Notes |
-|-----------|-----|------------|-------|
-| r/sideproject | Saturday | 10 AM | Most lenient, good for initial feedback |
-| r/webdev | Saturday | 11 AM | Showoff Saturday thread |
-| r/cscareerquestions | Monday | 10 AM | Career-focused framing |
-| r/Python | Tuesday | 11 AM | Focus on pip contribution |
+| Subreddit           | Day      | Time (EST) | Notes                                   |
+| ------------------- | -------- | ---------- | --------------------------------------- |
+| r/sideproject       | Saturday | 10 AM      | Most lenient, good for initial feedback |
+| r/webdev            | Saturday | 11 AM      | Showoff Saturday thread                 |
+| r/cscareerquestions | Monday   | 10 AM      | Career-focused framing                  |
+| r/Python            | Tuesday  | 11 AM      | Focus on pip contribution               |
 
 ## Response Strategy
 
@@ -266,6 +278,7 @@ Would love feedback from the community! What would you add to a developer portfo
 ## Karma Building (If Needed)
 
 If account karma is low:
+
 1. Comment helpfully on posts for 1-2 weeks before posting
 2. Answer questions in each subreddit you plan to post in
 3. Avoid commenting just to build karma - add genuine value

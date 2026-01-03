@@ -39,6 +39,7 @@ This guide explains how to set up and customize the Calendly integration for cof
 Update the Calendly URL in the contact pages:
 
 ### English Contact Page
+
 File: `src/pages/contact.astro`
 
 ```astro
@@ -47,6 +48,7 @@ const CALENDLY_URL = 'https://calendly.com/yourusername/coffee-chat';
 ```
 
 ### Arabic Contact Page
+
 File: `src/pages/ar/contact.astro`
 
 ```astro
@@ -87,20 +89,20 @@ Shows a button that opens Calendly in a popup modal:
 
 ## Component Props Reference
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `url` | string | (required) | Your Calendly scheduling URL |
-| `mode` | 'inline' \| 'popup' | 'inline' | Display mode |
-| `height` | number | 400 | Height of inline widget (px) |
-| `minWidth` | number | 320 | Minimum width of inline widget (px) |
-| `buttonText` | string | 'Schedule a Meeting' | Button text for popup mode |
-| `className` | string | - | Custom CSS class for container |
-| `hideBranding` | boolean | false | Hide Calendly branding |
-| `prefillName` | string | - | Pre-fill invitee name |
-| `prefillEmail` | string | - | Pre-fill invitee email |
-| `primaryColor` | string | - | Widget primary color (hex without #) |
-| `textColor` | string | - | Widget text color (hex without #) |
-| `backgroundColor` | string | - | Widget background color (hex without #) |
+| Prop              | Type                | Default              | Description                             |
+| ----------------- | ------------------- | -------------------- | --------------------------------------- |
+| `url`             | string              | (required)           | Your Calendly scheduling URL            |
+| `mode`            | 'inline' \| 'popup' | 'inline'             | Display mode                            |
+| `height`          | number              | 400                  | Height of inline widget (px)            |
+| `minWidth`        | number              | 320                  | Minimum width of inline widget (px)     |
+| `buttonText`      | string              | 'Schedule a Meeting' | Button text for popup mode              |
+| `className`       | string              | -                    | Custom CSS class for container          |
+| `hideBranding`    | boolean             | false                | Hide Calendly branding                  |
+| `prefillName`     | string              | -                    | Pre-fill invitee name                   |
+| `prefillEmail`    | string              | -                    | Pre-fill invitee email                  |
+| `primaryColor`    | string              | -                    | Widget primary color (hex without #)    |
+| `textColor`       | string              | -                    | Widget text color (hex without #)       |
+| `backgroundColor` | string              | -                    | Widget background color (hex without #) |
 
 ## Customization Examples
 
@@ -110,8 +112,8 @@ Shows a button that opens Calendly in a popup modal:
 <CalendlyEmbed
   client:load
   url="https://calendly.com/yourusername/meeting"
-  primaryColor="10b981"  // Emerald-500
-  textColor="1f2937"     // Gray-800
+  primaryColor="10b981" // Emerald-500
+  textColor="1f2937" // Gray-800
   backgroundColor="f9fafb" // Gray-50
 />
 ```
@@ -141,6 +143,7 @@ Useful when the user is already logged in:
 ### Integration with Calendar
 
 Connect your Google Calendar or Outlook to:
+
 - Automatically check for conflicts
 - Add booked events to your calendar
 - Send calendar invites to invitees

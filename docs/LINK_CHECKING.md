@@ -11,18 +11,22 @@ This project uses a bash script wrapping `wget` to check for broken links in the
 
 1.  **Start the Server:**
     Run the development server or the preview server.
+
     ```bash
     npm run dev
     # OR
     npm run build && npm run preview
     ```
+
     Note the URL (usually `http://localhost:4321`).
 
 2.  **Run the Check:**
     In a separate terminal, run:
+
     ```bash
     npm run check:links
     ```
+
     This defaults to checking `http://localhost:4321`.
 
 3.  **Custom URL:**
@@ -36,6 +40,7 @@ This project uses a bash script wrapping `wget` to check for broken links in the
 In a CI environment, ensure the server is started in the background before running this script.
 
 Example pattern:
+
 ```bash
 npm run build
 npm run preview &

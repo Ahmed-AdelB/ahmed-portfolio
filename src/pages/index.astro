@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/features/Hero.astro';
+import RolePathways from '../components/features/RolePathways.astro';
 import SkillsStrip from '../components/features/SkillsStrip.astro';
 import GitHubStats from '../components/features/GitHubStats.astro';
 import ProjectCard from '../components/features/ProjectCard.astro';
@@ -35,6 +36,9 @@ const description = "Portfolio of Ahmed Adel, an AI Security Researcher and Open
   
   <!-- Hero Section -->
   <Hero />
+
+  <!-- Role Pathways Section -->
+  <RolePathways />
 
   <!-- Skills & Stats Strip -->
   <SkillsStrip />

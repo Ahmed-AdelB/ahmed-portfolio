@@ -3,12 +3,15 @@
 ## Title (Show HN Format)
 
 **Option 1 (Recommended):**
+
 > Show HN: I built my developer portfolio with 3 AI coding assistants working together
 
 **Option 2 (Technical Focus):**
+
 > Show HN: Astro 5 + React 19 portfolio built with a tri-agent AI workflow
 
 **Option 3 (Process Focus):**
+
 > Show HN: How I orchestrated Claude, Codex, and Gemini to build my portfolio
 
 ## URL
@@ -57,24 +60,27 @@ Would love feedback on both the site itself and the multi-agent workflow. Has an
 
 **Optimal Windows (US Eastern Time):**
 
-| Day | Time | Notes |
-|-----|------|-------|
-| Tuesday | 9-11 AM EST | Good HN activity, less Monday backlog |
-| Wednesday | 9-11 AM EST | Peak HN engagement mid-week |
-| Thursday | 9-11 AM EST | High engagement, before weekend slowdown |
+| Day       | Time        | Notes                                    |
+| --------- | ----------- | ---------------------------------------- |
+| Tuesday   | 9-11 AM EST | Good HN activity, less Monday backlog    |
+| Wednesday | 9-11 AM EST | Peak HN engagement mid-week              |
+| Thursday  | 9-11 AM EST | High engagement, before weekend slowdown |
 
 **Avoid:**
+
 - Mondays (backlogged from weekend)
 - Fridays after 12 PM (weekend slowdown begins)
 - Weekends (lower overall traffic)
 - Major tech news days (Apple events, big launches, etc.)
 
 **Time Zone Conversion:**
+
 - 9 AM EST = 6 AM PST = 2 PM UTC = 3 PM CET
 
 ## Pre-Submission Checklist
 
 ### Site Readiness
+
 - [ ] Site is live and accessible at https://ahmedalderai.com
 - [ ] All pages load correctly (home, projects, blog, contact)
 - [ ] No console errors on any page
@@ -85,6 +91,7 @@ Would love feedback on both the site itself and the multi-agent workflow. Has an
 - [ ] Sitemap accessible at /sitemap.xml
 
 ### Performance
+
 - [ ] Lighthouse Performance score >= 95
 - [ ] Lighthouse Accessibility score = 100
 - [ ] Lighthouse Best Practices score = 100
@@ -92,6 +99,7 @@ Would love feedback on both the site itself and the multi-agent workflow. Has an
 - [ ] Page load time < 3 seconds on 3G
 
 ### Content
+
 - [ ] No placeholder text anywhere on site
 - [ ] All project links work
 - [ ] Blog posts have correct dates
@@ -99,6 +107,7 @@ Would love feedback on both the site itself and the multi-agent workflow. Has an
 - [ ] No typos in visible content
 
 ### HN Account Preparation
+
 - [ ] Account has some karma (not brand new)
 - [ ] No recent submissions (avoid appearing spammy)
 - [ ] Ready to respond to comments for first 2 hours
@@ -106,11 +115,13 @@ Would love feedback on both the site itself and the multi-agent workflow. Has an
 ## Post-Submission Actions
 
 ### Immediate (First 30 Minutes)
+
 1. Post first comment immediately (copy from above)
 2. Stay logged in and watch for questions
 3. Respond thoughtfully to early comments (first replies matter most)
 
 ### First 2 Hours
+
 - Check every 15 minutes for new comments
 - Be genuine, technical, and helpful in responses
 - Don't be defensive about criticism
@@ -119,18 +130,23 @@ Would love feedback on both the site itself and the multi-agent workflow. Has an
 ### Common Questions to Prepare For
 
 **"Why not just use one model?"**
+
 > Each model has different strengths. Claude excels at architecture, Codex at rapid prototyping, Gemini at large context analysis. Cross-verification catches bugs a single model might miss.
 
 **"Isn't this overkill for a portfolio?"**
+
 > Honestly, yes for just building a portfolio. But the real goal was testing the workflow itself. The portfolio was the proving ground.
 
 **"What's the cost?"**
+
 > The combined subscription cost is $420/month (Claude Max $200, ChatGPT Pro $200, Google AI Pro $20). Worth it for professional development work where quality matters.
 
 **"Show me the code"**
+
 > [Link to GitHub repo if public, or explain if private]
 
 **"Performance numbers?"**
+
 > Lighthouse 100 across all categories. First Contentful Paint under 1s. Total blocking time 0ms.
 
 ## HN Guidelines Reminders
@@ -146,9 +162,11 @@ Would love feedback on both the site itself and the multi-agent workflow. Has an
 If the tri-agent angle doesn't resonate, consider resubmitting later with:
 
 1. **Performance Focus:**
+
    > Show HN: How I achieved 100 Lighthouse scores with Astro 5 and React 19
 
 2. **Stack Focus:**
+
    > Show HN: Astro 5 islands + React 19 + Tailwind 4 portfolio template
 
 3. **Accessibility Focus:**
@@ -156,4 +174,4 @@ If the tri-agent angle doesn't resonate, consider resubmitting later with:
 
 ---
 
-*Last updated: January 2026*
+_Last updated: January 2026_

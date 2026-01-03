@@ -1,5 +1,5 @@
 {
-  "project": "pypa/pip",
+  "project": "pip",
   "title": "Fix dependency resolution for editable installs",
   "type": "PR",
   "pr_url": "https://github.com/pypa/pip/pull/12446",

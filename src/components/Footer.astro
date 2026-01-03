@@ -1,79 +1,130 @@
 ---
-import { Github, Linkedin, Twitter, Send, Rss } from 'lucide-react';
+import { Github, Linkedin, Twitter, Rss } from 'lucide-react';
+import { NewsletterForm } from './features/NewsletterForm';
+
+interface Props {
+  lang?: 'en' | 'ar';
+}
+
+const { lang = 'en' } = Astro.props;
 
 const currentYear = new Date().getFullYear();
 
+const translations = {
+  en: {
+    stayUpdated: 'Stay Updated',
+    subscribeText: 'Subscribe to my newsletter for the latest updates on Python, Security, and Open Source.',
+    navigation: 'Navigation',
+    social: 'Social',
+    home: 'Home',
+    about: 'About',
+    projects: 'Projects',
+    blog: 'Blog',
+    github: 'GitHub',
+    linkedin: 'LinkedIn',
+    twitter: 'Twitter',
+    rss: 'RSS Feed',
+    rights: 'All rights reserved.',
+    builtWith: 'Built with',
+    newsletter: {
+      placeholder: 'Enter your email',
+      submitLabel: 'Subscribe',
+      successMessage: 'Thanks for subscribing! Please check your inbox to confirm.',
+      errorMessage: 'Something went wrong. Please try again.',
+      requiredEmailMessage: 'Email is required.',
+      invalidEmailMessage: 'Please enter a valid email address.',
+    }
+  },
+  ar: {
+    stayUpdated: 'ابق على اطلاع',
+    subscribeText: 'اشترك في النشرة البريدية للحصول على أحدث المستجدات حول بايثون، الأمن السيبراني، والمصادر المفتوحة.',
+    navigation: 'روابط سريعة',
+    social: 'تواصل اجتماعي',
+    home: 'الرئيسية',
+    about: 'من أنا',
+    projects: 'المشاريع',
+    blog: 'المدونة',
+    github: 'GitHub',
+    linkedin: 'LinkedIn',
+    twitter: 'Twitter',
+    rss: 'خلاصة RSS',
+    rights: 'جميع الحقوق محفوظة.',
+    builtWith: 'تم تطويره بواسطة',
+    newsletter: {
+      placeholder: 'أدخل بريدك الإلكتروني',
+      submitLabel: 'اشترك',
+      successMessage: 'شكرًا لاشتراكك! يرجى التحقق من بريدك الإلكتروني للتأكيد.',
+      errorMessage: 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
+      requiredEmailMessage: 'البريد الإلكتروني مطلوب.',
+      invalidEmailMessage: 'يرجى إدخال عنوان بريد إلكتروني صالح.',
+    }
+  }
+};
+
+const t = translations[lang];
+const isRtl = lang === 'ar';
+
+const getPath = (path: string) => lang === 'ar' ? `/ar${path}` : path;
+
 const socialLinks = [
   {
-    name: 'GitHub',
+    name: t.github,
     url: 'https://github.com/Ahmed-AdelB',
     icon: Github,
   },
   {
-    name: 'LinkedIn',
+    name: t.linkedin,
     url: 'https://linkedin.com/in/ahmedadel1991',
     icon: Linkedin,
   },
   {
-    name: 'Twitter',
+    name: t.twitter,
     url: 'https://twitter.com/ahmedalderai',
     icon: Twitter,
   },
   {
-    name: 'RSS Feed',
-    url: '/rss.xml',
+    name: t.rss,
+    url: '/rss.xml', // RSS usually doesn't have localized version unless generated separately
     icon: Rss,
     isInternal: true,
   },
 ];
 
 const navLinks = [
-  { name: 'Home', url: '/' },
-  { name: 'About', url: '/about' },
-  { name: 'Projects', url: '/projects' },
-  { name: 'Blog', url: '/blog' },
+  { name: t.home, url: getPath('/') },
+  { name: t.about, url: getPath('/about') },
+  { name: t.projects, url: getPath('/projects') },
+  { name: t.blog, url: getPath('/blog') },
 ];
 ---
 
-<footer role="contentinfo" class="border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
+<footer role="contentinfo" class="border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950" dir={isRtl ? 'rtl' : 'ltr'}>
   <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
       {/* Newsletter Section */}
       <div class="lg:col-span-1">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-          Stay Updated
+          {t.stayUpdated}
         </h3>
         <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">
-          Subscribe to my newsletter for the latest updates on Python, Security, and Open Source.
+          {t.subscribeText}
         </p>
-        <form class="mt-4 sm:flex sm:max-w-md">
-          <label for="email-address" class="sr-only">Email address</label>
-          <input
-            type="email"
-            name="email-address"
-            id="email-address"
-            autocomplete="email"
-            required
-            class="w-full min-w-0 appearance-none rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-900 placeholder-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:placeholder-gray-400 dark:focus:border-indigo-400 dark:focus:ring-indigo-400"
-            placeholder="Enter your email"
-          />
-          <div class="mt-3 rounded-md sm:ms-3 sm:mt-0 sm:flex-shrink-0">
-            <button
-              type="submit"
-              class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:bg-indigo-500 dark:hover:bg-indigo-600 dark:focus:ring-offset-gray-900"
-            >
-              <span class="sr-only">Subscribe</span>
-              <Send className="h-5 w-5" />
-            </button>
-          </div>
-        </form>
+        <NewsletterForm 
+          client:load 
+          placeholder={t.newsletter.placeholder}
+          submitLabel={t.newsletter.submitLabel}
+          successMessage={t.newsletter.successMessage}
+          errorMessage={t.newsletter.errorMessage}
+          requiredEmailMessage={t.newsletter.requiredEmailMessage}
+          invalidEmailMessage={t.newsletter.invalidEmailMessage}
+        />
       </div>
 
       {/* Quick Links Section */}
       <div class="grid grid-cols-2 gap-8 lg:col-span-2 lg:grid-cols-2">
         <div>
           <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-900 dark:text-white">
-            Navigation
+            {t.navigation}
           </h3>
           <ul class="mt-4 space-y-4">
             {navLinks.map((link) => (
@@ -91,7 +142,7 @@ const navLinks = [
         
         <div>
            <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-900 dark:text-white">
-            Social
+            {t.social}
           </h3>
           <ul class="mt-4 space-y-4">
             {socialLinks.map((link) => (
@@ -102,7 +153,7 @@ const navLinks = [
                   {...(link.isInternal ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
                   class="flex items-center text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                 >
-                  <link.icon className="me-2 h-5 w-5" />
+                  <link.icon className={`h-5 w-5 ${isRtl ? 'ms-2' : 'me-2'}`} />
                   {link.name}
                 </a>
               </li>
@@ -116,10 +167,10 @@ const navLinks = [
     <div class="mt-12 border-t border-gray-200 pt-8 dark:border-gray-800">
       <div class="flex flex-col items-center justify-between md:flex-row">
         <p class="text-base text-gray-400 dark:text-gray-500">
-          &copy; {currentYear} Ahmed Adel. All rights reserved.
+          &copy; {currentYear} Ahmed Adel. {t.rights}
         </p>
         <p class="mt-4 text-base text-gray-400 dark:text-gray-500 md:mt-0">
-          Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="hover:text-gray-600 dark:hover:text-gray-300">Astro</a>
+          {t.builtWith} <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="hover:text-gray-600 dark:hover:text-gray-300">Astro</a>
         </p>
       </div>
     </div>

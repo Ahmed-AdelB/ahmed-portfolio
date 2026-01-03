@@ -12,8 +12,8 @@
  * - Active link highlighting
  */
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Home,
   User,
@@ -23,7 +23,7 @@ import {
   FileText,
   Mail,
   type LucideIcon,
-} from 'lucide-react';
+} from "lucide-react";
 
 interface NavLink {
   href: string;
@@ -66,7 +66,7 @@ const menuVariants = {
     y: 0,
     transition: {
       duration: 0.3,
-      ease: [0.25, 0.1, 0.25, 1],
+      ease: [0.25, 0.1, 0.25, 1] as const,
       staggerChildren: 0.05,
       delayChildren: 0.1,
     },
@@ -92,7 +92,7 @@ const itemVariants = {
     x: 0,
     transition: {
       duration: 0.3,
-      ease: [0.25, 0.1, 0.25, 1],
+      ease: [0.25, 0.1, 0.25, 1] as const,
     },
   },
   exit: {
@@ -116,13 +116,13 @@ export default function MobileNav({ navLinks, currentPath }: MobileNavProps) {
     };
 
     window.addEventListener(
-      'toggle-mobile-menu',
-      handleToggle as EventListener
+      "toggle-mobile-menu",
+      handleToggle as EventListener,
     );
     return () => {
       window.removeEventListener(
-        'toggle-mobile-menu',
-        handleToggle as EventListener
+        "toggle-mobile-menu",
+        handleToggle as EventListener,
       );
     };
   }, []);
@@ -140,37 +140,37 @@ export default function MobileNav({ navLinks, currentPath }: MobileNavProps) {
   // Lock body scroll when menu is open
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
 
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isOpen]);
 
   // Handle keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
-    const links = navRef.current?.querySelectorAll('a');
+    const links = navRef.current?.querySelectorAll("a");
     if (!links) return;
 
     switch (e.key) {
-      case 'ArrowDown':
+      case "ArrowDown":
         e.preventDefault();
         const nextIndex = (index + 1) % links.length;
         (links[nextIndex] as HTMLElement).focus();
         break;
-      case 'ArrowUp':
+      case "ArrowUp":
         e.preventDefault();
         const prevIndex = (index - 1 + links.length) % links.length;
         (links[prevIndex] as HTMLElement).focus();
         break;
-      case 'Home':
+      case "Home":
         e.preventDefault();
         (links[0] as HTMLElement).focus();
         break;
-      case 'End':
+      case "End":
         e.preventDefault();
         (links[links.length - 1] as HTMLElement).focus();
         break;
@@ -182,16 +182,16 @@ export default function MobileNav({ navLinks, currentPath }: MobileNavProps) {
     setIsOpen(false);
     // Dispatch event to sync with Header button state
     window.dispatchEvent(
-      new CustomEvent('toggle-mobile-menu', {
+      new CustomEvent("toggle-mobile-menu", {
         detail: { isOpen: false },
-      })
+      }),
     );
     // Also update the button state
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenuButton = document.getElementById("mobile-menu-button");
     if (mobileMenuButton) {
-      mobileMenuButton.setAttribute('aria-expanded', 'false');
-      document.getElementById('menu-icon-open')?.classList.remove('hidden');
-      document.getElementById('menu-icon-close')?.classList.add('hidden');
+      mobileMenuButton.setAttribute("aria-expanded", "false");
+      document.getElementById("menu-icon-open")?.classList.remove("hidden");
+      document.getElementById("menu-icon-close")?.classList.add("hidden");
     }
   };
 
@@ -226,7 +226,7 @@ export default function MobileNav({ navLinks, currentPath }: MobileNavProps) {
               {navLinks.map((link, index) => {
                 const isActive =
                   currentPath === link.href ||
-                  (link.href !== '/' && currentPath.startsWith(link.href));
+                  (link.href !== "/" && currentPath.startsWith(link.href));
                 const Icon = iconMap[link.label] || Home;
 
                 return (
@@ -241,18 +241,18 @@ export default function MobileNav({ navLinks, currentPath }: MobileNavProps) {
                         focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset
                         ${
                           isActive
-                            ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
-                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
+                            ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white"
                         }
                       `}
-                      aria-current={isActive ? 'page' : undefined}
+                      aria-current={isActive ? "page" : undefined}
                     >
                       <Icon
                         size={20}
                         className={`flex-shrink-0 ${
                           isActive
-                            ? 'text-blue-600 dark:text-blue-400'
-                            : 'text-gray-500 dark:text-gray-400'
+                            ? "text-blue-600 dark:text-blue-400"
+                            : "text-gray-500 dark:text-gray-400"
                         }`}
                         aria-hidden="true"
                       />

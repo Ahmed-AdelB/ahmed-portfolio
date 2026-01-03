@@ -6,7 +6,8 @@
 This document serves as a checklist and record for the quarterly maintenance and review of the Ahmed Adel Portfolio.
 
 ## 1. Content Freshness
-*Objective: Ensure all information presented is accurate, relevant, and reflects the current professional standing.*
+
+_Objective: Ensure all information presented is accurate, relevant, and reflects the current professional standing._
 
 - [ ] **Bio & Personal Info**:
   - Review "About Me" section for accuracy regarding current role and location.
@@ -25,7 +26,8 @@ This document serves as a checklist and record for the quarterly maintenance and
   - Verify email delivery and social media links (LinkedIn, GitHub, X, etc.).
 
 ## 2. Technical Debt Review
-*Objective: Maintain code quality, security, and manageability.*
+
+_Objective: Maintain code quality, security, and manageability._
 
 - [ ] **Dependency Audit**:
   - Run `npm outdated` (or equivalent) to identify stale packages.
@@ -40,16 +42,17 @@ This document serves as a checklist and record for the quarterly maintenance and
   - Verify that directory structure still makes sense as the project grows.
 
 ## 3. Performance Benchmarks
-*Objective: Ensure top-tier user experience and SEO rankings.*
 
-*Run a fresh Lighthouse audit on Homepage, Blog Index, and a Project Detail page.*
+_Objective: Ensure top-tier user experience and SEO rankings._
 
-| Metric | Target | Current Score (Home) | Current Score (Blog) | Notes |
-| :--- | :--- | :--- | :--- | :--- |
-| **Performance** | > 95 | | | |
-| **Accessibility** | 100 | | | |
-| **Best Practices** | 100 | | | |
-| **SEO** | 100 | | | |
+_Run a fresh Lighthouse audit on Homepage, Blog Index, and a Project Detail page._
+
+| Metric             | Target | Current Score (Home) | Current Score (Blog) | Notes |
+| :----------------- | :----- | :------------------- | :------------------- | :---- |
+| **Performance**    | > 95   |                      |                      |       |
+| **Accessibility**  | 100    |                      |                      |       |
+| **Best Practices** | 100    |                      |                      |       |
+| **SEO**            | 100    |                      |                      |       |
 
 - [ ] **Core Web Vitals**:
   - **LCP (Largest Contentful Paint)**: Target < 2.5s.
@@ -60,7 +63,8 @@ This document serves as a checklist and record for the quarterly maintenance and
   - Review bundle size; use `source-map-explorer` if bundle size has spiked.
 
 ## 4. Competitive Analysis
-*Objective: Stay ahead of trends in the AI and Cybersecurity portfolio space.*
+
+_Objective: Stay ahead of trends in the AI and Cybersecurity portfolio space._
 
 - [ ] **Peer Review**:
   - Review 3-5 portfolios of other Security Researchers or AI Engineers.
@@ -70,13 +74,15 @@ This document serves as a checklist and record for the quarterly maintenance and
   - Evaluate if the "Terminal Mode" or interactive elements need enhancements based on user feedback.
 
 ## 5. Action Plan for Next Quarter
-*Based on the findings above, list the top 3 priorities for the upcoming quarter.*
 
-1. 
-2. 
-3. 
+_Based on the findings above, list the top 3 priorities for the upcoming quarter._
+
+1.
+2.
+3.
 
 ---
+
 **Signed,**
 
 **Ahmed Adel Bakr Alderai**

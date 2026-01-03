@@ -275,12 +275,17 @@ const navLinks = isArabic ? arLinks : enLinks;
     }));
   });
 
+  const triggerOpenSearch = () => {
+    window.__commandPaletteOpenRequested = true;
+    window.dispatchEvent(new CustomEvent('open-search'));
+  };
+
   // Keyboard shortcut for search (Cmd/Ctrl + K)
   document.addEventListener('keydown', (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
       e.preventDefault();
       // Dispatch custom event for search dialog
-      window.dispatchEvent(new CustomEvent('open-search'));
+      triggerOpenSearch();
     }
   });
 
@@ -290,7 +295,7 @@ const navLinks = isArabic ? arLinks : enLinks;
 
   [searchTrigger, mobileSearchTrigger].forEach(btn => {
     btn?.addEventListener('click', () => {
-      window.dispatchEvent(new CustomEvent('open-search'));
+      triggerOpenSearch();
     });
   });
 

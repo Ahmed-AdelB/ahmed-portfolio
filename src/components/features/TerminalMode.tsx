@@ -7,12 +7,12 @@ import {
   useMemo,
   useRef,
   useState,
-} from 'react';
-import { useStore } from '@nanostores/react';
-import { Terminal, Power } from 'lucide-react';
-import { terminalMode, toggleTerminalMode } from '../../stores/terminal';
+} from "react";
+import { useStore } from "@nanostores/react";
+import { Terminal, Power } from "lucide-react";
+import { terminalMode, toggleTerminalMode } from "../../stores/terminal";
 
-type TerminalLineType = 'command' | 'output' | 'system';
+type TerminalLineType = "command" | "output" | "system";
 
 interface TerminalLine {
   id: string;
@@ -37,101 +37,108 @@ interface TypingQueueResult {
   clearLines: (nextLines?: TerminalLine[]) => void;
 }
 
-const ROOT_DIR = '~' as const;
-const DIRECTORIES = ['about', 'projects', 'skills', 'contact', 'blog', 'resume'] as const;
+const ROOT_DIR = "~" as const;
+const DIRECTORIES = [
+  "about",
+  "projects",
+  "skills",
+  "contact",
+  "blog",
+  "resume",
+] as const;
 
 type TerminalDirectory = typeof ROOT_DIR | (typeof DIRECTORIES)[number];
 
-const PROMPT_USER = 'guest';
-const PROMPT_HOST = 'ahmed-portfolio';
+const PROMPT_USER = "guest";
+const PROMPT_HOST = "ahmed-portfolio";
 
 const ABOUT_OUTPUT = [
-  'Ahmed Adel - AI Security Researcher & Open Source Contributor.',
-  'Focus: Incident Response, Threat Intelligence, AI Security.',
-  'Open-source work across pip, pydantic, openai-python, and OWASP.',
+  "Ahmed Adel - AI Security Researcher & Open Source Contributor.",
+  "Focus: Incident Response, Threat Intelligence, AI Security.",
+  "Open-source work across pip, pydantic, openai-python, and OWASP.",
 ];
 
 const PROJECTS_OUTPUT = [
-  'Featured projects:',
-  '- LLM Security Playbook',
-  '- OpenAI Python Security Hardening',
-  '- pip Supply Chain Security Contributions',
-  'More: /projects',
+  "Featured projects:",
+  "- LLM Security Playbook",
+  "- OpenAI Python Security Hardening",
+  "- pip Supply Chain Security Contributions",
+  "More: /projects",
 ];
 
 const SKILLS_OUTPUT = [
-  'Core skills:',
-  '- Incident Response',
-  '- Threat Intelligence',
-  '- AI Security',
-  '- AppSec',
-  '- DevSecOps',
-  '- Open Source',
+  "Core skills:",
+  "- Incident Response",
+  "- Threat Intelligence",
+  "- AI Security",
+  "- AppSec",
+  "- DevSecOps",
+  "- Open Source",
 ];
 
 const CONTACT_OUTPUT = [
-  'Email: contact@ahmedalderai.com',
-  'LinkedIn: linkedin.com/in/ahmedadel1991',
-  'GitHub: github.com/Ahmed-AdelB',
+  "Email: contact@ahmedalderai.com",
+  "LinkedIn: linkedin.com/in/ahmedadel1991",
+  "GitHub: github.com/Ahmed-AdelB",
 ];
 
-const BLOG_OUTPUT = ['Latest posts live at /blog.'];
+const BLOG_OUTPUT = ["Latest posts live at /blog."];
 
-const RESUME_OUTPUT = ['Resume available at /resume.'];
+const RESUME_OUTPUT = ["Resume available at /resume."];
 
 const README_OUTPUT = [
-  'Welcome to Terminal Mode.',
-  'Type `help` to see available commands.',
-  'Tip: use `ls` and `cat` to explore.',
+  "Welcome to Terminal Mode.",
+  "Type `help` to see available commands.",
+  "Tip: use `ls` and `cat` to explore.",
 ];
 
 const HELP_OUTPUT = [
-  'Available commands:',
-  'ls - list sections/files',
-  'cat <file> - read a file',
-  'cd <section> - change directory',
-  'help - show this message',
-  'whoami - display current user',
-  'clear - clear the screen',
-  'projects - featured work',
-  'skills - core skills',
-  'contact - contact details',
+  "Available commands:",
+  "ls - list sections/files",
+  "cat <file> - read a file",
+  "cd <section> - change directory",
+  "help - show this message",
+  "whoami - display current user",
+  "clear - clear the screen",
+  "projects - featured work",
+  "skills - core skills",
+  "contact - contact details",
 ];
 
 const DIRECTORY_LISTINGS: Record<TerminalDirectory, string[]> = {
   [ROOT_DIR]: [
-    'about',
-    'projects',
-    'skills',
-    'contact',
-    'blog',
-    'resume',
-    'about.txt',
-    'projects.txt',
-    'skills.txt',
-    'contact.txt',
-    'readme.txt',
+    "about",
+    "projects",
+    "skills",
+    "contact",
+    "blog",
+    "resume",
+    "about.txt",
+    "projects.txt",
+    "skills.txt",
+    "contact.txt",
+    "readme.txt",
   ],
-  about: ['index.txt'],
-  projects: ['index.txt'],
-  skills: ['index.txt'],
-  contact: ['index.txt'],
-  blog: ['index.txt'],
-  resume: ['index.txt'],
+  about: ["index.txt"],
+  projects: ["index.txt"],
+  skills: ["index.txt"],
+  contact: ["index.txt"],
+  blog: ["index.txt"],
+  resume: ["index.txt"],
 };
 
 const FILE_CONTENTS: Record<string, string[]> = {
-  'about.txt': ABOUT_OUTPUT,
-  'about/index.txt': ABOUT_OUTPUT,
-  'projects.txt': PROJECTS_OUTPUT,
-  'projects/index.txt': PROJECTS_OUTPUT,
-  'skills.txt': SKILLS_OUTPUT,
-  'skills/index.txt': SKILLS_OUTPUT,
-  'contact.txt': CONTACT_OUTPUT,
-  'contact/index.txt': CONTACT_OUTPUT,
-  'blog/index.txt': BLOG_OUTPUT,
-  'resume/index.txt': RESUME_OUTPUT,
-  'readme.txt': README_OUTPUT,
+  "about.txt": ABOUT_OUTPUT,
+  "about/index.txt": ABOUT_OUTPUT,
+  "projects.txt": PROJECTS_OUTPUT,
+  "projects/index.txt": PROJECTS_OUTPUT,
+  "skills.txt": SKILLS_OUTPUT,
+  "skills/index.txt": SKILLS_OUTPUT,
+  "contact.txt": CONTACT_OUTPUT,
+  "contact/index.txt": CONTACT_OUTPUT,
+  "blog/index.txt": BLOG_OUTPUT,
+  "resume/index.txt": RESUME_OUTPUT,
+  "readme.txt": README_OUTPUT,
 };
 
 const COMMAND_OUTPUTS: Record<string, string[]> = {
@@ -142,13 +149,14 @@ const COMMAND_OUTPUTS: Record<string, string[]> = {
 
 const INITIAL_LINES: TerminalLine[] = [
   {
-    id: 'terminal-welcome',
-    type: 'system',
-    content: 'Terminal Mode ready. Type `help` to begin.',
+    id: "terminal-welcome",
+    type: "system",
+    content: "Terminal Mode ready. Type `help` to begin.",
   },
 ];
 
-const createLineId = (): string => `line-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+const createLineId = (): string =>
+  `line-${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
 const sleep = (durationMs: number): Promise<void> =>
   new Promise((resolve) => {
@@ -161,9 +169,12 @@ const isDirectory = (value: string): value is (typeof DIRECTORIES)[number] =>
 const formatPrompt = (cwd: TerminalDirectory): string =>
   `${PROMPT_USER}@${PROMPT_HOST}:${cwd === ROOT_DIR ? ROOT_DIR : `~/${cwd}`}$`;
 
-const normalizeFileTarget = (target: string, cwd: TerminalDirectory): string => {
-  const stripped = target.replace(/^~\//, '').replace(/^\//, '');
-  if (stripped.includes('/')) return stripped;
+const normalizeFileTarget = (
+  target: string,
+  cwd: TerminalDirectory,
+): string => {
+  const stripped = target.replace(/^~\//, "").replace(/^\//, "");
+  if (stripped.includes("/")) return stripped;
   if (cwd !== ROOT_DIR) {
     return `${cwd}/${stripped}`;
   }
@@ -174,14 +185,14 @@ const usePrefersReducedMotion = (): boolean => {
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (typeof window === "undefined") return;
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReducedMotion(mediaQuery.matches);
     const handleChange = (event: MediaQueryListEvent) => {
       setReducedMotion(event.matches);
     };
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
   return reducedMotion;
@@ -234,14 +245,16 @@ const useTypingQueue = (
       }
 
       if (!mountedRef.current) return;
-      setLines((prev) => [...prev, { ...next, content: '' }]);
+      setLines((prev) => [...prev, { ...next, content: "" }]);
 
       for (let index = 1; index <= next.content.length; index += 1) {
         if (!mountedRef.current || cancelTokenRef.current !== token) return;
         await sleep(typingSpeedMs);
         setLines((prev) =>
           prev.map((line) =>
-            line.id === next.id ? { ...line, content: next.content.slice(0, index) } : line,
+            line.id === next.id
+              ? { ...line, content: next.content.slice(0, index) }
+              : line,
           ),
         );
       }
@@ -254,7 +267,7 @@ const useTypingQueue = (
   }, [reducedMotion, typingSpeedMs]);
 
   const enqueueLines = useCallback(
-    (contents: string[], type: TerminalLineType = 'output') => {
+    (contents: string[], type: TerminalLineType = "output") => {
       const nextLines = contents.map((content) => ({
         id: createLineId(),
         type,
@@ -284,7 +297,7 @@ const useTypingQueue = (
 export const TerminalMode: FC<TerminalModeProps> = ({ className }) => {
   const isTerminalEnabled = useStore(terminalMode);
   const [cwd, setCwd] = useState<TerminalDirectory>(ROOT_DIR);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState<number | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -292,13 +305,11 @@ export const TerminalMode: FC<TerminalModeProps> = ({ className }) => {
   const prefersReducedMotion = usePrefersReducedMotion();
   const prompt = useMemo(() => formatPrompt(cwd), [cwd]);
 
-  const { lines, isTyping, appendLine, enqueueLines, clearLines } = useTypingQueue(
-    INITIAL_LINES,
-    {
+  const { lines, isTyping, appendLine, enqueueLines, clearLines } =
+    useTypingQueue(INITIAL_LINES, {
       typingSpeedMs: prefersReducedMotion ? 0 : 14,
       reducedMotion: prefersReducedMotion,
-    },
-  );
+    });
 
   const handleScroll = useCallback(() => {
     if (!outputRef.current) return;
@@ -318,24 +329,27 @@ export const TerminalMode: FC<TerminalModeProps> = ({ className }) => {
   const handleHistoryNavigation = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
       if (history.length === 0) return;
-      if (event.key === 'ArrowUp') {
+      if (event.key === "ArrowUp") {
         event.preventDefault();
-        const nextIndex = historyIndex === null ? history.length - 1 : Math.max(historyIndex - 1, 0);
+        const nextIndex =
+          historyIndex === null
+            ? history.length - 1
+            : Math.max(historyIndex - 1, 0);
         setHistoryIndex(nextIndex);
-        setInputValue(history[nextIndex] ?? '');
+        setInputValue(history[nextIndex] ?? "");
       }
 
-      if (event.key === 'ArrowDown') {
+      if (event.key === "ArrowDown") {
         event.preventDefault();
         if (historyIndex === null) return;
         const nextIndex = historyIndex + 1;
         if (nextIndex >= history.length) {
           setHistoryIndex(null);
-          setInputValue('');
+          setInputValue("");
           return;
         }
         setHistoryIndex(nextIndex);
-        setInputValue(history[nextIndex] ?? '');
+        setInputValue(history[nextIndex] ?? "");
       }
     },
     [history, historyIndex],
@@ -348,7 +362,7 @@ export const TerminalMode: FC<TerminalModeProps> = ({ className }) => {
 
       appendLine({
         id: createLineId(),
-        type: 'command',
+        type: "command",
         content: `${prompt} ${trimmed}`,
       });
 
@@ -358,53 +372,59 @@ export const TerminalMode: FC<TerminalModeProps> = ({ className }) => {
       const [commandToken, ...rest] = trimmed.split(/\s+/);
       const command = commandToken.toLowerCase();
 
-      if (command === 'clear') {
+      if (command === "clear") {
         clearLines([]);
         return;
       }
 
-      if (command === 'ls') {
+      if (command === "ls") {
         const listing = DIRECTORY_LISTINGS[cwd] ?? DIRECTORY_LISTINGS[ROOT_DIR];
-        enqueueLines([listing.join('  ')]);
+        enqueueLines([listing.join("  ")]);
         return;
       }
 
-      if (command === 'help') {
+      if (command === "help") {
         enqueueLines(HELP_OUTPUT);
         return;
       }
 
-      if (command === 'whoami') {
+      if (command === "whoami") {
         enqueueLines([PROMPT_USER]);
         return;
       }
 
-      if (command === 'cd') {
+      if (command === "cd") {
         const target = rest[0];
         if (!target) {
           enqueueLines([
-            'Usage: cd <section>',
-            `Available: ${DIRECTORIES.join(', ')}`,
+            "Usage: cd <section>",
+            `Available: ${DIRECTORIES.join(", ")}`,
           ]);
           return;
         }
 
-        if (target === '/' || target === '~') {
+        if (target === "/" || target === "~") {
           setCwd(ROOT_DIR);
-          enqueueLines(['Moved to ~']);
+          enqueueLines(["Moved to ~"]);
           return;
         }
 
-        if (target === '..') {
+        if (target === "..") {
           setCwd(ROOT_DIR);
-          enqueueLines(['Moved to ~']);
+          enqueueLines(["Moved to ~"]);
           return;
         }
 
-        const normalized = target.replace(/^~\//, '').replace(/^\//, '').toLowerCase();
+        const normalized = target
+          .replace(/^~\//, "")
+          .replace(/^\//, "")
+          .toLowerCase();
         if (isDirectory(normalized)) {
           setCwd(normalized);
-          enqueueLines([`Switched to ~/${normalized}.`, 'Run `ls` or `cat index.txt`.']);
+          enqueueLines([
+            `Switched to ~/${normalized}.`,
+            "Run `ls` or `cat index.txt`.",
+          ]);
           return;
         }
 
@@ -412,10 +432,10 @@ export const TerminalMode: FC<TerminalModeProps> = ({ className }) => {
         return;
       }
 
-      if (command === 'cat') {
+      if (command === "cat") {
         const target = rest[0];
         if (!target) {
-          enqueueLines(['Usage: cat <file>', 'Try: cat about.txt']);
+          enqueueLines(["Usage: cat <file>", "Try: cat about.txt"]);
           return;
         }
         const resolved = normalizeFileTarget(target, cwd);
@@ -443,32 +463,34 @@ export const TerminalMode: FC<TerminalModeProps> = ({ className }) => {
       event.preventDefault();
       if (!inputValue.trim() || isTyping) return;
       const nextInput = inputValue;
-      setInputValue('');
+      setInputValue("");
       handleCommand(nextInput);
     },
     [handleCommand, inputValue, isTyping],
   );
 
   return (
-    <div className={`terminal-shell ${className ?? ''}`.trim()}>
+    <div className={`terminal-shell ${className ?? ""}`.trim()}>
       <button
         type="button"
         className="terminal-toggle"
-        data-enabled={isTerminalEnabled ? 'true' : 'false'}
+        data-enabled={isTerminalEnabled ? "true" : "false"}
         onClick={toggleTerminalMode}
         aria-pressed={isTerminalEnabled}
-        aria-label={isTerminalEnabled ? 'Disable terminal mode' : 'Enable terminal mode'}
+        aria-label={
+          isTerminalEnabled ? "Disable terminal mode" : "Enable terminal mode"
+        }
       >
         <Terminal size={18} aria-hidden="true" />
         <span className="terminal-toggle__label">
-          {isTerminalEnabled ? 'Terminal Mode On' : 'Terminal Mode'}
+          {isTerminalEnabled ? "Terminal Mode On" : "Terminal Mode"}
         </span>
         <Power size={16} aria-hidden="true" />
       </button>
 
       <section
         className="terminal-panel"
-        data-open={isTerminalEnabled ? 'true' : 'false'}
+        data-open={isTerminalEnabled ? "true" : "false"}
         aria-hidden={!isTerminalEnabled}
         aria-label="Interactive terminal"
       >
@@ -478,13 +500,21 @@ export const TerminalMode: FC<TerminalModeProps> = ({ className }) => {
             Portfolio Terminal
           </div>
           <div className="terminal-status">
-            {isTerminalEnabled ? 'Online' : 'Offline'}
+            {isTerminalEnabled ? "Online" : "Offline"}
           </div>
         </div>
 
-        <div className="terminal-output" role="log" aria-live="polite" ref={outputRef}>
+        <div
+          className="terminal-output"
+          role="log"
+          aria-live="polite"
+          ref={outputRef}
+        >
           {lines.map((line) => (
-            <div key={line.id} className={`terminal-line terminal-line--${line.type}`}>
+            <div
+              key={line.id}
+              className={`terminal-line terminal-line--${line.type}`}
+            >
               {line.content}
             </div>
           ))}
@@ -517,7 +547,9 @@ export const TerminalMode: FC<TerminalModeProps> = ({ className }) => {
           <button
             type="submit"
             className="terminal-submit"
-            disabled={!isTerminalEnabled || isTyping || inputValue.trim().length === 0}
+            disabled={
+              !isTerminalEnabled || isTyping || inputValue.trim().length === 0
+            }
           >
             Run
           </button>

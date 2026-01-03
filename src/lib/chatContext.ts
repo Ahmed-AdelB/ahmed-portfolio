@@ -1,27 +1,27 @@
-import { experience, skills, certifications, education } from '../data/resume';
-import { projects } from '../data/projects';
+import { experience, skills, certifications, education } from "../data/resume";
+import { projects } from "../data/projects";
 
 const RESUME_CONTEXT = `
 **Experience:**
-${experience.map(exp => `- ${exp.title} at ${exp.company} (${exp.period}): ${exp.highlights.join('. ')}`).join('\n')}
+${experience.map((exp) => `- ${exp.title} at ${exp.company} (${exp.period}): ${exp.highlights.join(". ")}`).join("\n")}
 
 **Skills:**
-- Leadership: ${skills.leadership.join(', ')}
-- Technical: ${skills.technical.join(', ')}
-- Tools: ${skills.tools.join(', ')}
-- Cloud: ${skills.cloud.join(', ')}
-- Frameworks: ${skills.frameworks.join(', ')}
+- Leadership: ${skills.leadership.join(", ")}
+- Technical: ${skills.technical.join(", ")}
+- Tools: ${skills.tools.join(", ")}
+- Cloud: ${skills.cloud.join(", ")}
+- Frameworks: ${skills.frameworks.join(", ")}
 
 **Certifications:**
-${certifications.map(cert => `- ${cert.name} (${cert.status}, ${cert.year})`).join('\n')}
+${certifications.map((cert) => `- ${cert.name} (${cert.status}, ${cert.year})`).join("\n")}
 
 **Education:**
-${education.map(edu => `- ${edu.degree} from ${edu.school} (${edu.period}). ${edu.note || ''}`).join('\n')}
+${education.map((edu) => `- ${edu.degree} from ${edu.school} (${edu.period}). ${edu.note || ""}`).join("\n")}
 `;
 
 const PROJECTS_CONTEXT = `
 **Projects:**
-${projects.map(proj => `- ${proj.title}: ${proj.description} (Tech: ${proj.techStack.join(', ')})`).join('\n')}
+${projects.map((proj) => `- ${proj.title}: ${proj.description} (Tech: ${proj.techStack.join(", ")})`).join("\n")}
 `;
 
 export const SYSTEM_PROMPT = `
@@ -49,5 +49,5 @@ export const INITIAL_QUESTIONS = [
   "What are your core skills?",
   "Tell me about your OSS contributions",
   "What is your experience with AI Security?",
-  "How can I contact you?"
+  "How can I contact you?",
 ];

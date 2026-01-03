@@ -1,0 +1,371 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic:
+    - link "Skip to main content" [ref=e2] [cursor=pointer]:
+      - /url: "#main-content"
+    - link "Skip to navigation" [ref=e3] [cursor=pointer]:
+      - /url: "#main-nav"
+  - progressbar "Reading progress"
+  - main [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e9]:
+        - generic [ref=e11]: Available for new opportunities
+        - generic [ref=e13]: Incident Response & Threat Intelligence Leader | 12+ Years
+        - heading "Hi, I'm Ahmed Adel Bakr Alderai" [level=1] [ref=e14]
+        - paragraph [ref=e15]: I secure the AI systems you deploy and improve the tools you use to build them.
+        - paragraph [ref=e16]: Contributing to critical open-source infrastructure including pip, pydantic, OWASP, and openai-python.
+        - paragraph [ref=e17]: 150M+ combined monthly downloads
+        - generic [ref=e18]:
+          - link "View Contributions" [ref=e19] [cursor=pointer]:
+            - /url: "#contributions"
+            - text: View Contributions
+            - img [ref=e20]
+          - link "Download Resume" [ref=e22] [cursor=pointer]:
+            - /url: /resume.pdf
+            - img [ref=e23]
+            - text: Download Resume
+        - generic [ref=e25]:
+          - link "GitHub" [ref=e26] [cursor=pointer]:
+            - /url: https://github.com/Ahmed-AdelB
+            - img [ref=e27]
+          - link "LinkedIn" [ref=e29] [cursor=pointer]:
+            - /url: https://linkedin.com/in/ahmedadel1991
+            - img [ref=e30]
+          - link "Email" [ref=e32] [cursor=pointer]:
+            - /url: mailto:ahmedalderai25@gmail.com
+            - img [ref=e33]
+        - link "View GitHub Profile" [ref=e38] [cursor=pointer]:
+          - /url: https://github.com/aadel
+          - img [ref=e39]
+      - link "Scroll to explore" [ref=e42] [cursor=pointer]:
+        - /url: "#github-stats"
+        - text: Scroll to explore
+    - generic [ref=e44]:
+      - generic [ref=e45]:
+        - heading "Choose Your Path" [level=2] [ref=e46]
+        - paragraph [ref=e47]: Tailored content to help you find exactly what you're looking for.
+      - generic [ref=e48]:
+        - generic [ref=e50]:
+          - img [ref=e52]
+          - generic [ref=e54]: Recruiter
+          - heading "Hiring?" [level=3] [ref=e55]
+          - paragraph [ref=e56]: View my professional background, resume, and project portfolio.
+          - generic [ref=e57]:
+            - link "View Resume" [ref=e58] [cursor=pointer]:
+              - /url: /resume
+              - text: View Resume
+              - img [ref=e59]
+            - link "Portfolio" [ref=e61] [cursor=pointer]:
+              - /url: /projects
+              - text: Portfolio
+              - img [ref=e62]
+        - generic [ref=e65]:
+          - img [ref=e67]
+          - generic [ref=e69]: Developer
+          - heading "Building?" [level=3] [ref=e70]
+          - paragraph [ref=e71]: Explore my open source contributions, codebases, and technical prowess.
+          - generic [ref=e72]:
+            - link "GitHub" [ref=e73] [cursor=pointer]:
+              - /url: https://github.com/Ahmed-AdelB
+              - text: GitHub
+              - img [ref=e74]
+            - link "Contributions" [ref=e76] [cursor=pointer]:
+              - /url: /contributions
+              - text: Contributions
+              - img [ref=e77]
+        - generic [ref=e80]:
+          - img [ref=e82]
+          - generic [ref=e84]: Student
+          - heading "Learning?" [level=3] [ref=e85]
+          - paragraph [ref=e86]: Read my technical articles, tutorials, and explore security playgrounds.
+          - generic [ref=e87]:
+            - link "Read Blog" [ref=e88] [cursor=pointer]:
+              - /url: /blog
+              - text: Read Blog
+              - img [ref=e89]
+            - link "Playground" [ref=e91] [cursor=pointer]:
+              - /url: /security-playground
+              - text: Playground
+              - img [ref=e92]
+    - region "Security expertise with global reach" [ref=e94]:
+      - generic [ref=e97]:
+        - generic [ref=e98]:
+          - paragraph [ref=e99]: Skills Strip
+          - heading "Security expertise with global reach" [level=2] [ref=e100]
+          - paragraph [ref=e101]: 12+ years securing AI and cloud systems, trusted across 25+ countries, safeguarding 150M+ monthly open-source downloads.
+          - list "Core skills" [ref=e102]:
+            - listitem [ref=e103]: Incident Response
+            - listitem [ref=e104]: Threat Intelligence
+            - listitem [ref=e105]: AI Security
+            - listitem [ref=e106]: AppSec
+            - listitem [ref=e107]: DevSecOps
+            - listitem [ref=e108]: Open Source
+        - list "Impact stats" [ref=e109]:
+          - listitem [ref=e110]:
+            - generic [ref=e111]:
+              - text: 12+
+              - img [ref=e113]
+            - paragraph [ref=e115]: Years in Incident Response
+            - paragraph [ref=e116]: Leading high-stakes security operations
+          - listitem [ref=e117]:
+            - generic [ref=e118]:
+              - text: 25+
+              - img [ref=e120]
+            - paragraph [ref=e124]: Countries Served
+            - paragraph [ref=e125]: Supporting teams across global time zones
+          - listitem [ref=e126]:
+            - generic [ref=e127]:
+              - text: 150M+
+              - img [ref=e129]
+            - paragraph [ref=e131]: Monthly Downloads Protected
+            - paragraph [ref=e132]: Hardening open-source supply chains
+    - generic [ref=e135]:
+      - generic [ref=e136]:
+        - generic [ref=e137]:
+          - img [ref=e138]
+          - text: Open Source Impact
+        - heading "Building in Public" [level=2] [ref=e140]
+        - paragraph [ref=e141]: Real-time statistics from my GitHub activity and contributions to the open source ecosystem.
+      - generic [ref=e142]:
+        - generic [ref=e144]:
+          - generic [ref=e145]:
+            - img [ref=e146]
+            - img [ref=e150]
+          - generic [ref=e154]: ...
+          - paragraph [ref=e155]: Total Commits
+        - generic [ref=e157]:
+          - generic [ref=e158]:
+            - img [ref=e159]
+            - img [ref=e164]
+          - generic [ref=e169]: ...
+          - paragraph [ref=e170]: Merged PRs
+        - generic [ref=e172]:
+          - generic [ref=e173]:
+            - img [ref=e174]
+            - img [ref=e179]
+          - generic [ref=e184]: ...
+          - paragraph [ref=e185]: Public Repos
+        - generic [ref=e187]:
+          - generic [ref=e188]:
+            - img [ref=e189]
+            - img [ref=e191]
+          - generic [ref=e193]: ...
+          - paragraph [ref=e194]: Contributions
+      - generic [ref=e195]:
+        - paragraph [ref=e197]: Projects I've Contributed To
+        - generic [ref=e198]:
+          - link "pip - Python package installer pip" [ref=e199] [cursor=pointer]:
+            - /url: https://github.com/pypa/pip
+            - img "pip - Python package installer" [ref=e201]
+            - text: pip
+          - link "Pydantic - Data validation library Pydantic" [ref=e202] [cursor=pointer]:
+            - /url: https://github.com/pydantic/pydantic
+            - img "Pydantic - Data validation library" [ref=e204]
+            - text: Pydantic
+          - link "OpenAI Python SDK openai-python" [ref=e205] [cursor=pointer]:
+            - /url: https://github.com/openai/openai-python
+            - img "OpenAI Python SDK" [ref=e207]
+            - text: openai-python
+          - link "OWASP - Open Web Application Security Project OWASP" [ref=e208] [cursor=pointer]:
+            - /url: https://github.com/OWASP
+            - img "OWASP - Open Web Application Security Project" [ref=e210]
+            - text: OWASP
+      - link "View GitHub Profile" [ref=e212] [cursor=pointer]:
+        - /url: https://github.com/aadel
+        - text: View GitHub Profile
+        - img [ref=e213]
+    - generic [ref=e218]:
+      - generic [ref=e219]:
+        - heading "Featured Projects" [level=2] [ref=e220]
+        - paragraph [ref=e221]: Building tools to secure the next generation of AI infrastructure.
+      - generic [ref=e222]:
+        - article [ref=e223]:
+          - img "Screenshot of LLM Security Playbook" [ref=e225]
+          - generic [ref=e226]:
+            - heading "LLM Security Playbook" [level=3] [ref=e228]
+            - paragraph [ref=e229]: A comprehensive guide and checklist for securing Large Language Model applications against common vulnerabilities.
+            - list "Technologies used" [ref=e230]:
+              - listitem [ref=e231]: Markdown
+              - listitem [ref=e232]: Python
+              - listitem [ref=e233]: Security
+            - link "GitHub" [ref=e235] [cursor=pointer]:
+              - /url: https://github.com/Ahmed-AdelB/llm-security-playbook
+              - img [ref=e236]
+              - text: GitHub
+        - article [ref=e238]:
+          - img "Screenshot of Hardening the OpenAI Python SDK" [ref=e240]
+          - generic [ref=e241]:
+            - heading "Hardening the OpenAI Python SDK" [level=3] [ref=e243]
+            - paragraph [ref=e244]: A detailed case study on identifying and fixing security vulnerabilities in the OpenAI Python SDK, including async streaming improvements and backpressure handling implementation.
+            - list "Technologies used" [ref=e245]:
+              - listitem [ref=e246]: Python
+              - listitem [ref=e247]: Security
+              - listitem [ref=e248]: AsyncIO
+              - listitem [ref=e249]: API Design
+              - listitem [ref=e250]: Open Source
+            - link "GitHub" [ref=e252] [cursor=pointer]:
+              - /url: https://github.com/openai/openai-python
+              - img [ref=e253]
+              - text: GitHub
+        - article [ref=e255]:
+          - 'img "Screenshot of Fixing pip''s Dependency Resolver: A Deep Dive" [ref=e257]'
+          - generic [ref=e258]:
+            - 'heading "Fixing pip''s Dependency Resolver: A Deep Dive" [level=3] [ref=e260]'
+            - paragraph [ref=e261]: A comprehensive case study on discovering and fixing a critical vulnerability in pip's dependency resolution algorithm that affected millions of Python developers worldwide.
+            - list "Technologies used" [ref=e262]:
+              - listitem [ref=e263]: Python
+              - listitem [ref=e264]: Security
+              - listitem [ref=e265]: Package Management
+              - listitem [ref=e266]: Open Source
+            - link "GitHub" [ref=e268] [cursor=pointer]:
+              - /url: https://github.com/pypa/pip
+              - img [ref=e269]
+              - text: GitHub
+      - link "View all projects" [ref=e272] [cursor=pointer]:
+        - /url: /projects
+        - text: View all projects
+        - img [ref=e273]
+    - generic [ref=e277]:
+      - generic [ref=e278]:
+        - heading "Open Source Impact" [level=2] [ref=e279]
+        - paragraph [ref=e280]:
+          - img [ref=e281]
+          - text: Contributing to the tools that power the AI ecosystem
+      - list "Open source projects" [ref=e283]:
+        - listitem "pip - Python package installer" [ref=e284] [cursor=pointer]:
+          - img "pip - Python package installer" [ref=e286]
+          - text: pip
+        - listitem "Poetry - Python dependency management" [ref=e287] [cursor=pointer]:
+          - img "Poetry - Python dependency management" [ref=e289]
+          - text: Poetry
+        - listitem "Pydantic - Data validation library" [ref=e290] [cursor=pointer]:
+          - img "Pydantic - Data validation library" [ref=e292]
+          - text: Pydantic
+        - listitem "Click - CLI creation toolkit" [ref=e293] [cursor=pointer]:
+          - img "Click - CLI creation toolkit" [ref=e295]
+          - text: Click
+        - listitem "OWASP - Open Web Application Security Project" [ref=e296] [cursor=pointer]:
+          - img "OWASP - Open Web Application Security Project" [ref=e298]
+          - text: OWASP
+        - listitem "OpenAI Python SDK" [ref=e299] [cursor=pointer]:
+          - img "OpenAI Python SDK" [ref=e301]
+          - text: openai-python
+        - listitem "pip-tools - Dependency management utilities" [ref=e302] [cursor=pointer]:
+          - img "pip-tools - Dependency management utilities" [ref=e304]
+          - text: pip-tools
+      - link "View all contributions on GitHub" [ref=e306] [cursor=pointer]:
+        - /url: https://github.com
+        - text: View all contributions on GitHub
+        - img [ref=e307]
+    - generic [ref=e310]:
+      - generic [ref=e311]:
+        - generic [ref=e312]:
+          - heading "Recent Writings" [level=2] [ref=e313]
+          - paragraph [ref=e314]: Thoughts on AI security, open source, and software engineering.
+        - link "Read all posts" [ref=e315] [cursor=pointer]:
+          - /url: /blog
+          - text: Read all posts
+          - img [ref=e316]
+      - generic [ref=e318]:
+        - article [ref=e319]:
+          - generic:
+            - 'img "Launching My New Portfolio: A Deep Dive into the Tech Stack"'
+          - generic [ref=e320]:
+            - generic [ref=e321]:
+              - time [ref=e322]: January 3, 2026
+              - text: •
+              - generic [ref=e323]: "#portfolio"
+            - 'heading "Launching My New Portfolio: A Deep Dive into the Tech Stack" [level=3] [ref=e324]':
+              - 'link "Launching My New Portfolio: A Deep Dive into the Tech Stack" [ref=e325] [cursor=pointer]':
+                - /url: /blog/portfolio-launch
+                - text: "Launching My New Portfolio: A Deep Dive into the Tech Stack"
+            - paragraph [ref=e326]: Announcing the launch of my personal portfolio built with Astro 5, React 19, and Tailwind CSS 4. A look at the architecture, features, and the journey of building a modern developer portfolio.
+            - generic [ref=e327]:
+              - text: Read article
+              - img [ref=e328]
+        - article [ref=e330]:
+          - generic:
+            - 'img "Hello World: Starting My Security Research Journey"'
+          - generic [ref=e331]:
+            - generic [ref=e332]:
+              - time [ref=e333]: January 1, 2026
+              - text: •
+              - generic [ref=e334]: "#personal"
+            - 'heading "Hello World: Starting My Security Research Journey" [level=3] [ref=e335]':
+              - 'link "Hello World: Starting My Security Research Journey" [ref=e336] [cursor=pointer]':
+                - /url: /blog/hello-world
+                - text: "Hello World: Starting My Security Research Journey"
+            - paragraph [ref=e337]: An introduction to my new portfolio and what I plan to share about AI security and Python development.
+            - generic [ref=e338]:
+              - text: Read article
+              - img [ref=e339]
+        - article [ref=e341]:
+          - generic:
+            - 'img "Securing LLM Applications: A Practical Guide"'
+          - generic [ref=e342]:
+            - generic [ref=e343]:
+              - time [ref=e344]: December 15, 2025
+              - text: •
+              - generic [ref=e345]: "#ai-security"
+            - 'heading "Securing LLM Applications: A Practical Guide" [level=3] [ref=e346]':
+              - 'link "Securing LLM Applications: A Practical Guide" [ref=e347] [cursor=pointer]':
+                - /url: /blog/securing-llm-applications
+                - text: "Securing LLM Applications: A Practical Guide"
+            - paragraph [ref=e348]: A comprehensive guide to understanding and mitigating security risks in Large Language Model applications, from prompt injection to data leakage.
+            - generic [ref=e349]:
+              - text: Read article
+              - img [ref=e350]
+      - link "Read all posts" [ref=e353] [cursor=pointer]:
+        - /url: /blog
+        - text: Read all posts
+        - img [ref=e354]
+    - generic [ref=e357]:
+      - heading "Ready to secure your AI infrastructure?" [level=2] [ref=e358]
+      - paragraph [ref=e359]: I'm always open to discussing new opportunities, collaborations, or just chatting about AI security and open source.
+      - generic [ref=e360]:
+        - link "Get in Touch" [ref=e361] [cursor=pointer]:
+          - /url: mailto:contact@ahmedalderai.com
+          - img [ref=e362]
+          - text: Get in Touch
+        - link "Connect on LinkedIn" [ref=e364] [cursor=pointer]:
+          - /url: https://linkedin.com/in/ahmedaderai
+          - img [ref=e365]
+          - text: Connect on LinkedIn
+  - button "Open chat" [active] [ref=e369]:
+    - img [ref=e370]
+  - generic [ref=e373]:
+    - button "Enable terminal mode" [ref=e374] [cursor=pointer]:
+      - img [ref=e375]
+      - generic [ref=e378]: Terminal Mode
+      - img [ref=e379]
+    - region:
+      - generic:
+        - generic: Portfolio Terminal
+        - generic: Offline
+      - log:
+        - generic: "Terminal Mode ready. Type `help` to begin."
+      - generic:
+        - generic: guest@ahmed-portfolio:~$
+        - textbox [disabled]
+        - button [disabled]: Run
+  - button "Back to top" [ref=e382]:
+    - img [ref=e383]
+    - generic [ref=e385]: Scroll to top
+  - generic [ref=e388]:
+    - button "Menu" [ref=e389]:
+      - img [ref=e391]
+      - generic: Menu
+    - button "Inspect" [ref=e395]:
+      - img [ref=e397]
+      - generic: Inspect
+    - button "Audit" [ref=e399]:
+      - generic [ref=e400]:
+        - img [ref=e401]
+        - img [ref=e404]
+      - generic: Audit
+    - button "Settings" [ref=e407]:
+      - img [ref=e409]
+      - generic: Settings
+```

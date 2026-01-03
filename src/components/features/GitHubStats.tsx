@@ -1,14 +1,17 @@
-import React, { useEffect, useRef } from 'react';
-import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
-import { useGitHubStats } from '../../hooks/useGitHubStats';
-import { GitCommit, GitPullRequest, FolderGit2, Activity } from 'lucide-react';
+import React, { useEffect, useRef } from "react";
+import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import { useGitHubStats } from "../../hooks/useGitHubStats";
+import { GitCommit, GitPullRequest, FolderGit2, Activity } from "lucide-react";
 
 interface AnimatedCounterProps {
   value: number;
   suffix?: string;
 }
 
-const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ value, suffix = '' }) => {
+const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
+  value,
+  suffix = "",
+}) => {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, { damping: 50, stiffness: 400 });
@@ -37,70 +40,77 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ value, suffix = '' })
 };
 
 const GitHubStats: React.FC = () => {
-  const { repos, commits, prs, contributions, loading, error } = useGitHubStats();
+  const { repos, commits, prs, contributions, loading, error } =
+    useGitHubStats();
 
   const statItems = [
     {
-      label: 'Total Commits',
+      label: "Total Commits",
       value: commits,
       icon: GitCommit,
-      suffix: '+',
-      color: 'from-emerald-400 to-green-500'
+      suffix: "+",
+      color: "from-emerald-400 to-green-500",
     },
     {
-      label: 'Merged PRs',
+      label: "Merged PRs",
       value: prs,
       icon: GitPullRequest,
-      suffix: '',
-      color: 'from-blue-400 to-indigo-500'
+      suffix: "",
+      color: "from-blue-400 to-indigo-500",
     },
     {
-      label: 'Public Repos',
+      label: "Public Repos",
       value: repos,
       icon: FolderGit2,
-      suffix: '',
-      color: 'from-purple-400 to-pink-500'
+      suffix: "",
+      color: "from-purple-400 to-pink-500",
     },
     {
-      label: 'Contributions',
+      label: "Contributions",
       value: contributions,
       icon: Activity,
-      suffix: '+',
-      color: 'from-orange-400 to-red-500'
-    }
+      suffix: "+",
+      color: "from-orange-400 to-red-500",
+    },
   ];
 
   const contributionsLogos = [
     {
-      name: 'pip',
-      logo: '/images/logos/pip.svg',
-      url: 'https://github.com/pypa/pip',
-      alt: 'pip - Python package installer',
+      name: "pip",
+      logo: "/images/logos/pip.svg",
+      url: "https://github.com/pypa/pip",
+      alt: "pip - Python package installer",
     },
     {
-      name: 'Pydantic',
-      logo: '/images/logos/pydantic.svg',
-      url: 'https://github.com/pydantic/pydantic',
-      alt: 'Pydantic - Data validation library',
+      name: "Pydantic",
+      logo: "/images/logos/pydantic.svg",
+      url: "https://github.com/pydantic/pydantic",
+      alt: "Pydantic - Data validation library",
     },
     {
-      name: 'openai-python',
-      logo: '/images/logos/openai.svg',
-      url: 'https://github.com/openai/openai-python',
-      alt: 'OpenAI Python SDK',
+      name: "openai-python",
+      logo: "/images/logos/openai.svg",
+      url: "https://github.com/openai/openai-python",
+      alt: "OpenAI Python SDK",
     },
     {
-      name: 'OWASP',
-      logo: '/images/logos/owasp.svg',
-      url: 'https://github.com/OWASP',
-      alt: 'OWASP - Open Web Application Security Project',
+      name: "OWASP",
+      logo: "/images/logos/owasp.svg",
+      url: "https://github.com/OWASP",
+      alt: "OWASP - Open Web Application Security Project",
     },
   ];
 
   return (
-    <section className="relative py-16 md:py-20 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950" id="github-stats">
+    <section
+      className="relative py-16 md:py-20 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950"
+      id="github-stats"
+    >
       {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none"
+        aria-hidden="true"
+      >
         <div className="absolute top-0 start-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 end-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"></div>
       </div>
@@ -108,17 +118,19 @@ const GitHubStats: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <header className="text-center mb-12">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6"
           >
             <Activity className="w-5 h-5 text-emerald-400" />
-            <span className="text-sm font-medium text-emerald-400">Open Source Impact</span>
+            <span className="text-sm font-medium text-emerald-400">
+              Open Source Impact
+            </span>
           </motion.div>
-          
-          <motion.h2 
+
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -127,15 +139,16 @@ const GitHubStats: React.FC = () => {
           >
             Building in Public
           </motion.h2>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             className="text-lg text-slate-400 max-w-2xl mx-auto"
           >
-            Real-time statistics from my GitHub activity and contributions to the open source ecosystem.
+            Real-time statistics from my GitHub activity and contributions to
+            the open source ecosystem.
           </motion.p>
         </header>
 
@@ -151,10 +164,15 @@ const GitHubStats: React.FC = () => {
               className="relative group p-6 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:bg-slate-800/80 transition-all duration-300 backdrop-blur-sm"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
-              
+
               <div className="relative z-10 flex flex-col items-center justify-center">
-                <div className={`p-3 rounded-full bg-slate-900/50 mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                  <stat.icon className={`w-6 h-6 bg-gradient-to-br ${stat.color} bg-clip-text text-transparent`} stroke="url(#gradient)" />
+                <div
+                  className={`p-3 rounded-full bg-slate-900/50 mb-4 group-hover:scale-110 transition-transform duration-300`}
+                >
+                  <stat.icon
+                    className={`w-6 h-6 bg-gradient-to-br ${stat.color} bg-clip-text text-transparent`}
+                    stroke="url(#gradient)"
+                  />
                   {/* Hack for gradient stroke on Lucide icons if simpler color doesn't work, usually text-color works for currentcolor. 
                       Actually, Lucide icons take stroke color. We can use a class or style. 
                       Let's stick to a solid color for the icon to be safe, or use a mask.
@@ -162,7 +180,7 @@ const GitHubStats: React.FC = () => {
                   */}
                   <stat.icon className="w-6 h-6 text-slate-400 group-hover:text-emerald-400 transition-colors" />
                 </div>
-                
+
                 <div className="text-3xl sm:text-4xl font-bold text-white mb-1">
                   {loading ? (
                     <span className="animate-pulse">...</span>
@@ -170,7 +188,7 @@ const GitHubStats: React.FC = () => {
                     <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                   )}
                 </div>
-                
+
                 <p className="text-sm font-medium text-slate-500 group-hover:text-slate-400 transition-colors">
                   {stat.label}
                 </p>
@@ -217,7 +235,7 @@ const GitHubStats: React.FC = () => {
         </div>
 
         {/* Footer Link */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

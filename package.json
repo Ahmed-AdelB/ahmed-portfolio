@@ -7,6 +7,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "lint": "prettier --check .",
+    "typecheck": "astro check && tsc --noEmit",
     "pre-launch": "bash scripts/pre-launch-check.sh",
     "check:links": "bash scripts/check-links.sh",
     "test": "vitest run",
@@ -24,6 +26,7 @@
     "@astrojs/rss": "^4.0.14",
     "@astrojs/sitemap": "^3.6.0",
     "@astrojs/vercel": "^9.0.2",
+    "@fontsource/ibm-plex-sans-arabic": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@fontsource/space-grotesk": "^5.2.10",
     "@nanostores/persistent": "^1.2.0",
@@ -37,7 +40,8 @@
     "nanostores": "^1.1.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "tailwindcss": "^4.1.18"
+    "tailwindcss": "^4.1.18",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",

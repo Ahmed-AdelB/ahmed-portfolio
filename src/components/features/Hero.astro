@@ -1,5 +1,6 @@
 ---
 import HeroStats from './HeroStats';
+import AvailabilityIndicator from '../ui/AvailabilityIndicator.astro';
 
 interface Props {
   className?: string;
@@ -43,8 +44,13 @@ const socialLinks = [
 
   <!-- Main Content -->
   <div class="max-w-5xl mx-auto text-center z-10">
+    <!-- Availability Indicator -->
+    <div class="hero-reveal hero-reveal-1 mb-4">
+      <AvailabilityIndicator />
+    </div>
+
     <!-- Role Badge -->
-    <div class="hero-reveal hero-reveal-1 mb-6">
+    <div class="hero-reveal hero-reveal-2 mb-6">
       <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm text-sm text-slate-300">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
         Incident Response & Threat Intelligence Leader | 12+ Years
@@ -52,18 +58,18 @@ const socialLinks = [
     </div>
 
     <!-- Name with Gradient -->
-    <h1 class="hero-reveal hero-reveal-2 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
+    <h1 class="hero-reveal hero-reveal-3 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
       <span class="text-white">Hi, I'm </span>
       <span class="hero-name-gradient">Ahmed Adel Bakr Alderai</span>
     </h1>
 
     <!-- Tagline -->
-    <p class="hero-reveal hero-reveal-3 text-xl sm:text-2xl md:text-3xl text-slate-300 mb-6 max-w-4xl mx-auto leading-relaxed">
+    <p class="hero-reveal hero-reveal-4 text-xl sm:text-2xl md:text-3xl text-slate-300 mb-6 max-w-4xl mx-auto leading-relaxed">
       I secure the AI systems you deploy and improve the tools you use to build them.
     </p>
 
     <!-- Brief Intro -->
-    <p class="hero-reveal hero-reveal-4 text-base sm:text-lg text-slate-400 mb-4 max-w-3xl mx-auto">
+    <p class="hero-reveal hero-reveal-5 text-base sm:text-lg text-slate-400 mb-4 max-w-3xl mx-auto">
       Contributing to critical open-source infrastructure including
       <span class="text-emerald-400 font-medium">pip</span>,
       <span class="text-emerald-400 font-medium">pydantic</span>,
@@ -72,12 +78,12 @@ const socialLinks = [
     </p>
 
     <!-- Impact Stat -->
-    <p class="hero-reveal hero-reveal-5 text-lg sm:text-xl font-semibold mb-8">
+    <p class="hero-reveal hero-reveal-6 text-lg sm:text-xl font-semibold mb-8">
       <span class="hero-stat-gradient">150M+ combined monthly downloads</span>
     </p>
 
     <!-- CTA Buttons -->
-    <div class="hero-reveal hero-reveal-6 flex flex-col sm:flex-row gap-4 justify-center mb-10">
+    <div class="hero-reveal hero-reveal-7 flex flex-col sm:flex-row gap-4 justify-center mb-10">
       <a
         href="#contributions"
         class="group relative inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-white bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105"
@@ -100,7 +106,7 @@ const socialLinks = [
     </div>
 
     <!-- Social Links -->
-    <div class="hero-reveal hero-reveal-7 flex justify-center gap-4 mb-12">
+    <div class="hero-reveal hero-reveal-8 flex justify-center gap-4 mb-12">
       {socialLinks.map((link) => (
         <a
           href={link.url}
@@ -134,7 +140,7 @@ const socialLinks = [
     </div>
 
     <!-- GitHub Stats Strip -->
-    <div class="hero-reveal hero-reveal-8">
+    <div class="hero-reveal hero-reveal-9">
       <HeroStats client:load />
     </div>
   </div>
@@ -271,6 +277,7 @@ const socialLinks = [
   .hero-reveal-6 { animation-delay: 0.6s; }
   .hero-reveal-7 { animation-delay: 0.7s; }
   .hero-reveal-8 { animation-delay: 0.8s; }
+  .hero-reveal-9 { animation-delay: 0.9s; }
 
   @keyframes reveal {
     to {

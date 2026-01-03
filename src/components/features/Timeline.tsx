@@ -1,6 +1,12 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Briefcase, Code, Shield, Terminal, GitPullRequest } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  Briefcase,
+  Code,
+  Shield,
+  Terminal,
+  GitPullRequest,
+} from "lucide-react";
 
 interface ExperienceItem {
   role: string;
@@ -14,41 +20,51 @@ const experienceData: ExperienceItem[] = [
     role: "AI Security Researcher",
     company: "Independent / Open Source",
     period: "Present",
-    description: "Leading research on securing AI infrastructure. Authoring the llm-security-playbook, a comprehensive guide to LLM security. Identifying and responsibly disclosing vulnerabilities in AI tooling."
+    description:
+      "Leading research on securing AI infrastructure. Authoring the llm-security-playbook, a comprehensive guide to LLM security. Identifying and responsibly disclosing vulnerabilities in AI tooling.",
   },
   {
     role: "Open Source Contributor",
     company: "pip, pydantic, openai-python, OWASP",
     period: "Ongoing",
-    description: "7 merged PRs to foundational Python ecosystem projects. Focus on security hardening, input validation, and supply chain protection. Every contribution strengthens the foundation that millions of developers rely on."
+    description:
+      "7 merged PRs to foundational Python ecosystem projects. Focus on security hardening, input validation, and supply chain protection. Every contribution strengthens the foundation that millions of developers rely on.",
   },
   {
     role: "Security Community Member",
     company: "OWASP",
     period: "Ongoing",
-    description: "Active contributor to OWASP initiatives focused on AI/ML security. Participating in the development of security standards for the next generation of applications."
-  }
+    description:
+      "Active contributor to OWASP initiatives focused on AI/ML security. Participating in the development of security standards for the next generation of applications.",
+  },
 ];
 
 const getIcon = (role: string) => {
-  if (role.includes('Security')) return <Shield className="w-5 h-5" />;
-  if (role.includes('Contributor')) return <GitPullRequest className="w-5 h-5" />;
-  if (role.includes('Developer')) return <Code className="w-5 h-5" />;
+  if (role.includes("Security")) return <Shield className="w-5 h-5" />;
+  if (role.includes("Contributor"))
+    return <GitPullRequest className="w-5 h-5" />;
+  if (role.includes("Developer")) return <Code className="w-5 h-5" />;
   return <Briefcase className="w-5 h-5" />;
 };
 
-const TimelineItem = ({ item, index }: { item: ExperienceItem; index: number }) => {
+const TimelineItem = ({
+  item,
+  index,
+}: {
+  item: ExperienceItem;
+  index: number;
+}) => {
   return (
     <div className="relative pl-8 sm:pl-32 py-6 group">
       {/* Vertical Line */}
-      <div 
-        className="hidden sm:flex flex-col items-center absolute left-[8.5rem] top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800 group-last:bottom-auto group-last:h-6" 
+      <div
+        className="hidden sm:flex flex-col items-center absolute left-[8.5rem] top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800 group-last:bottom-auto group-last:h-6"
         aria-hidden="true"
       />
-      
+
       {/* Mobile Vertical Line */}
-      <div 
-        className="sm:hidden flex flex-col items-center absolute left-3 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800 group-last:bottom-auto group-last:h-6" 
+      <div
+        className="sm:hidden flex flex-col items-center absolute left-3 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800 group-last:bottom-auto group-last:h-6"
         aria-hidden="true"
       />
 
