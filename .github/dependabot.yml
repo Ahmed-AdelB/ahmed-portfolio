@@ -1,25 +1,37 @@
 # Dependabot configuration for automated dependency updates
 # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates
+# Issue #170: Configure Dependabot for dependency updates
 
 version: 2
+
+# Enable security updates for all ecosystems
+# Note: Security updates are enabled via GitHub repository settings
+# This file configures version updates
+
+registries: {}
+
 updates:
-  # NPM dependencies
+  # NPM dependencies - daily updates for rapid security response
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "daily"
       time: "09:00"
       timezone: "Europe/Dublin"
     open-pull-requests-limit: 10
     reviewers:
       - "Ahmed-AdelB"
+    assignees:
+      - "Ahmed-AdelB"
     labels:
       - "dependencies"
       - "npm"
+      - "security"
     commit-message:
       prefix: "deps"
       include: "scope"
+    # Rebase strategy for cleaner git history
+    rebase-strategy: "auto"
     groups:
       # Group all minor and patch updates together
       minor-and-patch:
@@ -42,20 +54,39 @@ updates:
         patterns:
           - "tailwindcss"
           - "@tailwindcss/*"
+      typescript:
+        patterns:
+          - "typescript"
+          - "@types/*"
     ignore:
       # Ignore specific problematic packages if needed
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
-        # Don't auto-update major versions
+        # Don't auto-update major versions - require manual review
 
-  # GitHub Actions
+  # GitHub Actions - weekly updates
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
       day: "monday"
+      time: "09:00"
+      timezone: "Europe/Dublin"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "Ahmed-AdelB"
+    assignees:
+      - "Ahmed-AdelB"
     labels:
       - "dependencies"
       - "github-actions"
+      - "ci/cd"
     commit-message:
       prefix: "ci"
+      include: "scope"
+    rebase-strategy: "auto"
+    groups:
+      # Group all GitHub Actions updates
+      actions:
+        patterns:
+          - "*"
