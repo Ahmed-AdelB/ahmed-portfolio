@@ -1,0 +1,238 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/Footer.astro';
+import { FileDown, Briefcase, GraduationCap, Award, Shield, Code, Users } from 'lucide-react';
+
+const title = "Resume | Ahmed Adel Bakr Alderai";
+const description = "Senior Security Operations & Threat Intelligence Leader with 12+ years of experience. View my resume and download PDF.";
+
+const experience = [
+  {
+    title: "Cyber Security Assurance Expert Lead",
+    company: "Vodafone Group",
+    location: "London, UK",
+    period: "May 2018 – Present",
+    highlights: [
+      "Scaled security operations team from 5 to 25 engineers, managing $45M annual budget",
+      "Directed breach investigations across 25+ countries with zero data exfiltration",
+      "Developed 200+ detection rules (YARA, Sigma) achieving 85% MITRE ATT&CK coverage",
+      "Reduced MTTC by 75% through SOAR automation and playbook development",
+      "Led response to APT intrusions affecting telecom infrastructure across 6 countries"
+    ]
+  },
+  {
+    title: "Security Assurance Senior Analyst",
+    company: "Vodafone Egypt",
+    location: "Cairo, Egypt",
+    period: "Sep 2016 – May 2018",
+    highlights: [
+      "Led IR for ransomware incidents, improving recovery time by 50%",
+      "Conducted penetration testing using Burp Suite, Metasploit",
+      "Reduced attack vectors by 40% through vulnerability assessments"
+    ]
+  },
+  {
+    title: "Compliance Officer",
+    company: "E-Finance",
+    location: "Cairo, Egypt",
+    period: "May 2015 – Sep 2016",
+    highlights: [
+      "Led PCI-DSS and ISO 27001 certifications for $2B+ transaction systems",
+      "Developed information security policies and procedures"
+    ]
+  }
+];
+
+const skills = {
+  leadership: ["Security Strategy", "Budget Management ($45M+)", "Team Building", "Vendor Risk Management", "Crisis Management"],
+  technical: ["Incident Response", "Threat Hunting", "Digital Forensics", "Malware Analysis", "Detection Engineering"],
+  tools: ["Splunk ES", "CrowdStrike Falcon", "Cortex XSOAR", "Volatility", "Zeek", "YARA", "Sigma"],
+  cloud: ["AWS Security Hub", "Azure Sentinel", "GCP Security Command Center"],
+  frameworks: ["MITRE ATT&CK", "NIST CSF", "ISO 27001", "PCI DSS", "Diamond Model"]
+};
+
+const certifications = [
+  { name: "CISSP", status: "Passed, Endorsement Pending", year: "2024" },
+  { name: "eCPPTv2", status: "Achieved", year: "2021" },
+  { name: "eWPT", status: "Achieved", year: "2020" },
+  { name: "Cisco CyberOps Associate", status: "Achieved", year: "2023" },
+  { name: "CCNA", status: "Achieved", year: "2022" },
+  { name: "OSCP", status: "In Progress", year: "Q1 2025" }
+];
+
+const education = [
+  {
+    degree: "Master of Science in Computer Science",
+    school: "Ain Shams University",
+    period: "2024 – 2026 (Expected)",
+    note: "Thesis: AI-Driven Security Techniques for IoT in Healthcare"
+  },
+  {
+    degree: "Postgraduate Diploma in Cyber Security",
+    school: "Information Technology Institute (ITI)",
+    period: "2014 – 2015",
+    note: "Selected from top 5% of applicants"
+  },
+  {
+    degree: "Bachelor of Science in Computer Science",
+    school: "Egyptian Aviation Academy",
+    period: "2008 – 2012",
+    note: "Grade: Very Good"
+  }
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <Header />
+
+  <main class="min-h-screen pt-20 pb-16">
+    <!-- Hero Section -->
+    <section class="relative py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-background">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div>
+            <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+              Ahmed Adel Bakr Alderai
+            </h1>
+            <p class="text-xl text-emerald-600 dark:text-emerald-400 font-medium mb-2">
+              Senior Security Operations & Threat Intelligence Leader
+            </p>
+            <p class="text-gray-600 dark:text-gray-400">
+              Dublin, Ireland • Stamp 4 (No sponsorship required)
+            </p>
+          </div>
+          <a
+            href="/resume.pdf"
+            download
+            class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-lg transition-colors"
+          >
+            <FileDown className="w-5 h-5" />
+            Download PDF
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+
+      <!-- Summary -->
+      <section>
+        <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+          Strategic cybersecurity leader with <strong>12+ years</strong> scaling SOCs and Incident Response functions for global enterprises.
+          At Vodafone Group, directed breach investigations across <strong>25+ markets</strong>, managed a <strong>$45M security budget</strong>,
+          and scaled teams from <strong>5 to 25+ engineers</strong>. Reduced Mean-Time-To-Contain by <strong>75%</strong> through SOAR automation.
+          Deep expertise in Digital Forensics, Threat Hunting, and Detection Engineering aligned with MITRE ATT&CK.
+        </p>
+      </section>
+
+      <!-- Experience -->
+      <section>
+        <h2 class="flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-white mb-6">
+          <Briefcase className="w-6 h-6 text-emerald-500" />
+          Professional Experience
+        </h2>
+        <div class="space-y-8">
+          {experience.map((job) => (
+            <div class="border-l-2 border-emerald-500 pl-6">
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{job.title}</h3>
+              <p class="text-emerald-600 dark:text-emerald-400 font-medium">{job.company}</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">{job.location} • {job.period}</p>
+              <ul class="space-y-2">
+                {job.highlights.map((item) => (
+                  <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
+                    <span class="text-emerald-500 mt-1.5">•</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section>
+        <h2 class="flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-white mb-6">
+          <Code className="w-6 h-6 text-emerald-500" />
+          Technical Skills
+        </h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700">
+            <h3 class="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+              <Users className="w-4 h-4 text-emerald-500" /> Leadership
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              {skills.leadership.map((skill) => (
+                <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-sm rounded-full">{skill}</span>
+              ))}
+            </div>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700">
+            <h3 class="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+              <Shield className="w-4 h-4 text-emerald-500" /> Security Operations
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              {skills.technical.map((skill) => (
+                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm rounded-full">{skill}</span>
+              ))}
+            </div>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700">
+            <h3 class="font-semibold text-gray-900 dark:text-white mb-3">Tools & Platforms</h3>
+            <div class="flex flex-wrap gap-2">
+              {skills.tools.map((skill) => (
+                <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm rounded-full">{skill}</span>
+              ))}
+            </div>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700">
+            <h3 class="font-semibold text-gray-900 dark:text-white mb-3">Frameworks</h3>
+            <div class="flex flex-wrap gap-2">
+              {skills.frameworks.map((skill) => (
+                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-sm rounded-full">{skill}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Certifications -->
+      <section>
+        <h2 class="flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-white mb-6">
+          <Award className="w-6 h-6 text-emerald-500" />
+          Certifications
+        </h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {certifications.map((cert) => (
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700">
+              <h3 class="font-semibold text-gray-900 dark:text-white">{cert.name}</h3>
+              <p class="text-sm text-gray-500 dark:text-gray-400">{cert.status} • {cert.year}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Education -->
+      <section>
+        <h2 class="flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-white mb-6">
+          <GraduationCap className="w-6 h-6 text-emerald-500" />
+          Education
+        </h2>
+        <div class="space-y-6">
+          {education.map((edu) => (
+            <div class="border-l-2 border-emerald-500 pl-6">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{edu.degree}</h3>
+              <p class="text-emerald-600 dark:text-emerald-400">{edu.school}</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">{edu.period}</p>
+              {edu.note && <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{edu.note}</p>}
+            </div>
+          ))}
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
