@@ -1,0 +1,65 @@
+---
+interface Props {
+  status?: 'available' | 'open' | 'unavailable';
+  className?: string;
+}
+
+const { 
+  status = 'available', 
+  className = ''
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const isArabic = currentPath.startsWith('/ar');
+
+const textMap = {
+  available: {
+    en: 'Available for new opportunities',
+    ar: 'متاح لفرص جديدة'
+  },
+  open: {
+    en: 'Open to offers',
+    ar: 'منفتح للعروض'
+  },
+  unavailable: {
+    en: 'Currently unavailable',
+    ar: 'غير متاح حالياً'
+  }
+};
+
+const statusConfig = {
+  available: {
+    color: 'bg-emerald-400',
+    shadow: 'shadow-emerald-400/25',
+    borderColor: 'border-emerald-500/20'
+  },
+  open: {
+    color: 'bg-amber-400',
+    shadow: 'shadow-amber-400/25',
+    borderColor: 'border-amber-500/20'
+  },
+  unavailable: {
+    color: 'bg-red-400',
+    shadow: 'shadow-red-400/25',
+    borderColor: 'border-red-500/20'
+  }
+};
+
+const config = statusConfig[status];
+const text = textMap[status][isArabic ? 'ar' : 'en'];
+---
+
+<div class:list={[
+  "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/50 backdrop-blur-sm border transition-all duration-300 hover:scale-105 cursor-default",
+  config.borderColor,
+  config.shadow,
+  className
+]}>
+  <span class="relative flex h-2 w-2">
+    <span class:list={["animate-ping absolute inline-flex h-full w-full rounded-full opacity-75", config.color]}></span>
+    <span class:list={["relative inline-flex rounded-full h-2 w-2", config.color]}></span>
+  </span>
+  <span class="text-xs font-medium text-slate-300">
+    {text}
+  </span>
+</div>

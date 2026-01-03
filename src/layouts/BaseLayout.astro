@@ -8,15 +8,13 @@ import { AIChatbot } from '../components/features/AIChatbot';
 import { TerminalMode } from '../components/features/TerminalMode';
 import BackToTop from '../components/features/BackToTop.astro';
 import CopyCodeButton from '../components/features/CopyCodeButton.astro';
-// Self-hosted fonts
-import '@fontsource/space-grotesk/300.css';
+// Self-hosted fonts - Optimized: reduced weights for better performance
+// Primary weights: 400 (body), 500 (medium), 700 (bold)
 import '@fontsource/space-grotesk/400.css';
 import '@fontsource/space-grotesk/500.css';
-import '@fontsource/space-grotesk/600.css';
 import '@fontsource/space-grotesk/700.css';
+// Mono font for code blocks - single weight
 import '@fontsource/jetbrains-mono/400.css';
-import '@fontsource/jetbrains-mono/500.css';
-import '@fontsource/jetbrains-mono/600.css';
 
 interface Props {
   title: string;
@@ -209,14 +207,14 @@ const umamiScriptSrc = 'https://analytics.umami.is/script.js';
       <slot />
     </main>
 
-    <!-- Command Palette (Cmd+K) -->
-    <CommandPalette client:load />
+    <!-- Command Palette (Cmd+K) - Lazy loaded for better LCP -->
+    <CommandPalette client:idle />
 
-    <!-- AI Chatbot -->
-    <AIChatbot client:load />
+    <!-- AI Chatbot - Lazy loaded for better initial performance -->
+    <AIChatbot client:idle />
 
-    <!-- Terminal Mode -->
-    <TerminalMode client:load />
+    <!-- Terminal Mode - Lazy loaded -->
+    <TerminalMode client:idle />
     
     <!-- Back to Top Button -->
     <BackToTop />

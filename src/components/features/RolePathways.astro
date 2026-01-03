@@ -1,0 +1,117 @@
+---
+const pathways = [
+  {
+    role: "Recruiter",
+    icon: "briefcase",
+    title: "Hiring?",
+    description: "View my professional background, resume, and project portfolio.",
+    links: [
+      { text: "View Resume", href: "/resume", primary: true },
+      { text: "Portfolio", href: "/projects", primary: false },
+    ]
+  },
+  {
+    role: "Developer",
+    icon: "code",
+    title: "Building?",
+    description: "Explore my open source contributions, codebases, and technical prowess.",
+    links: [
+      { text: "GitHub", href: "https://github.com/Ahmed-AdelB", primary: true, external: true },
+      { text: "Contributions", href: "/contributions", primary: false },
+    ]
+  },
+  {
+    role: "Student",
+    icon: "book",
+    title: "Learning?",
+    description: "Read my technical articles, tutorials, and explore security playgrounds.",
+    links: [
+      { text: "Read Blog", href: "/blog", primary: true },
+      { text: "Playground", href: "/security-playground", primary: false },
+    ]
+  }
+];
+---
+
+<section class="py-16 bg-white dark:bg-black/20 border-b border-gray-100 dark:border-white/5">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
+        Choose Your Path
+      </h2>
+      <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        Tailored content to help you find exactly what you're looking for.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {pathways.map((path) => (
+        <div class="relative group p-8 rounded-2xl bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/5 hover:-translate-y-1">
+          <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-300" />
+          
+          <div class="relative z-10">
+            <div class="w-12 h-12 mb-6 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              {path.icon === 'briefcase' && (
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              )}
+              {path.icon === 'code' && (
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+              )}
+              {path.icon === 'book' && (
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              )}
+            </div>
+
+            <div class="flex items-center gap-3 mb-3">
+              <span class="px-3 py-1 text-xs font-semibold tracking-wide uppercase rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300">
+                {path.role}
+              </span>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">
+              {path.title}
+            </h3>
+            
+            <p class="text-gray-600 dark:text-gray-400 mb-8 min-h-[3rem]">
+              {path.description}
+            </p>
+
+            <div class="flex flex-wrap gap-3">
+              {path.links.map((link) => (
+                <a
+                  href={link.href}
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? "noopener noreferrer" : undefined}
+                  class={`
+                    inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200
+                    ${link.primary 
+                      ? 'bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500' 
+                      : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                    }
+                  `}
+                >
+                  {link.text}
+                  {link.external ? (
+                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  ) : (
+                    <svg class="w-3 h-3 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                  )}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

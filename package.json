@@ -8,16 +8,22 @@
     "preview": "astro preview",
     "astro": "astro",
     "pre-launch": "bash scripts/pre-launch-check.sh",
+    "check:links": "bash scripts/check-links.sh",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:browsers": "playwright test --project=chromium --project=firefox --project=webkit --project=edge",
+    "test:browsers:smoke": "playwright test tests/e2e/cross-browser-smoke.spec.ts --project=chromium --project=firefox --project=webkit --project=edge",
+    "test:e2e:all": "playwright test",
+    "test:mobile": "playwright test tests/e2e/mobile.spec.ts --project='iPhone 14 Pro' --project='iPhone SE' --project='Pixel 7' --project='iPad Pro 11'"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/react": "^4.4.2",
     "@astrojs/rss": "^4.0.14",
     "@astrojs/sitemap": "^3.6.0",
+    "@astrojs/vercel": "^9.0.2",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@fontsource/space-grotesk": "^5.2.10",
     "@nanostores/persistent": "^1.2.0",

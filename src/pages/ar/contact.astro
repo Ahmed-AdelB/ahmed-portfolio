@@ -3,6 +3,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { Github, Linkedin, Twitter, Mail, MapPin, Clock, Calendar } from 'lucide-react';
+import { CalendlyEmbed } from '../../components/features/CalendlyEmbed';
+
+// Calendly configuration - Update this URL after setting up your Calendly account
+const CALENDLY_URL = 'https://calendly.com/ahmedadel/coffee-chat';
 
 const title = "تواصل | أحمد عادل";
 const description = "تواصل مع أحمد عادل لتدقيق الأمان، التعاون، أو الدعوات للتحدث.";
@@ -213,18 +217,32 @@ const faqs = [
           <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
             <div class="flex items-center gap-3 mb-4">
               <Calendar className="w-5 h-5 text-emerald-500" />
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">حجز اجتماع</h3>
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">حجز محادثة قهوة</h3>
             </div>
-            <!-- Calendly Inline Widget -->
-            <div 
-              class="calendly-inline-widget w-full h-[400px]" 
-              data-url="https://calendly.com/ahmedadel" 
-              style="min-width:320px;height:400px;" 
-            ></div>
-            <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" crossorigin="anonymous" async></script>
-            <p class="text-xs text-center text-gray-400 mt-2">
+            <CalendlyEmbed
+              client:load
+              url={CALENDLY_URL}
+              mode="inline"
+              height={400}
+              primaryColor="10b981"
+            />
+            <p class="text-xs text-center text-gray-400 mt-4">
               * يرجى التأكد من وجود أجندة محددة للاجتماع.
             </p>
+          </div>
+
+          <!-- Quick Schedule Button -->
+          <div class="bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 dark:from-emerald-500/5 dark:to-cyan-500/5 rounded-xl p-6 border border-emerald-200 dark:border-emerald-800">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">تفضل نافذة منبثقة؟</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+              انقر أدناه لفتح جدولة الموعد في نافذة منبثقة.
+            </p>
+            <CalendlyEmbed
+              client:load
+              url={CALENDLY_URL}
+              mode="popup"
+              buttonText="حجز محادثة قهوة"
+            />
           </div>
 
         </div>

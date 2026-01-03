@@ -1,0 +1,156 @@
+---
+title: 'Launching My New Portfolio: A Deep Dive into the Tech Stack'
+description: 'Announcing the launch of my personal portfolio built with Astro 5, React 19, and Tailwind CSS 4. A look at the architecture, features, and the journey of building a modern developer portfolio.'
+pubDate: '2026-01-03'
+tags: ['portfolio', 'astro', 'react', 'web-development', 'open-source']
+draft: false
+heroImage: '../../assets/images/blog/blog-placeholder-1.svg'
+---
+
+# Launching My New Portfolio
+
+After weeks of planning, building, and iterating, I'm excited to announce the launch of my personal portfolio. This isn't just a static resume page - it's a living showcase of my work in security research, Python development, and open-source contributions.
+
+In this post, I'll share the technical decisions behind the build, the features I'm most proud of, and what I learned along the way.
+
+## Why Build a Custom Portfolio?
+
+There's no shortage of portfolio templates available. So why spend time building one from scratch?
+
+For me, a portfolio is more than a showcase - it's a statement about how I approach software development. Every architectural decision, every component, and every optimization reflects the standards I bring to my work. I wanted something that would:
+
+1. **Demonstrate technical depth** - Not just list skills, but show how I apply them
+2. **Showcase real contributions** - Highlight my open-source work with context and impact
+3. **Provide a writing platform** - Share knowledge through technical blog posts
+4. **Be fast and accessible** - Performance and accessibility as non-negotiables
+
+## The Tech Stack
+
+### Astro 5: Islands Architecture
+
+I chose [Astro](https://astro.build) as the foundation for its innovative islands architecture. Rather than shipping a full JavaScript framework to the client, Astro renders pages as static HTML and only hydrates interactive components when needed.
+
+The result? A blazing-fast site that scores 100 on Lighthouse performance metrics while still offering rich interactivity where it matters.
+
+```typescript
+// Only this React component gets hydrated - the rest is static HTML
+<CommandPalette client:only="react" />
+```
+
+### React 19: Selective Interactivity
+
+React 19 powers the interactive islands - the command palette, theme toggle, and other dynamic components. With Astro's `client:only` directive, React only loads when these components are in view, keeping the initial bundle minimal.
+
+The component architecture prioritizes composition and reusability:
+
+```tsx
+// Composable, type-safe components
+interface Project {
+  title: string;
+  techStack: string[];
+  github?: string;
+  featured: boolean;
+}
+```
+
+### Tailwind CSS 4: Modern Styling
+
+Tailwind CSS 4 brings the latest in utility-first styling with improved performance and the new Oxide engine. The design system uses a carefully crafted color palette that supports both light and dark modes:
+
+- **Space Grotesk** for headings - clean, modern, and technical
+- **JetBrains Mono** for code - the industry standard for readability
+- A consistent spacing and typography scale throughout
+
+### Content Management with MDX
+
+All content - blog posts, project descriptions, and contribution records - lives in version control as MDX files. This approach offers:
+
+- **Type-safe frontmatter** via Zod schemas
+- **Component embedding** in Markdown content
+- **Git history** for every content change
+- **Local development** without external dependencies
+
+## Key Features
+
+### Command Palette (Cmd+K)
+
+One of my favorite features is the command palette. Press `Cmd+K` (or `Ctrl+K`) anywhere on the site to instantly navigate to any page, search blog posts, or toggle the theme. It's powered by [cmdk](https://cmdk.paco.me/), the same library behind linear.app's command menu.
+
+### Dark Mode with Persistence
+
+Theme preference is detected from system settings and persisted using [nanostores](https://github.com/nanostores/nanostores). The transition between themes is smooth, and your preference follows you across sessions.
+
+### Open Source Contributions Gallery
+
+Rather than just listing "open source contributor" on a resume, I've built a dedicated section that showcases actual contributions with context:
+
+- **pip** - Fixed dependency resolution for editable installs
+- **openai-python** - Added async streaming support with backpressure handling
+- **pydantic** - Performance optimizations for validation
+- **OWASP WSTG** - API security documentation improvements
+
+Each contribution links directly to the pull request, showing the actual code changes and discussions.
+
+### Performance Optimized
+
+The site achieves perfect Lighthouse scores across all categories:
+
+- **Performance: 100** - Static generation, optimized images, minimal JavaScript
+- **Accessibility: 100** - Semantic HTML, ARIA labels, keyboard navigation
+- **Best Practices: 100** - Security headers, HTTPS, no deprecated APIs
+- **SEO: 100** - Structured data, sitemap, RSS feed
+
+## Architecture Decisions
+
+### Static Site Generation
+
+Everything is pre-rendered at build time. There's no server to manage, no database to secure, and no runtime costs. The site deploys to Vercel's edge network, serving content from the nearest location to each visitor.
+
+### Content Collections
+
+Astro's Content Collections provide type-safe access to all content. The schema is defined once in TypeScript, and every blog post and project entry is validated at build time:
+
+```typescript
+const blog = defineCollection({
+  type: 'content',
+  schema: ({ image }) => z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    tags: z.array(z.string()).default([]),
+    draft: z.boolean().default(false),
+    heroImage: image().optional(),
+  }),
+});
+```
+
+### Component-Driven Development
+
+Each feature is isolated into focused components. This makes the codebase maintainable and allows for targeted optimizations. Testing is done with Vitest for unit tests and Playwright for end-to-end scenarios.
+
+## What's Next
+
+This launch is just the beginning. Here's what I'm planning:
+
+1. **More blog content** - Deep dives into AI security, Python internals, and security research
+2. **Project case studies** - Detailed write-ups of significant projects
+3. **Interactive demos** - Embedded code playgrounds for tutorials
+4. **Newsletter** - Email updates for new content (coming soon)
+
+## Try It Out
+
+I'd love to hear your feedback. Here are a few things to explore:
+
+- Press `Cmd+K` to open the command palette
+- Toggle between light and dark mode
+- Browse the [projects](/projects) section
+- Check out the [contributions](/contributions) gallery
+- Subscribe to the [RSS feed](/rss.xml)
+
+If you have questions about the implementation, find a bug, or just want to connect, reach out through the [contact page](/contact).
+
+Thanks for reading, and welcome to my corner of the internet.
+
+---
+
+*Building something similar? Feel free to explore the source code and reach out if you'd like to discuss the architecture.*

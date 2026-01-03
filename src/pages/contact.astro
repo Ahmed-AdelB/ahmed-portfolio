@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/Footer.astro';
 import { Github, Linkedin, Twitter, Mail, MapPin, Clock, Calendar } from 'lucide-react';
+import { CalendlyEmbed } from '../components/features/CalendlyEmbed';
+
+// Calendly configuration - Update this URL after setting up your Calendly account
+const CALENDLY_URL = 'https://calendly.com/ahmedadel/coffee-chat';
 
 const title = "Contact | Ahmed Adel";
 const description = "Get in touch with Ahmed Adel for security audits, collaborations, or speaking engagements.";
@@ -72,7 +76,14 @@ const faqs = [
         <!-- Left Column: Contact Form -->
         <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-700 h-fit">
           <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Send a Message</h2>
-          
+
+          <!--
+            Email Destination Configuration:
+            - Form submissions go to Formspree (https://formspree.io/f/xpwzgkdl)
+            - Formspree forwards notifications to the account owner's email
+            - For domain email setup (contact@ahmedaderai.dev), see: docs/EMAIL_SETUP.md
+            - Direct email link uses: ahmedalderai25@gmail.com
+          -->
           <form class="space-y-6" id="contact-form" action="https://formspree.io/f/xpwzgkdl" method="POST">
             <div class="grid md:grid-cols-2 gap-6">
               <div class="space-y-2">
@@ -81,6 +92,7 @@ const faqs = [
                   type="text"
                   id="name"
                   name="name"
+                  autocomplete="name"
                   required
                   aria-required="true"
                   class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none"
@@ -93,6 +105,7 @@ const faqs = [
                   type="email"
                   id="email"
                   name="email"
+                  autocomplete="email"
                   required
                   aria-required="true"
                   class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none"
@@ -213,18 +226,32 @@ const faqs = [
           <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
             <div class="flex items-center gap-3 mb-4">
               <Calendar className="w-5 h-5 text-emerald-500" />
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Schedule a Meeting</h3>
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Schedule a Coffee Chat</h3>
             </div>
-            <!-- Calendly Inline Widget -->
-            <div 
-              class="calendly-inline-widget w-full h-[400px]" 
-              data-url="https://calendly.com/ahmedadel" 
-              style="min-width:320px;height:400px;" 
-            ></div>
-            <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" crossorigin="anonymous" async></script>
-            <p class="text-xs text-center text-gray-400 mt-2">
+            <CalendlyEmbed
+              client:load
+              url={CALENDLY_URL}
+              mode="inline"
+              height={400}
+              primaryColor="10b981"
+            />
+            <p class="text-xs text-center text-gray-400 mt-4">
               * Please ensure you have a specific agenda for the meeting.
             </p>
+          </div>
+
+          <!-- Quick Schedule Button -->
+          <div class="bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 dark:from-emerald-500/5 dark:to-cyan-500/5 rounded-xl p-6 border border-emerald-200 dark:border-emerald-800">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Prefer a Quick Popup?</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+              Click below to open the scheduler in a popup window.
+            </p>
+            <CalendlyEmbed
+              client:load
+              url={CALENDLY_URL}
+              mode="popup"
+              buttonText="Schedule a Coffee Chat"
+            />
           </div>
 
         </div>

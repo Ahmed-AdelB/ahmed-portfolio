@@ -14,45 +14,48 @@ export default defineConfig({
     video: 'retain-on-failure',
   },
   projects: [
+    // Desktop browsers - Cross-browser testing (Issue #177)
     {
       name: 'chromium',
-      use: { browserName: 'chromium' },
+      use: { ...devices['Desktop Chrome'] },
     },
     {
       name: 'firefox',
-      use: { browserName: 'firefox' },
+      use: { ...devices['Desktop Firefox'] },
     },
     {
       name: 'webkit',
-      use: { browserName: 'webkit' },
+      use: { ...devices['Desktop Safari'] },
     },
     {
+      name: 'edge',
+      use: { ...devices['Desktop Edge'], channel: 'msedge' },
+    },
+    // Mobile browsers
+    {
       name: 'Mobile Chrome',
-      use: {
-        browserName: 'chromium',
-        ...({
-          userAgent: 'Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.91 Mobile Safari/537.36',
-          viewport: { width: 393, height: 851 },
-          deviceScaleFactor: 3,
-          isMobile: true,
-          hasTouch: true,
-          defaultBrowserType: 'chromium',
-        }),
-      },
+      use: { ...devices['Pixel 5'] },
     },
     {
       name: 'Mobile Safari',
-      use: {
-        browserName: 'webkit',
-        ...({
-          userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1',
-          viewport: { width: 390, height: 844 },
-          deviceScaleFactor: 3,
-          isMobile: true,
-          hasTouch: true,
-          defaultBrowserType: 'webkit',
-        }),
-      },
+      use: { ...devices['iPhone 12'] },
+    },
+    // Additional mobile devices for comprehensive testing (Issue #178)
+    {
+      name: 'iPhone 14 Pro',
+      use: { ...devices['iPhone 14 Pro'] },
+    },
+    {
+      name: 'iPhone SE',
+      use: { ...devices['iPhone SE'] },
+    },
+    {
+      name: 'Pixel 7',
+      use: { ...devices['Pixel 7'] },
+    },
+    {
+      name: 'iPad Pro 11',
+      use: { ...devices['iPad Pro 11'] },
     },
   ],
   webServer: {
