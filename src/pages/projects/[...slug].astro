@@ -93,7 +93,7 @@ const { Content } = await project.render();
 
     {project.data.heroImage && (
       <img
-        src={project.data.heroImage}
+        src={project.data.heroImage.src}
         alt={project.data.title}
         class="w-full rounded-lg mb-8 shadow-lg"
       />

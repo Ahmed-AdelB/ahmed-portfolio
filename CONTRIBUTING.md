@@ -22,11 +22,13 @@ If you experience or witness unacceptable behavior, please report it by opening 
 Please submit issues for bugs, feature requests, or documentation improvements.
 
 **Before opening an issue:**
+
 - Search existing issues to avoid duplicates.
 - Verify the issue on the latest `main` branch.
 - Provide a clear, descriptive title.
 
 **Include the following details when possible:**
+
 - Steps to reproduce
 - Expected vs. actual behavior
 - Environment details (OS, browser, Node version)
@@ -47,6 +49,7 @@ Please submit issues for bugs, feature requests, or documentation improvements.
 6. **Respond to reviews** and update your PR as needed.
 
 **PR requirements:**
+
 - One focused change per PR.
 - No unrelated formatting or refactors unless necessary.
 - Keep PRs reasonably small and easy to review.
@@ -67,6 +70,7 @@ This project uses **Prettier** for formatting and **ESLint** for linting.
   ```
 
 **General style expectations:**
+
 - Use TypeScript and explicit types for props, state, and function returns.
 - Avoid `any`; use `unknown` with type guards if needed.
 - Prefer async/await over callbacks.
@@ -83,11 +87,13 @@ Use clear, consistent commit messages to improve changelog quality and review cl
 ```
 
 **Examples:**
+
 - `feat(ui): add hero section animation`
 - `fix(api): handle empty response errors`
 - `docs(readme): update setup instructions`
 
 **Common types:**
+
 - `feat` — new feature
 - `fix` — bug fix
 - `docs` — documentation changes
@@ -100,25 +106,30 @@ Use clear, consistent commit messages to improve changelog quality and review cl
 ## 6) Development Setup
 
 ### Prerequisites
+
 - Node.js (latest LTS recommended)
 - npm (or compatible package manager)
 
 ### Install
+
 ```bash
 npm install
 ```
 
 ### Run the project
+
 ```bash
 npm run dev
 ```
 
 ### Build for production
+
 ```bash
 npm run build
 ```
 
 ### Lint & format
+
 ```bash
 npm run lint
 npm run format

@@ -89,7 +89,7 @@ const buttonClasses =
 <script>
   const shareRoots = document.querySelectorAll('[data-share-root]');
 
-  const copyToClipboard = async (text) => {
+  const copyToClipboard = async (text: string) => {
     if (!navigator.clipboard || !navigator.clipboard.writeText) {
       throw new Error('Clipboard API not available');
     }
@@ -102,9 +102,9 @@ const buttonClasses =
     const copyButton = root.querySelector('[data-copy-link]');
     const nativeShareButton = root.querySelector('[data-share-native]');
     const status = root.querySelector('[data-share-status]');
-    let statusTimeout;
+    let statusTimeout: number | undefined;
 
-    const setStatus = (message) => {
+    const setStatus = (message: string) => {
       if (!status) return;
       status.textContent = message;
       if (statusTimeout) window.clearTimeout(statusTimeout);

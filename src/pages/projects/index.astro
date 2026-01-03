@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const title = 'Projects | Ahmed Adel';
@@ -22,7 +22,7 @@ const securityKeywords = [
   'cve',
 ];
 
-const isSecurityProject = (project) => {
+const isSecurityProject = (project: CollectionEntry<'projects'>) => {
   const haystack = [
     project.data.title,
     project.data.description,
@@ -68,7 +68,7 @@ const projectItems = projects.map((project) => {
 });
 
 const contributionItems = contributions.map((contribution) => ({
-  id: contribution.id ?? contribution.slug,
+  id: contribution.id,
   title: contribution.data.project,
   description:
     contribution.data.impact ||
@@ -111,7 +111,7 @@ const categories = [
   { label: 'Security', value: 'security' },
 ];
 
-const formatDate = (value) => {
+const formatDate = (value: number | Date) => {
   if (!value) return '';
   return new Date(value).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -165,7 +165,7 @@ const formatDate = (value) => {
               {project.image && (
                 <div class="aspect-video w-full overflow-hidden bg-gray-100 dark:bg-gray-900">
                   <img
-                    src={project.image}
+                    src={project.image.src}
                     alt={`Screenshot of ${project.title}`}
                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     loading="lazy"
@@ -321,7 +321,7 @@ const formatDate = (value) => {
                 {item.image && (
                   <div class="aspect-video w-full overflow-hidden bg-gray-100 dark:bg-gray-900">
                     <img
-                      src={item.image}
+                      src={item.image.src}
                       alt={`Screenshot of ${item.title}`}
                       class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                       loading="lazy"
@@ -408,11 +408,11 @@ const formatDate = (value) => {
   const setupProjectFilters = () => {
     const categoryButtons = Array.from(
       document.querySelectorAll('[data-filter="category"]')
-    );
+    ) as HTMLElement[];
     const tagButtons = Array.from(
       document.querySelectorAll('[data-filter="tag"]')
-    );
-    const cards = Array.from(document.querySelectorAll('[data-card]'));
+    ) as HTMLElement[];
+    const cards = Array.from(document.querySelectorAll('[data-card]')) as HTMLElement[];
     const clearButton = document.getElementById('clear-filters');
     const noResults = document.getElementById('no-results');
     const activeFilters = document.getElementById('active-filters');
@@ -420,7 +420,7 @@ const formatDate = (value) => {
     if (!cards.length) return;
 
     let activeCategory = 'all';
-    const activeTags = new Set();
+    const activeTags = new Set<string>();
 
     const updateButtons = () => {
       categoryButtons.forEach((button) => {
@@ -430,8 +430,10 @@ const formatDate = (value) => {
 
       tagButtons.forEach((button) => {
         const tag = button.dataset.tag;
-        const isActive = activeTags.has(tag);
-        button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        if (tag) {
+          const isActive = activeTags.has(tag);
+          button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        }
       });
     };
 

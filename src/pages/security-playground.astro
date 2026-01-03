@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { SecurityPlayground } from "../components/features/SecurityPlayground";
+import { SecurityPlayground as PlaygroundComponent } from "../components/features/SecurityPlayground";
 ---
 
 <BaseLayout
@@ -27,7 +27,7 @@ import { SecurityPlayground } from "../components/features/SecurityPlayground";
       </p>
     </div>
 
-    <SecurityPlayground client:load />
+    <PlaygroundComponent client:load />
 
     <div class="mt-16 mx-auto max-w-3xl prose dark:prose-invert">
       <h3>Why this matters?</h3>

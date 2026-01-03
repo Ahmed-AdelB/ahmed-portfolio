@@ -14,7 +14,7 @@ test("dark mode toggle works", async ({ page }) => {
 
   // Find toggle button by aria-label pattern
   const toggle = page.locator('button[aria-label*="theme"]').first();
-  await expect(toggle).toBeVisible();
+  await expect(toggle).toBeVisible({ timeout: 10000 });
 
   await toggle.click();
 

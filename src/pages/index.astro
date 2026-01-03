@@ -124,7 +124,7 @@ const description = "Portfolio of Ahmed Adel, an AI Security Researcher and Open
             {post.data.heroImage && (
               <div class="aspect-video w-full overflow-hidden">
                 <img
-                  src={post.data.heroImage}
+                  src={post.data.heroImage.src}
                   alt={post.data.title}
                   class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   loading="lazy"

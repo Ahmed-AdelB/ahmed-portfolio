@@ -4,11 +4,13 @@
 **Date:** January 3, 2026
 
 ## Executive Summary
+
 To protect the portfolio's AI and Newsletter APIs from abuse and cost overruns, we require a robust rate limiting strategy. After evaluating options compatible with our Vercel + Astro serverless architecture, we recommend a **Redis-backed Token Bucket** approach using **Upstash**.
 
 ## Research Findings
 
 ### 1. Upstash Redis Rate Limiting (`@upstash/ratelimit`)
+
 - **Verdict:** ✅ **Recommended**
 - **Pros:**
   - Designed specifically for serverless/edge environments (HTTP-based, stateless clients).
@@ -19,11 +21,13 @@ To protect the portfolio's AI and Newsletter APIs from abuse and cost overruns, 
   - External dependency (Upstash).
 
 ### 2. Vercel Edge Middleware
+
 - **Verdict:** ⚠️ **Partial Solution**
-- **Analysis:** Vercel Middleware runs before the cache, at the edge. It is the *perfect place* to enforce limits. However, Middleware itself is stateless. It *needs* a store.
-- **Strategy:** We will use Vercel/Astro Middleware *as the enforcement point*, but it must query Upstash Redis to maintain the counts.
+- **Analysis:** Vercel Middleware runs before the cache, at the edge. It is the _perfect place_ to enforce limits. However, Middleware itself is stateless. It _needs_ a store.
+- **Strategy:** We will use Vercel/Astro Middleware _as the enforcement point_, but it must query Upstash Redis to maintain the counts.
 
 ### 3. In-Memory Rate Limiting
+
 - **Verdict:** ❌ **Not Recommended**
 - **Analysis:** In a serverless environment (Vercel Functions), memory is not shared between requests. A variable `let requestCount = 0` resets every time the function wakes up or scales. This makes in-memory rate limiting ineffective for limiting users across multiple requests.
 
@@ -34,13 +38,17 @@ To protect the portfolio's AI and Newsletter APIs from abuse and cost overruns, 
 We will implement a **Sliding Window** or **Token Bucket** rate limiter using `@upstash/ratelimit` within an Astro Middleware. This ensures all API routes are protected uniformly without code duplication.
 
 ### Step 1: Dependencies
+
 Install the required packages:
+
 ```bash
 npm install @upstash/ratelimit @upstash/redis
 ```
 
 ### Step 2: Configuration
+
 Add the following to `.env`:
+
 ```env
 UPSTASH_REDIS_REST_URL="your_upstash_url"
 UPSTASH_REDIS_REST_TOKEN="your_upstash_token"
@@ -101,11 +109,18 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   // Identify the user (IP address)
   // Vercel/Astro provides clientAddress, or we fallback to headers
-  const ip = clientAddress || request.headers.get("x-forwarded-for") || "127.0.0.1";
+  const ip =
+    clientAddress || request.headers.get("x-forwarded-for") || "127.0.0.1";
 
   // Select limiter based on path
-  let limitResult = { success: true, pending: Promise.resolve(), limit: 0, remaining: 0, reset: 0 };
-  
+  let limitResult = {
+    success: true,
+    pending: Promise.resolve(),
+    limit: 0,
+    remaining: 0,
+    reset: 0,
+  };
+
   try {
     if (url.pathname === "/api/chat") {
       // Chat limit
@@ -121,18 +136,21 @@ export const onRequest = defineMiddleware(async (context, next) => {
     }
 
     if (!limitResult.success) {
-      return new Response(JSON.stringify({ 
-        error: "Too Many Requests", 
-        message: "You have exceeded the rate limit for this action." 
-      }), {
-        status: 429,
-        headers: {
-          "Content-Type": "application/json",
-          "X-RateLimit-Limit": limitResult.limit.toString(),
-          "X-RateLimit-Remaining": limitResult.remaining.toString(),
-          "X-RateLimit-Reset": limitResult.reset.toString(),
+      return new Response(
+        JSON.stringify({
+          error: "Too Many Requests",
+          message: "You have exceeded the rate limit for this action.",
+        }),
+        {
+          status: 429,
+          headers: {
+            "Content-Type": "application/json",
+            "X-RateLimit-Limit": limitResult.limit.toString(),
+            "X-RateLimit-Remaining": limitResult.remaining.toString(),
+            "X-RateLimit-Reset": limitResult.reset.toString(),
+          },
         },
-      });
+      );
     }
   } catch (error) {
     console.error("Rate limit error:", error);
@@ -145,10 +163,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
 ```
 
 ## Next Steps
+
 1.  Obtain Upstash credentials.
 2.  Implement the files as described above.
 3.  Deploy and verify.
 
 ---
-*Signed,*
+
+_Signed,_
 **Ahmed Adel Bakr Alderai**

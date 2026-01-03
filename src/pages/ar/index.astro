@@ -116,7 +116,7 @@ const description = "محفظة أعمال أحمد عادل، باحث أمني
             {post.data.heroImage && (
               <div class="aspect-video w-full overflow-hidden">
                 <img
-                  src={post.data.heroImage}
+                  src={post.data.heroImage.src}
                   alt={post.data.title}
                   class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   loading="lazy"

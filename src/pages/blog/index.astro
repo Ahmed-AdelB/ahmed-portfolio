@@ -143,7 +143,7 @@ const categories = Array.from(new Set(posts.flatMap((post) => post.tags))).sort(
               <div class="aspect-video w-full overflow-hidden bg-gray-100 dark:bg-gray-900">
                 {post.heroImage ? (
                   <img
-                    src={post.heroImage}
+                    src={post.heroImage.src}
                     alt={post.title}
                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     loading="lazy"
@@ -262,171 +262,188 @@ const categories = Array.from(new Set(posts.flatMap((post) => post.tags))).sort(
   </main>
 
   <script>
-    const posts = Array.from(document.querySelectorAll('[data-post]'));
-    const searchInput = document.getElementById('blog-search');
-    const categorySelect = document.getElementById('category-filter');
+    const posts = Array.from(document.querySelectorAll('[data-post]')) as HTMLElement[];
+    const searchInput = document.getElementById('blog-search') as HTMLInputElement | null;
+    const categorySelect = document.getElementById('category-filter') as HTMLSelectElement | null;
     const clearButtons = document.querySelectorAll('[data-clear]');
     const resultsCount = document.getElementById('results-count');
     const pageStatus = document.getElementById('page-status');
     const pagination = document.getElementById('pagination');
     const pageButtons = document.getElementById('page-buttons');
-    const prevButton = document.getElementById('page-prev');
-    const nextButton = document.getElementById('page-next');
+    const prevButton = document.getElementById('page-prev') as HTMLButtonElement | null;
+    const nextButton = document.getElementById('page-next') as HTMLButtonElement | null;
     const emptyState = document.getElementById('empty-state');
 
-    const POSTS_PER_PAGE = 10;
-    let currentPage = 1;
+    if (
+      !searchInput ||
+      !categorySelect ||
+      !resultsCount ||
+      !pageStatus ||
+      !pagination ||
+      !pageButtons ||
+      !prevButton ||
+      !nextButton ||
+      !emptyState
+    ) {
+      console.error('Missing required elements');
+    } else {
+      const POSTS_PER_PAGE = 10;
+      let currentPage = 1;
 
-    const normalize = (value) => value.trim().toLowerCase();
+      const normalize = (value: string) => value.trim().toLowerCase();
 
-    const getFilteredPosts = () => {
-      const query = normalize(searchInput.value || '');
-      const category = categorySelect.value;
+      const getFilteredPosts = () => {
+        const query = normalize(searchInput.value || '');
+        const category = categorySelect.value;
 
-      return posts.filter((post) => {
-        const searchText = post.dataset.search || '';
-        const tags = (post.dataset.tags || '').split('|').filter(Boolean);
-        const matchesQuery = query === '' || searchText.includes(query);
-        const matchesCategory = category === 'all' || tags.includes(category);
-        return matchesQuery && matchesCategory;
-      });
-    };
+        return posts.filter((post) => {
+          const searchText = post.dataset.search || '';
+          const tags = (post.dataset.tags || '').split('|').filter(Boolean);
+          const matchesQuery = query === '' || searchText.includes(query);
+          const matchesCategory = category === 'all' || tags.includes(category);
+          return matchesQuery && matchesCategory;
+        });
+      };
 
-    const buildPageButton = (page, isActive) => {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.dataset.page = String(page);
-      button.textContent = String(page);
-      button.className =
-        'min-w-[2.5rem] rounded-xl border px-3 py-2 text-sm font-semibold transition-colors ' +
-        (isActive
-          ? 'border-emerald-500 bg-emerald-500 text-white'
-          : 'border-gray-200 text-gray-600 hover:border-emerald-300 hover:text-emerald-600 dark:border-gray-700 dark:text-gray-300');
-      if (isActive) {
-        button.setAttribute('aria-current', 'page');
-      }
-      return button;
-    };
+      const buildPageButton = (page: number, isActive: boolean) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.dataset.page = String(page);
+        button.textContent = String(page);
+        button.className =
+          'min-w-[2.5rem] rounded-xl border px-3 py-2 text-sm font-semibold transition-colors ' +
+          (isActive
+            ? 'border-emerald-500 bg-emerald-500 text-white'
+            : 'border-gray-200 text-gray-600 hover:border-emerald-300 hover:text-emerald-600 dark:border-gray-700 dark:text-gray-300');
+        if (isActive) {
+          button.setAttribute('aria-current', 'page');
+        }
+        return button;
+      };
 
-    const renderPageButtons = (totalPages) => {
-      pageButtons.innerHTML = '';
-      if (totalPages <= 1) return;
+      const renderPageButtons = (totalPages: number) => {
+        pageButtons.innerHTML = '';
+        if (totalPages <= 1) return;
 
-      const maxButtons = 5;
-      let start = Math.max(1, currentPage - Math.floor(maxButtons / 2));
-      let end = Math.min(totalPages, start + maxButtons - 1);
-      start = Math.max(1, end - maxButtons + 1);
+        const maxButtons = 5;
+        let start = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+        let end = Math.min(totalPages, start + maxButtons - 1);
+        start = Math.max(1, end - maxButtons + 1);
 
-      for (let page = start; page <= end; page += 1) {
-        pageButtons.appendChild(buildPageButton(page, page === currentPage));
-      }
-    };
+        for (let page = start; page <= end; page += 1) {
+          pageButtons.appendChild(buildPageButton(page, page === currentPage));
+        }
+      };
 
-    const updateQueryString = (query, category, page) => {
-      const url = new URL(window.location.href);
-      if (query) {
-        url.searchParams.set('q', query);
-      } else {
-        url.searchParams.delete('q');
-      }
-      if (category && category !== 'all') {
-        url.searchParams.set('category', category);
-      } else {
-        url.searchParams.delete('category');
-      }
-      if (page > 1) {
-        url.searchParams.set('page', String(page));
-      } else {
-        url.searchParams.delete('page');
-      }
-      window.history.replaceState({}, '', url);
-    };
+      const updateQueryString = (query: string, category: string, page: number) => {
+        const url = new URL(window.location.href);
+        if (query) {
+          url.searchParams.set('q', query);
+        } else {
+          url.searchParams.delete('q');
+        }
+        if (category && category !== 'all') {
+          url.searchParams.set('category', category);
+        } else {
+          url.searchParams.delete('category');
+        }
+        if (page > 1) {
+          url.searchParams.set('page', String(page));
+        } else {
+          url.searchParams.delete('page');
+        }
+        window.history.replaceState({}, '', url);
+      };
 
-    const render = () => {
-      const filtered = getFilteredPosts();
-      const totalPages = Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
-      if (currentPage > totalPages) currentPage = totalPages;
+      const render = () => {
+        const filtered = getFilteredPosts();
+        const totalPages = Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
+        if (currentPage > totalPages) currentPage = totalPages;
 
-      const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-      const endIndex = startIndex + POSTS_PER_PAGE;
-      const visible = new Set(filtered.slice(startIndex, endIndex));
+        const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+        const endIndex = startIndex + POSTS_PER_PAGE;
+        const visible = new Set(filtered.slice(startIndex, endIndex));
 
-      posts.forEach((post) => {
-        post.hidden = !visible.has(post);
-      });
+        posts.forEach((post) => {
+          post.hidden = !visible.has(post);
+        });
 
-      resultsCount.textContent = `${filtered.length} post${filtered.length === 1 ? '' : 's'} found`;
-      pageStatus.textContent =
-        filtered.length === 0 ? '' : `Page ${currentPage} of ${totalPages}`;
+        resultsCount.textContent = `${filtered.length} post${filtered.length === 1 ? '' : 's'} found`;
+        pageStatus.textContent =
+          filtered.length === 0 ? '' : `Page ${currentPage} of ${totalPages}`;
 
-      emptyState.hidden = filtered.length !== 0;
-      pagination.hidden = filtered.length === 0 || totalPages === 1;
+        emptyState.hidden = filtered.length !== 0;
+        pagination.hidden = filtered.length === 0 || totalPages === 1;
 
-      prevButton.disabled = currentPage === 1;
-      nextButton.disabled = currentPage === totalPages;
+        prevButton.disabled = currentPage === 1;
+        nextButton.disabled = currentPage === totalPages;
 
-      renderPageButtons(totalPages);
-      updateQueryString(searchInput.value.trim(), categorySelect.value, currentPage);
-    };
+        renderPageButtons(totalPages);
+        updateQueryString(searchInput.value.trim(), categorySelect.value, currentPage);
+      };
 
-    const syncFromQuery = () => {
-      const params = new URLSearchParams(window.location.search);
-      const query = params.get('q');
-      const category = params.get('category');
-      const page = Number(params.get('page'));
+      const syncFromQuery = () => {
+        const params = new URLSearchParams(window.location.search);
+        const query = params.get('q');
+        const category = params.get('category');
+        const page = Number(params.get('page'));
 
-      if (query) searchInput.value = query;
-      if (category && Array.from(categorySelect.options).some((option) => option.value === category)) {
-        categorySelect.value = category;
-      }
-      if (page && page > 0) currentPage = page;
-    };
+        if (query) searchInput.value = query;
+        if (
+          category &&
+          Array.from(categorySelect.options).some((option) => option.value === category)
+        ) {
+          categorySelect.value = category;
+        }
+        if (page && page > 0) currentPage = page;
+      };
 
-    searchInput.addEventListener('input', () => {
-      currentPage = 1;
-      render();
-    });
-
-    categorySelect.addEventListener('change', () => {
-      currentPage = 1;
-      render();
-    });
-
-    clearButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        searchInput.value = '';
-        categorySelect.value = 'all';
+      searchInput.addEventListener('input', () => {
         currentPage = 1;
         render();
-        searchInput.focus();
       });
-    });
 
-    prevButton.addEventListener('click', () => {
-      if (currentPage > 1) {
-        currentPage -= 1;
+      categorySelect.addEventListener('change', () => {
+        currentPage = 1;
         render();
-      }
-    });
+      });
 
-    nextButton.addEventListener('click', () => {
-      const filtered = getFilteredPosts();
-      const totalPages = Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
-      if (currentPage < totalPages) {
-        currentPage += 1;
-        render();
-      }
-    });
+      clearButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          searchInput.value = '';
+          categorySelect.value = 'all';
+          currentPage = 1;
+          render();
+          searchInput.focus();
+        });
+      });
 
-    pageButtons.addEventListener('click', (event) => {
-      const target = event.target;
-      if (target instanceof HTMLButtonElement && target.dataset.page) {
-        currentPage = Number(target.dataset.page);
-        render();
-      }
-    });
+      prevButton.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage -= 1;
+          render();
+        }
+      });
 
-    syncFromQuery();
-    render();
+      nextButton.addEventListener('click', () => {
+        const filtered = getFilteredPosts();
+        const totalPages = Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
+        if (currentPage < totalPages) {
+          currentPage += 1;
+          render();
+        }
+      });
+
+      pageButtons.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+        if (target instanceof HTMLButtonElement && target.dataset.page) {
+          currentPage = Number(target.dataset.page);
+          render();
+        }
+      });
+
+      syncFromQuery();
+      render();
+    }
   </script>
 </BaseLayout>

@@ -4,28 +4,33 @@
 **Author:** Ahmed Adel Bakr Alderai
 
 ## 1. Executive Summary
+
 The project dependencies are generally healthy, but there are critical actions required regarding unused packages that are introducing security vulnerabilities. Removing unused dependencies will resolve the highest severity issues immediately.
 
 ## 2. Security Vulnerabilities (npm audit)
+
 **Status:** ⚠️ Requires Attention
 
 - **High Severity:** `path-to-regexp` (ReDoS).
-  - *Source:* `@astrojs/vercel` dependency.
-  - *Impact:* Denial of service via malicious regex inputs.
-  - *Fix:* **Remove `@astrojs/vercel`**. Analysis confirms this project uses `output: "static"` in `astro.config.mjs` and does not import this adapter.
+  - _Source:_ `@astrojs/vercel` dependency.
+  - _Impact:_ Denial of service via malicious regex inputs.
+  - _Fix:_ **Remove `@astrojs/vercel`**. Analysis confirms this project uses `output: "static"` in `astro.config.mjs` and does not import this adapter.
 - **Moderate Severity:** `esbuild`.
-  - *Source:* `vite` (transitive via `vitest`).
-  - *Impact:* Development server request hijacking.
-  - *Fix:* Update `vitest` to `^4.0.0` (Major version update).
+  - _Source:_ `vite` (transitive via `vitest`).
+  - _Impact:_ Development server request hijacking.
+  - _Fix:_ Update `vitest` to `^4.0.0` (Major version update).
 
 ## 3. Unused Dependencies
+
 **Status:** ⚠️ Cleanup Needed
 
 The following packages are installed but not used in the codebase:
+
 - **`@astrojs/vercel`**: Confirmed unused. Removing this fixes the High severity vulnerability.
 - **`@tailwindcss/vite`**: Commented out in `astro.config.mjs`. No `vite.config.ts` exists. Safe to remove.
 
 ## 4. Outdated Packages
+
 **Status:** ℹ️ Updates Available
 
 - **`vitest`**: `2.1.9` -> `4.0.16` (Major update required for security fix).
@@ -33,12 +38,14 @@ The following packages are installed but not used in the codebase:
 - **`jsdom`**: `25.0.1` -> `27.4.0`.
 
 ## 5. License Compliance
+
 **Status:** ❌ Missing Information
 
 - **Issue:** The `package.json` file is missing a `license` field.
 - **Action:** Add `"license": "MIT"` (or your preferred license) to `package.json`.
 
 ## 6. Bundle Size & Performance
+
 **Status:** ✅ Good
 
 - **Fonts:** Self-hosted via `@fontsource` (`jetbrains-mono`, `space-grotesk`, `ibm-plex-sans-arabic`). This is excellent for privacy and performance (no external Google Fonts requests).

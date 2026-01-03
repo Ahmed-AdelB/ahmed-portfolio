@@ -276,7 +276,7 @@ const navLinks = isArabic ? arLinks : enLinks;
   });
 
   const triggerOpenSearch = () => {
-    window.__commandPaletteOpenRequested = true;
+    (window as any).__commandPaletteOpenRequested = true;
     window.dispatchEvent(new CustomEvent('open-search'));
   };
 

@@ -13,16 +13,16 @@ This document synthesizes findings from 11 independent Gemini agent reviews and 
 
 ### Current State Assessment
 
-| Category | Score | Status |
-|----------|-------|--------|
-| Security | 6/10 | **Needs Work** - API endpoints lack rate limiting, prompt injection mitigation incomplete |
-| Code Quality | 8/10 | Good - High type safety, but SecurityPlayground.tsx (1024 lines) needs refactoring |
-| Test Coverage | 4/10 | **Critical** - 17% unit coverage, E2E suite exists but needs expansion |
-| SEO | 9/10 | Good - Schema.org implemented, minor URL inconsistencies to fix |
-| Deployment | 9/10 | Ready - Vercel configured, CI/CD pipeline complete |
-| Documentation | 7/10 | Good - CONTRIBUTING.md exists, README needs security section |
-| i18n | 7/10 | Good - Arabic translations exist, Footer fully localized |
-| CI/CD | 9/10 | Excellent - Lint, typecheck, E2E, Lighthouse, link checking all in place |
+| Category      | Score | Status                                                                                    |
+| ------------- | ----- | ----------------------------------------------------------------------------------------- |
+| Security      | 6/10  | **Needs Work** - API endpoints lack rate limiting, prompt injection mitigation incomplete |
+| Code Quality  | 8/10  | Good - High type safety, but SecurityPlayground.tsx (1024 lines) needs refactoring        |
+| Test Coverage | 4/10  | **Critical** - 17% unit coverage, E2E suite exists but needs expansion                    |
+| SEO           | 9/10  | Good - Schema.org implemented, minor URL inconsistencies to fix                           |
+| Deployment    | 9/10  | Ready - Vercel configured, CI/CD pipeline complete                                        |
+| Documentation | 7/10  | Good - CONTRIBUTING.md exists, README needs security section                              |
+| i18n          | 7/10  | Good - Arabic translations exist, Footer fully localized                                  |
+| CI/CD         | 9/10  | Excellent - Lint, typecheck, E2E, Lighthouse, link checking all in place                  |
 
 ### Launch Readiness: 72% Complete
 
@@ -78,37 +78,37 @@ This document synthesizes findings from 11 independent Gemini agent reviews and 
 
 ### P0 - Launch Blockers (Must Complete Before Launch)
 
-| ID | Task | Risk if Skipped | Estimated Hours |
-|----|------|-----------------|-----------------|
-| S-01 | Implement Rate Limiting | API abuse, cost overrun, DoS vulnerability | 4h |
-| S-02 | Prompt Injection Mitigation | Security breach, reputation damage, data exfiltration | 4h |
-| S-03 | Environment Variable Security | Credential exposure, production incidents | 1h |
+| ID   | Task                          | Risk if Skipped                                       | Estimated Hours |
+| ---- | ----------------------------- | ----------------------------------------------------- | --------------- |
+| S-01 | Implement Rate Limiting       | API abuse, cost overrun, DoS vulnerability            | 4h              |
+| S-02 | Prompt Injection Mitigation   | Security breach, reputation damage, data exfiltration | 4h              |
+| S-03 | Environment Variable Security | Credential exposure, production incidents             | 1h              |
 
 ### P1 - High Priority (Complete Within Launch Week)
 
-| ID | Task | Impact | Estimated Hours |
-|----|------|--------|-----------------|
-| T-01 | Unit Tests for Security Utils | Regression protection, confidence in security | 3h |
-| T-02 | E2E Smoke Suite Expansion | Critical path coverage | 2h |
-| I-01 | RTL Layout Verification | Arabic user experience | 2h |
-| Q-01 | Refactor SecurityPlayground.tsx | Maintainability, bundle size | 6h |
+| ID   | Task                            | Impact                                        | Estimated Hours |
+| ---- | ------------------------------- | --------------------------------------------- | --------------- |
+| T-01 | Unit Tests for Security Utils   | Regression protection, confidence in security | 3h              |
+| T-02 | E2E Smoke Suite Expansion       | Critical path coverage                        | 2h              |
+| I-01 | RTL Layout Verification         | Arabic user experience                        | 2h              |
+| Q-01 | Refactor SecurityPlayground.tsx | Maintainability, bundle size                  | 6h              |
 
 ### P2 - Important (Complete Within 2 Weeks)
 
-| ID | Task | Impact | Estimated Hours |
-|----|------|--------|-----------------|
-| O-01 | Fix Schema.org URLs | SEO consistency, rich snippets accuracy | 1h |
-| O-02 | Meta Tag Audit | Social sharing appearance | 1h |
-| D-01 | Update README Security Section | Developer onboarding | 1h |
-| T-03 | Increase Unit Test Coverage to 50% | Long-term stability | 8h |
+| ID   | Task                               | Impact                                  | Estimated Hours |
+| ---- | ---------------------------------- | --------------------------------------- | --------------- |
+| O-01 | Fix Schema.org URLs                | SEO consistency, rich snippets accuracy | 1h              |
+| O-02 | Meta Tag Audit                     | Social sharing appearance               | 1h              |
+| D-01 | Update README Security Section     | Developer onboarding                    | 1h              |
+| T-03 | Increase Unit Test Coverage to 50% | Long-term stability                     | 8h              |
 
 ### P3 - Nice to Have (Post-Launch)
 
-| ID | Task | Impact | Estimated Hours |
-|----|------|--------|-----------------|
-| F-01 | Add API Response Caching | Performance optimization | 3h |
-| F-02 | Implement CSP Headers | Defense in depth | 2h |
-| D-02 | Create Architecture Decision Records | Knowledge preservation | 4h |
+| ID   | Task                                 | Impact                   | Estimated Hours |
+| ---- | ------------------------------------ | ------------------------ | --------------- |
+| F-01 | Add API Response Caching             | Performance optimization | 3h              |
+| F-02 | Implement CSP Headers                | Defense in depth         | 2h              |
+| D-02 | Create Architecture Decision Records | Knowledge preservation   | 4h              |
 
 ---
 
@@ -116,29 +116,29 @@ This document synthesizes findings from 11 independent Gemini agent reviews and 
 
 ### AI Assignment by Task Type
 
-| Task Category | Primary AI | Verifier AI | Reasoning |
-|--------------|------------|-------------|-----------|
-| Security Implementation | Claude | Codex | Claude excels at security analysis, Codex validates implementation |
-| Code Refactoring | Codex | Gemini | Codex strong at code patterns, Gemini reviews with full context |
-| Test Writing | Codex | Claude | Codex fast at test generation, Claude validates edge cases |
-| Documentation | Gemini | Claude | Gemini handles long-form, Claude ensures accuracy |
-| SEO Fixes | Gemini | Codex | Gemini understands metadata patterns, Codex validates syntax |
-| i18n/RTL | Claude | Gemini | Claude handles RTL complexity, Gemini validates full layout |
+| Task Category           | Primary AI | Verifier AI | Reasoning                                                          |
+| ----------------------- | ---------- | ----------- | ------------------------------------------------------------------ |
+| Security Implementation | Claude     | Codex       | Claude excels at security analysis, Codex validates implementation |
+| Code Refactoring        | Codex      | Gemini      | Codex strong at code patterns, Gemini reviews with full context    |
+| Test Writing            | Codex      | Claude      | Codex fast at test generation, Claude validates edge cases         |
+| Documentation           | Gemini     | Claude      | Gemini handles long-form, Claude ensures accuracy                  |
+| SEO Fixes               | Gemini     | Codex       | Gemini understands metadata patterns, Codex validates syntax       |
+| i18n/RTL                | Claude     | Gemini      | Claude handles RTL complexity, Gemini validates full layout        |
 
 ### Specific Task Assignments
 
-| ID | Task | Assigned AI | Verifier AI | Status |
-|----|------|:-----------:|:-----------:|:------:|
-| S-01 | Rate Limiting | Claude | Codex | Pending |
-| S-02 | Prompt Injection | Claude | Gemini | Pending |
-| S-03 | Env Vars Security | Codex | Claude | Pending |
-| T-01 | Security Unit Tests | Codex | Claude | Pending |
-| T-02 | E2E Expansion | Codex | Gemini | Pending |
-| I-01 | RTL Verification | Claude | Gemini | Pending |
-| Q-01 | Refactor SecurityPlayground | Codex | Claude | Pending |
-| O-01 | Schema.org Fix | Gemini | Codex | Pending |
-| O-02 | Meta Tag Audit | Gemini | Claude | Pending |
-| D-01 | README Update | Gemini | Claude | Pending |
+| ID   | Task                        | Assigned AI | Verifier AI | Status  |
+| ---- | --------------------------- | :---------: | :---------: | :-----: |
+| S-01 | Rate Limiting               |   Claude    |    Codex    | Pending |
+| S-02 | Prompt Injection            |   Claude    |   Gemini    | Pending |
+| S-03 | Env Vars Security           |    Codex    |   Claude    | Pending |
+| T-01 | Security Unit Tests         |    Codex    |   Claude    | Pending |
+| T-02 | E2E Expansion               |    Codex    |   Gemini    | Pending |
+| I-01 | RTL Verification            |   Claude    |   Gemini    | Pending |
+| Q-01 | Refactor SecurityPlayground |    Codex    |   Claude    | Pending |
+| O-01 | Schema.org Fix              |   Gemini    |    Codex    | Pending |
+| O-02 | Meta Tag Audit              |   Gemini    |   Claude    | Pending |
+| D-01 | README Update               |   Gemini    |   Claude    | Pending |
 
 ---
 
@@ -151,17 +151,20 @@ This document synthesizes findings from 11 independent Gemini agent reviews and 
 **Problem:** The `/api/chat` and `/api/newsletter` endpoints have no rate limiting, making them vulnerable to abuse.
 
 **Solution:**
+
 1. Install `@upstash/ratelimit` and `@upstash/redis`
 2. Create `src/lib/ratelimit.ts` with sliding window algorithm
 3. Implement Astro middleware at `src/middleware.ts`
 4. Configure limits: 10 requests/minute for chat, 5 requests/minute for newsletter
 
 **Files to Create/Modify:**
+
 - `src/lib/ratelimit.ts` (new)
 - `src/middleware.ts` (new)
 - `.env` (add UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN)
 
 **Verification:**
+
 ```bash
 # Test rate limiting
 for i in {1..15}; do curl -X POST http://localhost:4321/api/chat; done
@@ -173,17 +176,20 @@ for i in {1..15}; do curl -X POST http://localhost:4321/api/chat; done
 **Problem:** The AI chatbot API lacks input validation and guardrails against prompt injection attacks.
 
 **Solution:**
+
 1. Implement input validation with Zod schemas
 2. Add regex-based guardrails for known injection patterns
 3. Harden system prompt with XML tagging and refusal instructions
 4. Implement output filtering
 
 **Files to Modify:**
+
 - `src/pages/api/chat.ts` - Add validation and guardrails
 - `src/lib/chatContext.ts` - Harden system prompt
 - `src/lib/validators.ts` (new) - Zod schemas and guardrail functions
 
 **Guardrail Patterns to Block:**
+
 ```typescript
 const BLOCKED_PATTERNS = [
   /ignore\s+(all\s+)?previous\s+instructions/i,
@@ -201,6 +207,7 @@ const BLOCKED_PATTERNS = [
 **Problem:** Environment variable configuration needs review for security best practices.
 
 **Solution:**
+
 1. Audit `src/env.d.ts` for proper typing
 2. Ensure all secrets use `SECRET_` prefix convention
 3. Verify `.env.example` documents all required variables
@@ -213,6 +220,7 @@ const BLOCKED_PATTERNS = [
 #### T-01: Unit Tests for Security Utils
 
 **Scope:**
+
 - Test `ratelimit.ts` with mocked Redis client
 - Test `validators.ts` guardrail functions
 - Test input sanitization functions
@@ -220,12 +228,14 @@ const BLOCKED_PATTERNS = [
 **Coverage Target:** 90% for security-critical code
 
 **Test Files:**
+
 - `src/test/lib/ratelimit.test.ts`
 - `src/test/lib/validators.test.ts`
 
 #### T-02: E2E Smoke Suite Expansion
 
 **Current E2E Tests:**
+
 - `homepage.spec.ts`
 - `navigation.spec.ts`
 - `theme-toggle.spec.ts`
@@ -238,6 +248,7 @@ const BLOCKED_PATTERNS = [
 - `newsletter.spec.ts`
 
 **Additions Needed:**
+
 - Rate limiting behavior verification
 - Error boundary testing
 - Accessibility audit integration
@@ -247,6 +258,7 @@ const BLOCKED_PATTERNS = [
 **Problem:** At 1024 lines, this component violates single-responsibility principle.
 
 **Refactoring Strategy:**
+
 1. Extract `ChallengeCard` component (~150 lines)
 2. Extract `PromptInput` component (~100 lines)
 3. Extract `ResultDisplay` component (~100 lines)
@@ -259,6 +271,7 @@ const BLOCKED_PATTERNS = [
 #### I-01: RTL Layout Verification
 
 **Checklist:**
+
 - [ ] Mobile navigation drawer opens from correct side
 - [ ] Command palette text alignment
 - [ ] Chat UI message bubbles
@@ -274,6 +287,7 @@ const BLOCKED_PATTERNS = [
 #### O-01: Fix Schema.org URLs
 
 **Issues Found:**
+
 1. LinkedIn URL inconsistent:
    - `Schema.astro`: `linkedin.com/in/ahmed-adel-b` (marked "Hypothetical")
    - `Footer.astro`: `linkedin.com/in/ahmedadel1991`
@@ -283,6 +297,7 @@ const BLOCKED_PATTERNS = [
    - `Footer.astro`: `@ahmedalderai`
 
 **Fix:** Standardize all social URLs to match `Footer.astro` values:
+
 - GitHub: `https://github.com/Ahmed-AdelB`
 - LinkedIn: `https://linkedin.com/in/ahmedadel1991`
 - Twitter: `https://twitter.com/ahmedalderai`
@@ -290,6 +305,7 @@ const BLOCKED_PATTERNS = [
 #### O-02: Meta Tag Audit
 
 **Verification Steps:**
+
 1. Test all pages with Facebook Sharing Debugger
 2. Test with Twitter Card Validator
 3. Verify `og:image` resolves correctly (currently pointing to `/og-default.svg`)
@@ -298,6 +314,7 @@ const BLOCKED_PATTERNS = [
 #### D-01: Update README Security Section
 
 **Add Section:**
+
 ```markdown
 ## Security
 
@@ -344,21 +361,23 @@ Unit Test Coverage                                  Proofreading
 
 ### High-Risk Areas
 
-| Risk | Likelihood | Impact | Mitigation |
-|------|------------|--------|------------|
-| Rate limiting fails under load | Medium | High | Load test with k6 before launch |
-| Prompt injection bypass | Medium | Critical | Red team testing, monitor logs |
-| SecurityPlayground refactor breaks UI | Low | Medium | Full E2E test coverage before refactor |
-| Schema.org validation errors | Low | Low | Test with Google Rich Results Test |
+| Risk                                  | Likelihood | Impact   | Mitigation                             |
+| ------------------------------------- | ---------- | -------- | -------------------------------------- |
+| Rate limiting fails under load        | Medium     | High     | Load test with k6 before launch        |
+| Prompt injection bypass               | Medium     | Critical | Red team testing, monitor logs         |
+| SecurityPlayground refactor breaks UI | Low        | Medium   | Full E2E test coverage before refactor |
+| Schema.org validation errors          | Low        | Low      | Test with Google Rich Results Test     |
 
 ### Rollback Strategy
 
 **Git Tags:**
+
 - `pre-security-hardening` - Before Day 1 changes
 - `pre-refactor` - Before SecurityPlayground refactor
 - `launch-candidate` - Final verified build
 
 **Deployment Strategy:**
+
 1. Deploy security changes to preview environment first
 2. Run full E2E suite against preview
 3. Manual security testing
@@ -371,35 +390,39 @@ Unit Test Coverage                                  Proofreading
 ### Launch Readiness Checklist
 
 #### Security (All Required)
+
 - [ ] Rate limiting active on all API endpoints
 - [ ] Prompt injection guardrails tested and passing
 - [ ] No high/critical npm audit vulnerabilities
 - [ ] Environment variables properly configured
 
 #### Quality (All Required)
+
 - [ ] All E2E tests passing
 - [ ] Lighthouse Performance > 90
 - [ ] Lighthouse Accessibility = 100
 - [ ] No broken links
 
 #### SEO (Required)
+
 - [ ] Schema.org URLs consistent
 - [ ] sitemap.xml valid
 - [ ] robots.txt configured
 
 #### Documentation (Required)
+
 - [ ] README updated with security info
 - [ ] CONTRIBUTING.md accurate
 
 ### Decision Matrix
 
-| Criteria | Status | Blocker? |
-|----------|--------|----------|
-| P0 Security Items Complete | Pending | YES |
-| E2E Tests Passing | Pending | YES |
-| No Critical Bugs | Pending | YES |
-| Documentation Complete | Pending | NO |
-| Test Coverage > 50% | Pending | NO |
+| Criteria                   | Status  | Blocker? |
+| -------------------------- | ------- | -------- |
+| P0 Security Items Complete | Pending | YES      |
+| E2E Tests Passing          | Pending | YES      |
+| No Critical Bugs           | Pending | YES      |
+| Documentation Complete     | Pending | NO       |
+| Test Coverage > 50%        | Pending | NO       |
 
 **Launch Decision:** Proceed only when ALL blockers are cleared.
 
@@ -444,12 +467,14 @@ Day 4 (Launch Day) [Conditional]
 ## Success Metrics (Post-Launch)
 
 ### Week 1 Targets
+
 - Zero security incidents
 - 99.9% uptime
 - < 3 second LCP on mobile
 - Zero critical accessibility violations
 
 ### Month 1 Targets
+
 - Test coverage reaches 60%
 - All P2 items completed
 - First blog post published
@@ -460,22 +485,24 @@ Day 4 (Launch Day) [Conditional]
 ## Appendix A: File Inventory
 
 ### Files to Create
-| Path | Purpose | Priority |
-|------|---------|----------|
-| `src/lib/ratelimit.ts` | Rate limiting utility | P0 |
-| `src/middleware.ts` | Astro middleware for rate limiting | P0 |
-| `src/lib/validators.ts` | Input validation and guardrails | P0 |
-| `src/test/lib/ratelimit.test.ts` | Rate limiting tests | P1 |
-| `src/test/lib/validators.test.ts` | Validator tests | P1 |
+
+| Path                              | Purpose                            | Priority |
+| --------------------------------- | ---------------------------------- | -------- |
+| `src/lib/ratelimit.ts`            | Rate limiting utility              | P0       |
+| `src/middleware.ts`               | Astro middleware for rate limiting | P0       |
+| `src/lib/validators.ts`           | Input validation and guardrails    | P0       |
+| `src/test/lib/ratelimit.test.ts`  | Rate limiting tests                | P1       |
+| `src/test/lib/validators.test.ts` | Validator tests                    | P1       |
 
 ### Files to Modify
-| Path | Changes | Priority |
-|------|---------|----------|
-| `src/pages/api/chat.ts` | Add validation, guardrails | P0 |
-| `src/lib/chatContext.ts` | Harden system prompt | P0 |
-| `src/components/seo/Schema.astro` | Fix social URLs | P2 |
-| `src/components/features/SecurityPlayground.tsx` | Refactor | P1 |
-| `README.md` | Add security section | P2 |
+
+| Path                                             | Changes                    | Priority |
+| ------------------------------------------------ | -------------------------- | -------- |
+| `src/pages/api/chat.ts`                          | Add validation, guardrails | P0       |
+| `src/lib/chatContext.ts`                         | Harden system prompt       | P0       |
+| `src/components/seo/Schema.astro`                | Fix social URLs            | P2       |
+| `src/components/features/SecurityPlayground.tsx` | Refactor                   | P1       |
+| `README.md`                                      | Add security section       | P2       |
 
 ---
 

@@ -6,17 +6,22 @@ test.describe("AI Chatbot", () => {
       window.localStorage.clear();
     });
     await page.goto("/");
+    // Hide Astro Dev Toolbar to prevent interference
+    await page.addStyleTag({ content: "astro-dev-toolbar { display: none !important; }" });
   });
 
   test("opens and closes the chat widget", async ({ page }) => {
+    // Wait for hydration
     const toggleBtn = page.getByLabel("Open chat");
-    await expect(toggleBtn).toBeVisible();
+    await expect(toggleBtn).toBeVisible({ timeout: 10000 });
     await toggleBtn.click();
 
     await expect(page.getByText("Ahmed AI")).toBeVisible();
     await expect(page.getByPlaceholder("Type a message...")).toBeVisible();
 
-    const closeBtn = page.getByLabel("Close chat");
+    // Specific close button (in the header of the chat window)
+    // The toggle button also has aria-label "Close chat" when open, so we pick the first one which should be the modal's X
+    const closeBtn = page.getByRole("button", { name: "Close chat" }).first();
     await closeBtn.click();
     await expect(page.getByText("Ahmed AI")).not.toBeVisible();
   });
@@ -32,14 +37,14 @@ test.describe("AI Chatbot", () => {
     });
 
     await page.getByLabel("Open chat").click();
-    
+
     const input = page.getByPlaceholder("Type a message...");
     await input.fill("Hello AI");
     await page.getByLabel("Send message").click();
 
     // Check for user message
     await expect(page.getByText("Hello AI")).toBeVisible();
-    
+
     // Check for loading state (might be too fast to catch deterministically, but good to know)
     // await expect(page.locator(".animate-bounce")).toBeVisible();
 
