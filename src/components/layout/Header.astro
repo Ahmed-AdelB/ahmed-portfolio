@@ -14,13 +14,14 @@
 
 import ThemeToggle from '../ui/ThemeToggle';
 import MobileNav from './MobileNav';
+import LanguageSwitcher from '../ui/LanguageSwitcher.astro';
 
 interface NavLink {
   href: string;
   label: string;
 }
 
-const navLinks: NavLink[] = [
+const enLinks: NavLink[] = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/projects', label: 'Projects' },
@@ -30,7 +31,19 @@ const navLinks: NavLink[] = [
   { href: '/contact', label: 'Contact' },
 ];
 
+const arLinks: NavLink[] = [
+  { href: '/ar', label: 'الرئيسية' },
+  { href: '/ar/about', label: 'عنّي' },
+  { href: '/ar/projects', label: 'مشاريعي' },
+  { href: '/ar/contributions', label: 'مساهمات' },
+  { href: '/ar/blog', label: 'المدونة' },
+  { href: '/ar/resume', label: 'السيرة الذاتية' },
+  { href: '/ar/contact', label: 'تواصل' },
+];
+
 const currentPath = Astro.url.pathname;
+const isArabic = currentPath.startsWith('/ar');
+const navLinks = isArabic ? arLinks : enLinks;
 ---
 
 <header
@@ -50,15 +63,15 @@ const currentPath = Astro.url.pathname;
         <!-- Logo/Name -->
         <div class="flex-shrink-0">
           <a
-            href="/"
+            href={isArabic ? "/ar" : "/"}
             class="group flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white transition-colors hover:text-blue-600 dark:hover:text-blue-400"
-            aria-label="Ahmed Adel - Home"
+            aria-label={isArabic ? "أحمد عادل - الرئيسية" : "Ahmed Adel - Home"}
           >
             <span class="relative">
               <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Ahmed
+                {isArabic ? 'أحمد' : 'Ahmed'}
               </span>
-              <span class="text-gray-900 dark:text-white ms-1">Adel</span>
+              <span class="text-gray-900 dark:text-white ms-1">{isArabic ? 'عادل' : 'Adel'}</span>
             </span>
           </a>
         </div>
@@ -67,7 +80,7 @@ const currentPath = Astro.url.pathname;
         <div class="hidden lg:flex lg:items-center lg:gap-1">
           {navLinks.map((link) => {
             const isActive = currentPath === link.href ||
-              (link.href !== '/' && currentPath.startsWith(link.href));
+              (link.href !== '/' && link.href !== '/ar' && currentPath.startsWith(link.href));
             return (
               <a
                 href={link.href}
@@ -115,7 +128,7 @@ const currentPath = Astro.url.pathname;
               <circle cx="11" cy="11" r="8"></circle>
               <path d="m21 21-4.3-4.3"></path>
             </svg>
-            <span class="hidden md:inline">Search...</span>
+            <span class="hidden md:inline">{isArabic ? 'بحث...' : 'Search...'}</span>
             <kbd class="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs font-mono bg-gray-200 dark:bg-gray-700 rounded">
               <span class="text-xs">&#8984;</span>K
             </kbd>
@@ -144,6 +157,9 @@ const currentPath = Astro.url.pathname;
               <path d="m21 21-4.3-4.3"></path>
             </svg>
           </button>
+
+          <!-- Language Switcher -->
+          <LanguageSwitcher />
 
           <!-- Theme Toggle -->
           <ThemeToggle client:load />

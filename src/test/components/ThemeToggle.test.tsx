@@ -3,37 +3,20 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ThemeToggle from '../../components/ui/ThemeToggle';
 
-type MockFn<Args extends unknown[], Return> = ReturnType<typeof vi.fn<Args, Return>>;
-
-interface StorageMocks {
-  storage: Storage;
-  getItem: MockFn<[string], string | null>;
-  setItem: MockFn<[string, string], void>;
-  removeItem: MockFn<[string], void>;
-  clear: MockFn<[], void>;
-  key: MockFn<[number], string | null>;
-}
-
-const createLocalStorageMock = (initial: Record<string, string> = {}): StorageMocks => {
+const createLocalStorageMock = (initial: Record<string, string> = {}) => {
   let store: Record<string, string> = { ...initial };
 
-  const getItem: MockFn<[string], string | null> = vi.fn((key: string) =>
-    key in store ? store[key] : null
-  );
-  const setItem: MockFn<[string, string], void> = vi.fn(
-    (key: string, value: string) => {
-      store[key] = value;
-    }
-  );
-  const removeItem: MockFn<[string], void> = vi.fn((key: string) => {
+  const getItem = vi.fn((key: string) => (key in store ? store[key] : null));
+  const setItem = vi.fn((key: string, value: string) => {
+    store[key] = value;
+  });
+  const removeItem = vi.fn((key: string) => {
     delete store[key];
   });
-  const clear: MockFn<[], void> = vi.fn(() => {
+  const clear = vi.fn(() => {
     store = {};
   });
-  const key: MockFn<[number], string | null> = vi.fn(
-    (index: number) => Object.keys(store)[index] ?? null
-  );
+  const key = vi.fn((index: number) => Object.keys(store)[index] ?? null);
 
   const storage: Storage = {
     getItem,
@@ -48,6 +31,8 @@ const createLocalStorageMock = (initial: Record<string, string> = {}): StorageMo
 
   return { storage, getItem, setItem, removeItem, clear, key };
 };
+
+type StorageMocks = ReturnType<typeof createLocalStorageMock>;
 
 const setMatchMedia = (matches: boolean) => {
   Object.defineProperty(window, 'matchMedia', {
@@ -96,7 +81,7 @@ describe('ThemeToggle', () => {
   });
 
   it('initializes from localStorage and applies dark theme', async () => {
-    const { storage } = createLocalStorageMock({ theme: 'dark' });
+    const { storage }: StorageMocks = createLocalStorageMock({ theme: 'dark' });
     Object.defineProperty(window, 'localStorage', {
       value: storage,
       configurable: true,
@@ -118,8 +103,24 @@ describe('ThemeToggle', () => {
     expect(meta.getAttribute('content')).toBe('#111827');
   });
 
+  it('uses system preference when no saved theme', async () => {
+    const { storage }: StorageMocks = createLocalStorageMock();
+    Object.defineProperty(window, 'localStorage', {
+      value: storage,
+      configurable: true,
+    });
+    setMatchMedia(true);
+
+    render(<ThemeToggle />);
+
+    await screen.findByRole('button', { name: /current theme: system/i });
+    expect(document.documentElement.classList.contains('dark')).toBe(true);
+  });
+
   it('changes theme and closes the menu', async () => {
-    const { storage, setItem } = createLocalStorageMock({ theme: 'dark' });
+    const { storage, setItem }: StorageMocks = createLocalStorageMock({
+      theme: 'dark',
+    });
     Object.defineProperty(window, 'localStorage', {
       value: storage,
       configurable: true,
@@ -149,7 +150,7 @@ describe('ThemeToggle', () => {
   });
 
   it('closes the menu on escape', async () => {
-    const { storage } = createLocalStorageMock();
+    const { storage }: StorageMocks = createLocalStorageMock();
     Object.defineProperty(window, 'localStorage', {
       value: storage,
       configurable: true,
@@ -167,6 +168,33 @@ describe('ThemeToggle', () => {
     ).toBeInTheDocument();
 
     fireEvent.keyDown(document, { key: 'Escape' });
+
+    await waitFor(() => {
+      expect(
+        screen.queryByRole('listbox', { name: /theme options/i })
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  it('closes the menu when clicking outside', async () => {
+    const { storage }: StorageMocks = createLocalStorageMock();
+    Object.defineProperty(window, 'localStorage', {
+      value: storage,
+      configurable: true,
+    });
+    setMatchMedia(false);
+
+    render(<ThemeToggle />);
+
+    const user = userEvent.setup();
+    const button = await screen.findByRole('button', { name: /current theme/i });
+    await user.click(button);
+
+    expect(
+      screen.getByRole('listbox', { name: /theme options/i })
+    ).toBeInTheDocument();
+
+    fireEvent.click(document.body);
 
     await waitFor(() => {
       expect(

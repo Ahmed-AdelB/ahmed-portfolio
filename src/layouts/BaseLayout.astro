@@ -1,8 +1,11 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css';
+import '../styles/terminal.css';
 import Schema from '../components/seo/Schema.astro';
 import CommandPalette from '../components/features/CommandPalette';
+import BackToTop from '../components/features/BackToTop.astro';
+import CopyCodeButton from '../components/features/CopyCodeButton.astro';
 // Self-hosted fonts
 import '@fontsource/space-grotesk/300.css';
 import '@fontsource/space-grotesk/400.css';
@@ -187,7 +190,11 @@ const socialImageURL = new URL(image, Astro.site);
     </main>
 
     <!-- Command Palette (Cmd+K) -->
-    <CommandPalette client:idle />
+    <CommandPalette client:load />
+    
+    <!-- Back to Top Button -->
+    <BackToTop />
+    <CopyCodeButton />
 
     <!-- Theme transition handler for View Transitions -->
     <script>

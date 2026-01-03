@@ -150,6 +150,7 @@ describe('HeroStats', () => {
 
     await waitFor(() => {
       expect(screen.getByText(/cached data/i)).toBeInTheDocument();
+      expect(screen.getByText('PRs Merged')).toBeInTheDocument();
     });
 
     warnSpy.mockRestore();

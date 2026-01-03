@@ -1,0 +1,242 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic:
+    - link "Skip to main content" [ref=e2] [cursor=pointer]:
+      - /url: "#main-content"
+    - link "Skip to navigation" [ref=e3] [cursor=pointer]:
+      - /url: "#main-nav"
+  - progressbar "Reading progress"
+  - main [ref=e4]:
+    - banner [ref=e5]:
+      - navigation "Main navigation" [ref=e7]:
+        - generic [ref=e8]:
+          - link "Ahmed Adel - Home" [ref=e10] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e11]: Ahmed Adel
+          - generic [ref=e12]:
+            - link "Home" [ref=e13] [cursor=pointer]:
+              - /url: /
+            - link "About" [ref=e14] [cursor=pointer]:
+              - /url: /about
+            - link "Projects" [ref=e15] [cursor=pointer]:
+              - /url: /projects
+            - link "Contributions" [ref=e16] [cursor=pointer]:
+              - /url: /contributions
+            - link "Blog" [ref=e17] [cursor=pointer]:
+              - /url: /blog
+            - link "Resume" [ref=e18] [cursor=pointer]:
+              - /url: /resume
+              - text: Resume
+            - link "Contact" [ref=e19] [cursor=pointer]:
+              - /url: /contact
+          - generic [ref=e20]:
+            - button "Open search dialog (Cmd+K)" [active] [ref=e21]:
+              - img [ref=e22]
+              - text: Search...
+              - generic [ref=e25]: ⌘K
+            - button "Open search" [ref=e26]:
+              - img [ref=e27]
+            - link "Switch to Arabic" [ref=e30] [cursor=pointer]:
+              - /url: /ar/resume
+              - text: عربي
+            - 'button "Current theme: system. Click to change theme." [ref=e33]':
+              - img [ref=e34]
+            - button "Open mobile menu" [ref=e36]:
+              - img [ref=e37]
+              - img [ref=e38]
+    - main [ref=e41]:
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - heading "Ahmed Adel Bakr Alderai" [level=1] [ref=e46]
+          - paragraph [ref=e47]: Senior Security Operations & Threat Intelligence Leader
+          - paragraph [ref=e48]: Dublin, Ireland • Stamp 4 (No sponsorship required)
+        - link "Download PDF" [ref=e49] [cursor=pointer]:
+          - /url: /resume.pdf
+          - img [ref=e50]
+          - text: Download PDF
+      - generic [ref=e54]:
+        - paragraph [ref=e56]:
+          - text: Strategic cybersecurity leader with
+          - strong [ref=e57]: 12+ years
+          - text: scaling SOCs and Incident Response functions for global enterprises. At Vodafone Group, directed breach investigations across
+          - strong [ref=e58]: 25+ markets
+          - text: ", managed a"
+          - strong [ref=e59]: $45M security budget
+          - text: ", and scaled teams from"
+          - strong [ref=e60]: 5 to 25+ engineers
+          - text: . Reduced Mean-Time-To-Contain by
+          - strong [ref=e61]: 75%
+          - text: through SOAR automation. Deep expertise in Digital Forensics, Threat Hunting, and Detection Engineering aligned with MITRE ATT&CK.
+        - generic [ref=e62]:
+          - heading "Professional Experience" [level=2] [ref=e63]:
+            - img [ref=e64]
+            - text: Professional Experience
+          - generic [ref=e67]:
+            - generic [ref=e68]:
+              - heading "Cyber Security Assurance Expert Lead" [level=3] [ref=e69]
+              - paragraph [ref=e70]: Vodafone Group
+              - paragraph [ref=e71]: London, UK • May 2018 – Present
+              - list [ref=e72]:
+                - listitem [ref=e73]: • Scaled security operations team from 5 to 25 engineers, managing $45M annual budget
+                - listitem [ref=e74]: • Directed breach investigations across 25+ countries with zero data exfiltration
+                - listitem [ref=e75]: • Developed 200+ detection rules (YARA, Sigma) achieving 85% MITRE ATT&CK coverage
+                - listitem [ref=e76]: • Reduced MTTC by 75% through SOAR automation and playbook development
+                - listitem [ref=e77]: • Led response to APT intrusions affecting telecom infrastructure across 6 countries
+            - generic [ref=e78]:
+              - heading "Security Assurance Senior Analyst" [level=3] [ref=e79]
+              - paragraph [ref=e80]: Vodafone Egypt
+              - paragraph [ref=e81]: Cairo, Egypt • Sep 2016 – May 2018
+              - list [ref=e82]:
+                - listitem [ref=e83]: • Led IR for ransomware incidents, improving recovery time by 50%
+                - listitem [ref=e84]: • Conducted penetration testing using Burp Suite, Metasploit
+                - listitem [ref=e85]: • Reduced attack vectors by 40% through vulnerability assessments
+            - generic [ref=e86]:
+              - heading "Compliance Officer" [level=3] [ref=e87]
+              - paragraph [ref=e88]: E-Finance
+              - paragraph [ref=e89]: Cairo, Egypt • May 2015 – Sep 2016
+              - list [ref=e90]:
+                - listitem [ref=e91]: • Led PCI-DSS and ISO 27001 certifications for $2B+ transaction systems
+                - listitem [ref=e92]: • Developed information security policies and procedures
+        - generic [ref=e93]:
+          - heading "Technical Skills" [level=2] [ref=e94]:
+            - img [ref=e95]
+            - text: Technical Skills
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - heading "Leadership" [level=3] [ref=e100]:
+                - img [ref=e101]
+                - text: Leadership
+              - generic [ref=e106]: Security StrategyBudget Management ($45M+)Team BuildingVendor Risk ManagementCrisis Management
+            - generic [ref=e107]:
+              - heading "Security Operations" [level=3] [ref=e108]:
+                - img [ref=e109]
+                - text: Security Operations
+              - generic [ref=e111]: Incident ResponseThreat HuntingDigital ForensicsMalware AnalysisDetection Engineering
+            - generic [ref=e112]:
+              - heading "Tools & Platforms" [level=3] [ref=e113]
+              - generic [ref=e114]: Splunk ESCrowdStrike FalconCortex XSOARVolatilityZeekYARASigma
+            - generic [ref=e115]:
+              - heading "Frameworks" [level=3] [ref=e116]
+              - generic [ref=e117]: MITRE ATT&CKNIST CSFISO 27001PCI DSSDiamond Model
+        - generic [ref=e118]:
+          - heading "Certifications" [level=2] [ref=e119]:
+            - img [ref=e120]
+            - text: Certifications
+          - generic [ref=e123]:
+            - generic [ref=e124]:
+              - heading "CISSP" [level=3] [ref=e125]
+              - paragraph [ref=e126]: Passed, Endorsement Pending • 2024
+            - generic [ref=e127]:
+              - heading "eCPPTv2" [level=3] [ref=e128]
+              - paragraph [ref=e129]: Achieved • 2021
+            - generic [ref=e130]:
+              - heading "eWPT" [level=3] [ref=e131]
+              - paragraph [ref=e132]: Achieved • 2020
+            - generic [ref=e133]:
+              - heading "Cisco CyberOps Associate" [level=3] [ref=e134]
+              - paragraph [ref=e135]: Achieved • 2023
+            - generic [ref=e136]:
+              - heading "CCNA" [level=3] [ref=e137]
+              - paragraph [ref=e138]: Achieved • 2022
+            - generic [ref=e139]:
+              - heading "OSCP" [level=3] [ref=e140]
+              - paragraph [ref=e141]: In Progress • Q1 2025
+        - generic [ref=e142]:
+          - heading "Education" [level=2] [ref=e143]:
+            - img [ref=e144]
+            - text: Education
+          - generic [ref=e147]:
+            - generic [ref=e148]:
+              - heading "Master of Science in Computer Science" [level=3] [ref=e149]
+              - paragraph [ref=e150]: Ain Shams University
+              - paragraph [ref=e151]: 2024 – 2026 (Expected)
+              - paragraph [ref=e152]: "Thesis: AI-Driven Security Techniques for IoT in Healthcare"
+            - generic [ref=e153]:
+              - heading "Postgraduate Diploma in Cyber Security" [level=3] [ref=e154]
+              - paragraph [ref=e155]: Information Technology Institute (ITI)
+              - paragraph [ref=e156]: 2014 – 2015
+              - paragraph [ref=e157]: Selected from top 5% of applicants
+            - generic [ref=e158]:
+              - heading "Bachelor of Science in Computer Science" [level=3] [ref=e159]
+              - paragraph [ref=e160]: Egyptian Aviation Academy
+              - paragraph [ref=e161]: 2008 – 2012
+              - paragraph [ref=e162]: "Grade: Very Good"
+    - contentinfo [ref=e163]:
+      - generic [ref=e164]:
+        - generic [ref=e165]:
+          - generic [ref=e166]:
+            - heading "Stay Updated" [level=3] [ref=e167]
+            - paragraph [ref=e168]: Subscribe to my newsletter for the latest updates on Python, Security, and Open Source.
+            - generic [ref=e169]:
+              - generic [ref=e170]: Email address
+              - textbox "Email address" [ref=e171]:
+                - /placeholder: Enter your email
+              - button "Subscribe" [ref=e173]:
+                - generic [ref=e174]: Subscribe
+                - img [ref=e175]
+          - generic [ref=e178]:
+            - generic [ref=e179]:
+              - heading "Navigation" [level=3] [ref=e180]
+              - list [ref=e181]:
+                - listitem [ref=e182]:
+                  - link "Home" [ref=e183] [cursor=pointer]:
+                    - /url: /
+                - listitem [ref=e184]:
+                  - link "About" [ref=e185] [cursor=pointer]:
+                    - /url: /about
+                - listitem [ref=e186]:
+                  - link "Projects" [ref=e187] [cursor=pointer]:
+                    - /url: /projects
+                - listitem [ref=e188]:
+                  - link "Blog" [ref=e189] [cursor=pointer]:
+                    - /url: /blog
+            - generic [ref=e190]:
+              - heading "Social" [level=3] [ref=e191]
+              - list [ref=e192]:
+                - listitem [ref=e193]:
+                  - link "GitHub" [ref=e194] [cursor=pointer]:
+                    - /url: https://github.com/Ahmed-AdelB
+                    - img [ref=e195]
+                    - text: GitHub
+                - listitem [ref=e198]:
+                  - link "LinkedIn" [ref=e199] [cursor=pointer]:
+                    - /url: https://linkedin.com/in/ahmedadel1991
+                    - img [ref=e200]
+                    - text: LinkedIn
+                - listitem [ref=e204]:
+                  - link "Twitter" [ref=e205] [cursor=pointer]:
+                    - /url: https://twitter.com/ahmedalderai
+                    - img [ref=e206]
+                    - text: Twitter
+                - listitem [ref=e208]:
+                  - link "RSS Feed" [ref=e209] [cursor=pointer]:
+                    - /url: /rss.xml
+                    - img [ref=e210]
+                    - text: RSS Feed
+        - generic [ref=e215]:
+          - paragraph [ref=e216]: © 2026 Ahmed Adel. All rights reserved.
+          - paragraph [ref=e217]:
+            - text: Built with
+            - link "Astro" [ref=e218] [cursor=pointer]:
+              - /url: https://astro.build
+  - button "Back to top" [ref=e219]:
+    - img [ref=e220]
+    - generic [ref=e222]: Scroll to top
+  - generic [ref=e225]:
+    - button "Menu" [ref=e226]:
+      - img [ref=e228]
+      - generic: Menu
+    - button "Inspect" [ref=e232]:
+      - img [ref=e234]
+      - generic: Inspect
+    - button "Audit" [ref=e236]:
+      - generic [ref=e237]:
+        - img [ref=e238]
+        - img [ref=e241]
+      - generic: Audit
+    - button "Settings" [ref=e244]:
+      - img [ref=e246]
+      - generic: Settings
+```

@@ -55,8 +55,8 @@ const contributions: Contribution[] = [
 >
   <!-- Background decoration -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    <div class="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"></div>
+    <div class="absolute top-0 start-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 end-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"></div>
   </div>
 
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -140,7 +140,7 @@ const contributions: Contribution[] = [
       >
         View all contributions
         <svg
-          class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+          class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

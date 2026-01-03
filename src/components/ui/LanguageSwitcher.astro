@@ -1,0 +1,13 @@
+---
+const { pathname } = Astro.url;
+const isArabic = pathname.startsWith('/ar');
+const targetPath = isArabic ? pathname.replace('/ar', '') || '/' : `/ar${pathname}`;
+---
+
+<a
+  href={targetPath}
+  class="px-3 py-1.5 text-sm font-medium rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+  aria-label={isArabic ? 'Switch to English' : 'Switch to Arabic'}
+>
+  {isArabic ? 'EN' : 'عربي'}
+</a>

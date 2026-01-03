@@ -92,6 +92,35 @@ describe('MobileNav', () => {
     });
   });
 
+  it('moves focus to first and last link with Home/End', async () => {
+    render(<MobileNav navLinks={navLinks} currentPath="/" />);
+
+    openMobileMenu();
+
+    const nav = await screen.findByRole('navigation', {
+      name: /mobile navigation/i,
+    });
+
+    const navLinkElements = Array.from(
+      nav.querySelectorAll('a[href^="/"]')
+    ) as HTMLAnchorElement[];
+
+    navLinkElements[1].focus();
+    expect(navLinkElements[1]).toHaveFocus();
+
+    fireEvent.keyDown(navLinkElements[1], { key: 'End' });
+
+    await waitFor(() => {
+      expect(navLinkElements[navLinkElements.length - 1]).toHaveFocus();
+    });
+
+    fireEvent.keyDown(navLinkElements[navLinkElements.length - 1], { key: 'Home' });
+
+    await waitFor(() => {
+      expect(navLinkElements[0]).toHaveFocus();
+    });
+  });
+
   it('closes when clicking the overlay and restores scroll', async () => {
     const { container } = render(
       <MobileNav navLinks={navLinks} currentPath="/" />

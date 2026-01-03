@@ -210,7 +210,7 @@ export default function HeroStats() {
         href="https://github.com/aadel"
         target="_blank"
         rel="noopener noreferrer"
-        className="absolute -top-3 -right-3 p-2 bg-slate-800 rounded-full border border-slate-700/50 hover:border-emerald-500/50 hover:bg-slate-700 transition-all duration-300 group"
+        className="absolute -top-3 -end-3 p-2 bg-slate-800 rounded-full border border-slate-700/50 hover:border-emerald-500/50 hover:bg-slate-700 transition-all duration-300 group"
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3, delay: 1.2 }}

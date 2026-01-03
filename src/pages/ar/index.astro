@@ -1,11 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/features/Hero.astro';
-import SkillsStrip from '../components/features/SkillsStrip.astro';
-import GitHubStats from '../components/features/GitHubStats.astro';
-import ProjectCard from '../components/features/ProjectCard.astro';
-import LogoWall from '../components/features/LogoWall.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/features/Hero.astro';
+import GitHubStats from '../../components/features/GitHubStats.astro';
+import ProjectCard from '../../components/features/ProjectCard.astro';
+import LogoWall from '../../components/features/LogoWall.astro';
 
 // Fetch Featured Projects
 const allProjects = await getCollection('projects');
@@ -27,17 +26,14 @@ const recentPosts = allPosts
   .slice(0, 3);
 
 // Metadata
-const title = "Ahmed Adel | AI Security Researcher";
-const description = "Portfolio of Ahmed Adel, an AI Security Researcher and Open Source Contributor specializing in securing AI systems and infrastructure.";
+const title = "أحمد عادل | باحث أمني في الذكاء الاصطناعي";
+const description = "محفظة أعمال أحمد عادل، باحث أمني في الذكاء الاصطناعي ومساهم في المصادر المفتوحة متخصص في تأمين أنظمة الذكاء الاصطناعي وبنيتها التحتية.";
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} lang="ar">
   
   <!-- Hero Section -->
   <Hero />
-
-  <!-- Skills & Stats Strip -->
-  <SkillsStrip />
 
   <!-- GitHub Stats Section -->
   <GitHubStats />
@@ -47,10 +43,10 @@ const description = "Portfolio of Ahmed Adel, an AI Security Researcher and Open
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
         <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-          Featured Projects
+          أبرز المشاريع
         </h2>
         <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Building tools to secure the next generation of AI infrastructure.
+          بناء أدوات لتأمين الجيل القادم من البنية التحتية للذكاء الاصطناعي.
         </p>
       </div>
 
@@ -69,11 +65,11 @@ const description = "Portfolio of Ahmed Adel, an AI Security Researcher and Open
 
       <div class="mt-12 text-center">
         <a
-          href="/projects"
+          href="/ar/projects"
           class="inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-500 font-medium transition-colors"
         >
-          View all projects
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          عرض جميع المشاريع
+          <svg class="w-4 h-4 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </a>
@@ -85,8 +81,8 @@ const description = "Portfolio of Ahmed Adel, an AI Security Researcher and Open
   <section id="contributions" class="py-20 bg-white dark:bg-background">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <LogoWall 
-        title="Open Source Impact"
-        tagline="Contributing to the tools that power the AI ecosystem"
+        title="تأثير المصدر المفتوح"
+        tagline="المساهمة في الأدوات التي تدعم نظام الذكاء الاصطناعي البيئي"
       />
     </div>
   </section>
@@ -97,18 +93,18 @@ const description = "Portfolio of Ahmed Adel, an AI Security Researcher and Open
       <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
         <div>
           <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-            Recent Writings
+            كتابات حديثة
           </h2>
           <p class="text-lg text-gray-600 dark:text-gray-400 max-w-xl">
-            Thoughts on AI security, open source, and software engineering.
+            أفكار حول أمن الذكاء الاصطناعي والمصدر المفتوح وهندسة البرمجيات.
           </p>
         </div>
         <a
-          href="/blog"
+          href="/ar/blog"
           class="hidden md:inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-500 font-medium transition-colors"
         >
-          Read all posts
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          قراءة جميع المقالات
+          <svg class="w-4 h-4 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </a>
@@ -144,7 +140,7 @@ const description = "Portfolio of Ahmed Adel, an AI Security Researcher and Open
                 </div>
               </div>
               <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                <a href={`/blog/${post.slug}`}>
+                <a href={`/ar/blog/${post.slug}`}>
                   <span class="absolute inset-0"></span>
                   {post.data.title}
                 </a>
@@ -153,8 +149,8 @@ const description = "Portfolio of Ahmed Adel, an AI Security Researcher and Open
                 {post.data.description}
               </p>
               <div class="mt-auto flex items-center text-sm font-medium text-emerald-600 dark:text-emerald-400">
-                Read article
-                <svg class="w-4 h-4 ms-1 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                قراءة المقال
+                <svg class="w-4 h-4 ms-1 transition-transform group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </div>
@@ -165,11 +161,11 @@ const description = "Portfolio of Ahmed Adel, an AI Security Researcher and Open
 
       <div class="mt-8 text-center md:hidden">
         <a
-          href="/blog"
+          href="/ar/blog"
           class="inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-500 font-medium transition-colors"
         >
-          Read all posts
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          قراءة جميع المقالات
+          <svg class="w-4 h-4 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </a>
@@ -187,10 +183,10 @@ const description = "Portfolio of Ahmed Adel, an AI Security Researcher and Open
 
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
       <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">
-        Ready to secure your AI infrastructure?
+        هل أنت مستعد لتأمين بنيتك التحتية للذكاء الاصطناعي؟
       </h2>
       <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-        I'm always open to discussing new opportunities, collaborations, or just chatting about AI security and open source.
+        أنا دائمًا منفتح لمناقشة فرص جديدة، أو تعاونات، أو مجرد الحديث عن أمن الذكاء الاصطناعي والمصدر المفتوح.
       </p>
       
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -201,7 +197,7 @@ const description = "Portfolio of Ahmed Adel, an AI Security Researcher and Open
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
-          Get in Touch
+          تواصل معي
         </a>
         <a
           href="https://linkedin.com/in/ahmedaderai"
@@ -212,7 +208,7 @@ const description = "Portfolio of Ahmed Adel, an AI Security Researcher and Open
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
           </svg>
-          Connect on LinkedIn
+          تواصل عبر LinkedIn
         </a>
       </div>
     </div>

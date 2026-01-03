@@ -1,0 +1,76 @@
+---
+---
+
+<button
+  id="back-to-top"
+  aria-label="Back to top"
+  class="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-emerald-600 text-white shadow-lg transition-all duration-300 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900 opacity-0 translate-y-4 pointer-events-none data-[visible=true]:opacity-100 data-[visible=true]:translate-y-0 data-[visible=true]:pointer-events-auto print:hidden"
+>
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    stroke-width="2" 
+    stroke-linecap="round" 
+    stroke-linejoin="round" 
+    class="w-6 h-6 animate-bounce-small"
+  >
+    <path d="m18 15-6-6-6 6"/>
+  </svg>
+  <span class="sr-only">Scroll to top</span>
+</button>
+
+<style>
+  /* Custom small bounce animation that's less distracting than the default tailwind bounce */
+  @keyframes bounce-small {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-2px);
+    }
+  }
+  .animate-bounce-small:hover {
+    animation: bounce-small 1s infinite;
+  }
+</style>
+
+<script>
+  const backToTopBtn = document.getElementById('back-to-top');
+  
+  const toggleBackToTop = () => {
+    if (window.scrollY > 300) {
+      backToTopBtn?.setAttribute('data-visible', 'true');
+    } else {
+      backToTopBtn?.removeAttribute('data-visible');
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  if (backToTopBtn) {
+    window.addEventListener('scroll', toggleBackToTop, { passive: true });
+    backToTopBtn.addEventListener('click', scrollToTop);
+  }
+
+  // Handle View Transitions
+  document.addEventListener('astro:after-swap', () => {
+    const newBtn = document.getElementById('back-to-top');
+    if (newBtn) {
+      newBtn.addEventListener('click', scrollToTop);
+      // Re-attach scroll listener if needed, though window listener persists. 
+      // But we need to ensure the button state is correct on new page.
+      if (window.scrollY > 300) {
+        newBtn.setAttribute('data-visible', 'true');
+      }
+    }
+  });
+</script>

@@ -83,6 +83,101 @@ const readingTime = Math.ceil(wordCount / wordsPerMinute);
       <Content />
     </div>
 
+    <script is:inline>
+      const COPY_RESET_DELAY = 1800;
+
+      const copyWithClipboardApi = async (text) => {
+        if (navigator?.clipboard?.writeText && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+        return false;
+      };
+
+      const copyWithFallback = (text) => {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'absolute';
+        textarea.style.left = '-9999px';
+        textarea.style.top = '0';
+
+        const selection = document.getSelection();
+        const selectedRange = selection && selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        let success = false;
+        try {
+          success = document.execCommand('copy');
+        } catch (error) {
+          success = false;
+        }
+
+        document.body.removeChild(textarea);
+
+        if (selectedRange && selection) {
+          selection.removeAllRanges();
+          selection.addRange(selectedRange);
+        }
+
+        return success;
+      };
+
+      const copyText = async (text) => {
+        try {
+          const copied = await copyWithClipboardApi(text);
+          if (copied) return true;
+        } catch (error) {
+          // Fall back to execCommand.
+        }
+        return copyWithFallback(text);
+      };
+
+      const initCopyButtons = () => {
+        const codeBlocks = document.querySelectorAll('.prose pre > code');
+        if (!codeBlocks.length) return;
+
+        codeBlocks.forEach((code) => {
+          const pre = code.parentElement;
+          if (!pre || pre.dataset.copyReady === 'true') return;
+
+          pre.dataset.copyReady = 'true';
+          pre.classList.add('code-block');
+
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'copy-code-button';
+          button.textContent = 'Copy';
+          button.setAttribute('aria-label', 'Copy code to clipboard');
+
+          button.addEventListener('click', async () => {
+            const textToCopy = code.textContent || '';
+            if (!textToCopy.trim()) return;
+
+            button.disabled = true;
+            button.dataset.state = '';
+
+            const success = await copyText(textToCopy);
+            button.dataset.state = success ? 'copied' : 'error';
+            button.textContent = success ? 'Copied' : 'Copy failed';
+
+            window.setTimeout(() => {
+              button.disabled = false;
+              button.dataset.state = '';
+              button.textContent = 'Copy';
+            }, COPY_RESET_DELAY);
+          });
+
+          pre.appendChild(button);
+        });
+      };
+
+      initCopyButtons();
+      document.addEventListener('astro:page-load', initCopyButtons);
+    </script>
+
     <!-- Footer -->
     <footer class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
       <div class="flex items-center justify-between">
