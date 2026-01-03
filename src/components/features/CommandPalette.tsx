@@ -168,7 +168,7 @@ export default function CommandPalette() {
   // Copy email handler
   const copyEmail = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText('contact@ahmedadel.dev');
+      await navigator.clipboard.writeText('contact@ahmedalderai.com');
       setCopiedEmail(true);
       setTimeout(() => {
         setCopiedEmail(false);
@@ -255,7 +255,7 @@ export default function CommandPalette() {
     {
       id: 'copy-email',
       label: 'Copy Email',
-      description: 'Copy contact@ahmedadel.dev to clipboard',
+      description: 'Copy contact@ahmedalderai.com to clipboard',
       icon: copiedEmail ? Check : Copy,
       category: 'action',
       keywords: ['copy', 'email', 'clipboard', 'contact'],
@@ -522,7 +522,7 @@ export default function CommandPalette() {
                               onClick={() => item.action()}
                               onMouseEnter={() => setSelectedIndex(index)}
                               className={`
-                                group flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition-colors
+                                group flex w-full items-center gap-3 rounded-xl px-3 py-3 text-start transition-colors
                                 ${isSelected
                                   ? 'bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 dark:from-emerald-500/20 dark:to-cyan-500/20'
                                   : 'hover:bg-gray-100 dark:hover:bg-gray-800'

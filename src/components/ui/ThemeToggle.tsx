@@ -173,7 +173,7 @@ export default function ThemeToggle() {
       {/* Dropdown Menu */}
       {isOpen && (
         <div
-          className="absolute right-0 mt-2 w-40 py-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 animate-in fade-in slide-in-from-top-2 duration-200"
+          className="absolute end-0 mt-2 w-40 py-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 animate-in fade-in slide-in-from-top-2 duration-200"
           role="listbox"
           aria-label="Theme options"
         >
@@ -211,7 +211,7 @@ export default function ThemeToggle() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="ml-auto"
+                    className="ms-auto"
                     aria-hidden="true"
                   >
                     <polyline points="20 6 9 17 4 12" />

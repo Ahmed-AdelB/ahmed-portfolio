@@ -218,7 +218,7 @@ export default function MobileNav({ navLinks, currentPath }: MobileNavProps) {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="lg:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-lg z-50"
+            className="lg:hidden absolute top-full inset-x-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-lg z-50"
             role="navigation"
             aria-label="Mobile navigation"
           >
@@ -260,7 +260,7 @@ export default function MobileNav({ navLinks, currentPath }: MobileNavProps) {
                       {isActive && (
                         <motion.span
                           layoutId="mobile-active-indicator"
-                          className="ml-auto w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full"
+                          className="ms-auto w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full"
                           aria-hidden="true"
                         />
                       )}

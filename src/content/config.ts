@@ -2,13 +2,13 @@ import { defineCollection, z } from 'astro:content';
 
 const blog = defineCollection({
 	type: 'content',
-	schema: z.object({
+	schema: ({ image }) => z.object({
 		title: z.string(),
 		description: z.string(),
 		// Transform string to Date object
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
-		heroImage: z.string().optional(),
+		heroImage: image().optional(),
 		tags: z.array(z.string()).default([]),
 		draft: z.boolean().default(false),
 	}),
@@ -16,7 +16,7 @@ const blog = defineCollection({
 
 const projects = defineCollection({
 	type: 'content',
-	schema: z.object({
+	schema: ({ image }) => z.object({
 		title: z.string(),
 		description: z.string(),
 		techStack: z.array(z.string()),
@@ -24,7 +24,7 @@ const projects = defineCollection({
 		demo: z.string().url().optional(),
 		featured: z.boolean().default(false),
 		pubDate: z.coerce.date().optional(), // Added for sorting/display
-		heroImage: z.string().optional(),
+		heroImage: image().optional(),
 	}),
 });
 

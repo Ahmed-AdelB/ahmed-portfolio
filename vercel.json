@@ -37,10 +37,10 @@
       "has": [
         {
           "type": "host",
-          "value": "www.ahmedadel.dev"
+          "value": "www.ahmedalderai.com"
         }
       ],
-      "destination": "https://ahmedadel.dev/$1",
+      "destination": "https://ahmedalderai.com/$1",
       "permanent": true
     }
   ]

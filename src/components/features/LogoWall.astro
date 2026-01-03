@@ -1,7 +1,16 @@
 ---
+import { Image } from 'astro:assets';
+import pipLogo from '../../assets/images/logos/pip.svg';
+import poetryLogo from '../../assets/images/logos/poetry.svg';
+import pydanticLogo from '../../assets/images/logos/pydantic.svg';
+import clickLogo from '../../assets/images/logos/click.svg';
+import owaspLogo from '../../assets/images/logos/owasp.svg';
+import openaiLogo from '../../assets/images/logos/openai.svg';
+import pipToolsLogo from '../../assets/images/logos/pip-tools.svg';
+
 interface Project {
   name: string;
-  logo: string;
+  logo: ImageMetadata;
   url: string;
   alt?: string;
 }
@@ -16,43 +25,43 @@ const {
   projects = [
     {
       name: "pip",
-      logo: "/images/logos/pip.svg",
+      logo: pipLogo,
       url: "https://github.com/pypa/pip",
       alt: "pip - Python package installer",
     },
     {
       name: "Poetry",
-      logo: "/images/logos/poetry.svg",
+      logo: poetryLogo,
       url: "https://github.com/python-poetry/poetry",
       alt: "Poetry - Python dependency management",
     },
     {
       name: "Pydantic",
-      logo: "/images/logos/pydantic.svg",
+      logo: pydanticLogo,
       url: "https://github.com/pydantic/pydantic",
       alt: "Pydantic - Data validation library",
     },
     {
       name: "Click",
-      logo: "/images/logos/click.svg",
+      logo: clickLogo,
       url: "https://github.com/pallets/click",
       alt: "Click - CLI creation toolkit",
     },
     {
       name: "OWASP",
-      logo: "/images/logos/owasp.svg",
+      logo: owaspLogo,
       url: "https://github.com/OWASP",
       alt: "OWASP - Open Web Application Security Project",
     },
     {
       name: "openai-python",
-      logo: "/images/logos/openai.svg",
+      logo: openaiLogo,
       url: "https://github.com/openai/openai-python",
       alt: "OpenAI Python SDK",
     },
     {
       name: "pip-tools",
-      logo: "/images/logos/pip-tools.svg",
+      logo: pipToolsLogo,
       url: "https://github.com/jazzband/pip-tools",
       alt: "pip-tools - Dependency management utilities",
     },
@@ -115,11 +124,10 @@ const {
           title={project.alt || project.name}
         >
           <div class="relative h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16">
-            <img
+            <Image
               src={project.logo}
               alt={project.alt || `${project.name} logo`}
               class="h-full w-full object-contain grayscale transition-all duration-300 group-hover:grayscale-0 dark:brightness-90 dark:group-hover:brightness-100"
-              loading="lazy"
             />
           </div>
           <span class="text-xs font-medium text-gray-500 transition-colors group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white sm:text-sm">

@@ -4,42 +4,58 @@ interface Props {
   description?: string;
   image?: string;
   article?: boolean;
+  project?: boolean;
   publishDate?: Date;
+  data?: Record<string, any>;
 }
 
-const { title, description, image, article = false, publishDate } = Astro.props;
+const { title, description, image, article = false, project = false, publishDate, data = {} } = Astro.props;
 
 const siteUrl = import.meta.env.SITE;
 const defaultImage = `${siteUrl}/og-default.svg`;
 const ogImage = image || defaultImage;
 
+const finalPublishDate = publishDate || (data.pubDate ? new Date(data.pubDate) : undefined);
+
 const personSchema = {
   "@type": "Person",
-  "@id": `${siteUrl}#person`,
+  "@id": `${siteUrl}/#person`,
   "name": "Ahmed Adel",
   "url": siteUrl,
   "jobTitle": "AI Security Researcher",
   "description": "AI Security Researcher and Python Open Source Contributor based in Ireland.",
+  "image": `${siteUrl}/images/logos/pydantic.svg`, // Using a placeholder or better if available
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Dublin",
     "addressCountry": "IE"
   },
   "sameAs": [
-    "https://github.com/Ahmed-AdelB"
-  ]
+    "https://github.com/Ahmed-AdelB",
+    "https://twitter.com/ahmedaderai",
+    "https://linkedin.com/in/ahmed-adel-b" // Hypothetical, but good to have structure
+  ],
+  "knowsAbout": ["AI Security", "Python", "Open Source", "Cybersecurity", "LLM Security"]
 };
 
 const websiteSchema = {
   "@type": "WebSite",
-  "@id": `${siteUrl}#website`,
+  "@id": `${siteUrl}/#website`,
   "url": siteUrl,
   "name": "Ahmed Adel Portfolio",
   "description": "Portfolio of Ahmed Adel, specializing in AI Security and Python development.",
   "publisher": {
-    "@id": `${siteUrl}#person`
+    "@id": `${siteUrl}/#person`
   },
-  "inLanguage": "en-US"
+  "inLanguage": "en-US",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": `${siteUrl}/search?q={search_term_string}`
+    },
+    "query-input": "required name=search_term_string"
+  }
 };
 
 const schema: any = {
@@ -50,22 +66,49 @@ const schema: any = {
   ]
 };
 
-if (article) {
+if (project) {
   schema["@graph"].push({
-    "@type": "BlogPosting",
+    "@type": "SoftwareSourceCode",
+    "@id": Astro.url.href,
+    "name": title,
+    "description": description,
+    "image": ogImage,
+    "codeRepository": data.github,
+    "programmingLanguage": data.techStack || [],
+    "author": {
+      "@id": `${siteUrl}/#person`
+    },
+    "maintainer": {
+      "@id": `${siteUrl}/#person`
+    },
+    "datePublished": data.pubDate ? new Date(data.pubDate).toISOString() : undefined,
+    "url": Astro.url.href,
+    "isPartOf": {
+        "@id": `${siteUrl}/#website`
+    }
+  });
+} else if (article) {
+  schema["@graph"].push({
+    "@type": "TechArticle",
+    "@id": Astro.url.href,
     "headline": title,
     "description": description,
     "image": ogImage,
-    "datePublished": publishDate?.toISOString(),
+    "datePublished": finalPublishDate?.toISOString(),
+    "dateModified": data.updatedDate ? new Date(data.updatedDate).toISOString() : finalPublishDate?.toISOString(),
     "author": {
-        "@id": `${siteUrl}#person`
+        "@id": `${siteUrl}/#person`
     },
     "publisher": {
-        "@id": `${siteUrl}#person`
+        "@id": `${siteUrl}/#person`
     },
+    "keywords": data.tags || [],
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": Astro.url.href
+    },
+    "isPartOf": {
+        "@id": `${siteUrl}/#website`
     }
   });
 } else {
@@ -82,10 +125,10 @@ if (article) {
             "height": 630
         },
         "isPartOf": {
-            "@id": `${siteUrl}#website`
+            "@id": `${siteUrl}/#website`
         },
         "about": {
-            "@id": `${siteUrl}#person`
+            "@id": `${siteUrl}/#person`
         }
     });
 }

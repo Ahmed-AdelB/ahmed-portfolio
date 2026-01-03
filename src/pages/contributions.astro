@@ -94,7 +94,7 @@ function getPrNumber(url: string): number {
       </div>
 
       <!-- Timeline/Grid -->
-      <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent dark:before:via-gray-700">
+      <div class="space-y-8 relative before:absolute before:inset-0 before:ms-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent dark:before:via-gray-700">
         {
           contributions.map((contribution, index) => (
             <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active contribution-item" data-project={contribution.data.project}>
@@ -118,7 +118,7 @@ function getPrNumber(url: string): number {
                     additions={contribution.data.additions}
                     deletions={contribution.data.deletions}
                   />
-                  <div class="mt-2 text-xs text-gray-500 dark:text-gray-400 text-right md:group-odd:text-left md:group-even:text-right">
+                  <div class="mt-2 text-xs text-gray-500 dark:text-gray-400 text-end md:group-odd:text-start md:group-even:text-end">
                     {contribution.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                   </div>
               </div>

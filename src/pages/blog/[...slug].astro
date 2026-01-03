@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ShareButtons from '../../components/features/ShareButtons.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -23,7 +24,12 @@ const wordCount = post.body?.split(/\s+/).length || 0;
 const readingTime = Math.ceil(wordCount / wordsPerMinute);
 ---
 
-<BaseLayout title={`${post.data.title} | Ahmed Adel`} description={post.data.description}>
+<BaseLayout 
+  title={`${post.data.title} | Ahmed Adel`} 
+  description={post.data.description}
+  article={true}
+  data={post.data}
+>
   <article class="max-w-3xl mx-auto px-4 py-12">
     <!-- Header -->
     <header class="mb-8">
@@ -90,19 +96,7 @@ const readingTime = Math.ceil(wordCount / wordsPerMinute);
           Back to Blog
         </a>
 
-        <!-- Share buttons placeholder -->
-        <div class="flex gap-4">
-          <button
-            onclick={`navigator.clipboard.writeText(window.location.href);`}
-            class="text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400"
-            title="Copy link"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-              <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
-            </svg>
-          </button>
-        </div>
+        <ShareButtons title={post.data.title} url={Astro.url} />
       </div>
     </footer>
   </article>

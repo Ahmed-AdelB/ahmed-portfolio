@@ -117,8 +117,8 @@ Auto-deploys to Vercel on push to main branch.
 - Framework: Astro
 - Build: `npm run build`
 - Output: `dist`
-- Domain: `ahmedadel.dev`
+- Domain: `ahmedalderai.com`
 
 **Environment:**
-- Site URL: `https://ahmedadel.dev` (configured in `astro.config.mjs`)
+- Site URL: `https://ahmedalderai.com` (configured in `astro.config.mjs`)
 - No secret env vars required for build

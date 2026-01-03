@@ -1,0 +1,43 @@
+:root {
+  --terminal-green: #00ff00;
+  --terminal-bg: #000000;
+}
+
+html[data-terminal='true'] {
+  color-scheme: dark;
+  background-color: var(--terminal-bg);
+}
+
+html[data-terminal='true'] body {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-green) !important;
+  font-family: "JetBrains Mono", "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
+
+html[data-terminal='true'] body * {
+  color: inherit !important;
+  border-color: var(--terminal-green) !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+html[data-terminal='true'] a {
+  color: var(--terminal-green) !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+html[data-terminal='true'] input,
+html[data-terminal='true'] textarea,
+html[data-terminal='true'] select {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-green) !important;
+  border-color: var(--terminal-green) !important;
+  caret-color: var(--terminal-green);
+}
+
+html[data-terminal='true'] ::selection {
+  background: rgba(0, 255, 0, 0.2);
+  color: var(--terminal-green);
+}

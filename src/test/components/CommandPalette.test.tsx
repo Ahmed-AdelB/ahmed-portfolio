@@ -478,7 +478,7 @@ describe('CommandPalette', () => {
       }
 
       await waitFor(() => {
-        expect(navigator.clipboard.writeText).toHaveBeenCalledWith('contact@ahmedadel.dev');
+        expect(navigator.clipboard.writeText).toHaveBeenCalledWith('contact@ahmedalderai.com');
       });
     });
   });

@@ -1,0 +1,153 @@
+---
+import { Twitter, Linkedin, Share2, Link as LinkIcon } from 'lucide-react';
+
+interface Props {
+  title: string;
+  url: URL | string;
+}
+
+const { title, url } = Astro.props;
+
+const pageUrl = typeof url === 'string' ? url : url.toString();
+const encodedUrl = encodeURIComponent(pageUrl);
+const encodedTitle = encodeURIComponent(title);
+
+const shareLinks = [
+  {
+    name: 'Share on X',
+    href: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
+    icon: Twitter,
+  },
+  {
+    name: 'Share on LinkedIn',
+    href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+    icon: Linkedin,
+  },
+  ];
+
+const buttonClasses =
+  'inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 text-gray-600 transition-colors ' +
+  'hover:border-emerald-300 hover:text-emerald-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ' +
+  'focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-gray-700 dark:text-gray-300 ' +
+  'dark:hover:border-emerald-500/50 dark:hover:text-emerald-300 dark:focus-visible:ring-emerald-400 ' +
+  'dark:focus-visible:ring-offset-gray-900';
+---
+
+<div
+  class="flex flex-wrap items-center gap-3"
+  role="group"
+  aria-label="Share this post"
+  data-share-root
+  data-url={pageUrl}
+  data-title={title}
+>
+  <span class="text-sm font-semibold text-gray-600 dark:text-gray-300">Share</span>
+
+  <div class="flex flex-wrap items-center gap-2">
+    {shareLinks.map((link) => (
+      <a
+        href={link.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={link.name}
+        title={link.name}
+        class={buttonClasses}
+      >
+        <link.icon className="h-5 w-5" />
+      </a>
+    ))}
+
+    <button
+      type="button"
+      class={`${buttonClasses} sm:hidden`}
+      data-share-native
+      aria-label="Share with your device"
+      title="Share with your device"
+    >
+      <Share2 className="h-5 w-5" />
+    </button>
+
+    <button
+      type="button"
+      class={buttonClasses}
+      data-copy-link
+      aria-label="Copy link"
+      title="Copy link"
+    >
+      <LinkIcon className="h-5 w-5" />
+    </button>
+  </div>
+
+  <span
+    class="min-h-[1rem] text-xs text-gray-500 dark:text-gray-400"
+    role="status"
+    aria-live="polite"
+    data-share-status
+  ></span>
+</div>
+
+<script>
+  const shareRoots = document.querySelectorAll('[data-share-root]');
+
+  const copyToClipboard = async (text) => {
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      throw new Error('Clipboard API not available');
+    }
+    await navigator.clipboard.writeText(text);
+  };
+
+  shareRoots.forEach((root) => {
+    const url = root.getAttribute('data-url');
+    const title = root.getAttribute('data-title') || document.title;
+    const copyButton = root.querySelector('[data-copy-link]');
+    const nativeShareButton = root.querySelector('[data-share-native]');
+    const status = root.querySelector('[data-share-status]');
+    let statusTimeout;
+
+    const setStatus = (message) => {
+      if (!status) return;
+      status.textContent = message;
+      if (statusTimeout) window.clearTimeout(statusTimeout);
+      if (message) {
+        statusTimeout = window.setTimeout(() => {
+          status.textContent = '';
+        }, 2400);
+      }
+    };
+
+    const handleCopy = async () => {
+      if (!url) return;
+      try {
+        await copyToClipboard(url);
+        setStatus('Link copied to clipboard.');
+      } catch (error) {
+        setStatus('Unable to copy link.');
+      }
+    };
+
+    if (copyButton) {
+      copyButton.addEventListener('click', () => {
+        handleCopy();
+      });
+    }
+
+    if (nativeShareButton) {
+      nativeShareButton.addEventListener('click', async () => {
+        if (!url) return;
+        if (navigator.share) {
+          try {
+            await navigator.share({ title, url });
+            setStatus('Share sheet opened.');
+          } catch (error) {
+            const isAbort =
+              error && typeof error === 'object' && 'name' in error && error.name === 'AbortError';
+            if (isAbort) return;
+            await handleCopy();
+          }
+          return;
+        }
+        await handleCopy();
+      });
+    }
+  });
+</script>

@@ -1,8 +1,10 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
   title: string;
   description: string;
-  image?: string;
+  image?: ImageMetadata;
   features: string[];
   techStack: string[];
   githubUrl: string;
@@ -229,11 +231,12 @@ const finalCtaUrl = ctaUrl || demoUrl || githubUrl;
       image && (
         <div class="relative order-first md:order-last">
           <div class="overflow-hidden rounded-xl bg-gray-100 shadow-lg dark:bg-gray-900">
-            <img
+            <Image
               src={image}
               alt={`Screenshot of ${title}`}
               class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              loading="lazy"
+              width={800}
+              height={600}
             />
           </div>
           <!-- Decorative gradient blob -->

@@ -37,8 +37,8 @@ export async function GET(context: APIContext) {
     // Additional channel elements
     customData: `<language>en-us</language>
 <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-<managingEditor>ahmed@ahmedadel.dev (Ahmed Adel)</managingEditor>
-<webMaster>ahmed@ahmedadel.dev (Ahmed Adel)</webMaster>
+<managingEditor>ahmed@ahmedalderai.com (Ahmed Adel)</managingEditor>
+<webMaster>ahmed@ahmedalderai.com (Ahmed Adel)</webMaster>
 <copyright>Copyright ${new Date().getFullYear()} Ahmed Adel. All rights reserved.</copyright>`,
     // Use pretty XML formatting
     trailingSlash: false,
