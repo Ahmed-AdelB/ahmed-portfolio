@@ -1,123 +1,124 @@
-# Ahmed Adel - Personal Portfolio
+# Ahmed Adel - Portfolio
 
-A professional portfolio and personal website for Ahmed Adel, an AI Security Researcher and Python Open Source Contributor. This site showcases projects, blog posts, and open-source contributions.
+A professional portfolio and personal website showcasing projects, blog posts, and open-source contributions. Built with modern web standards, optimized for performance and accessibility.
 
-Built with performance, accessibility, and modern web standards in mind.
+## Tech Stack
 
-## 🚀 Tech Stack
-
-- **Framework:** [Astro 5.x](https://astro.build/) (Static Site Generation)
-- **UI Library:** [React 19](https://react.dev/)
-- **Styling:** [Tailwind CSS 4.x](https://tailwindcss.com/)
-- **Animations:** [Framer Motion](https://www.framer.com/motion/)
-- **Icons:** [Lucide React](https://lucide.dev/)
-- **Content:** MDX (Markdown + JSX) & JSON Content Collections
+- **Framework:** Astro 5.16 (Static Site Generation)
+- **UI Library:** React 19 (islands architecture)
+- **Styling:** Tailwind CSS 4
+- **Content:** MDX (Markdown + JSX) & JSON
+- **Animations:** Framer Motion
+- **Icons:** Lucide React
 - **Deployment:** Vercel
 
-## 🛠️ Getting Started
+## Features
+
+- **Dark/Light Theme Toggle** - User preference with persistent storage
+- **Command Palette** - Quick navigation (Cmd+K / Ctrl+K)
+- **RSS Feed** - Subscribe to blog updates
+- **Blog** - MDX posts with automatic reading time estimates
+- **Project Case Studies** - Detailed project showcases with tech stack
+- **Open Source Contributions** - Gallery of significant OSS PRs and reviews
+- **Contact Form** - Email integration via Formspree
+- **SEO Optimized** - OG images, meta tags, and structured data
+- **Sitemap & Robots.txt** - Search engine discoverability
+- **Performance** - 100 Lighthouse scores, optimized images
+
+## Getting Started
 
 ### Prerequisites
 
-- Node.js (v20 or higher recommended)
+- Node.js 20+
 - npm or pnpm
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/ahmed-portfolio.git
-   cd ahmed-portfolio
-   ```
+```bash
+git clone <repository-url>
+cd ahmed-portfolio
+npm install
+```
 
-2. Install dependencies:
-   ```bash
-   npm install
-   # or
-   pnpm install
-   ```
+### Development
 
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-   The site will be available at `http://localhost:4321`.
+```bash
+npm run dev
+```
 
-## 📂 Content Structure
+Site runs at `http://localhost:4321`
 
-This project uses [Astro Content Collections](https://docs.astro.build/en/guides/content-collections/) to manage content. All content is located in `src/content/`.
+### Build & Preview
 
-### 1. Blog Posts (`src/content/blog/`)
-- **Type:** `content` (Markdown/MDX)
-- **Schema:**
-  ```typescript
-  {
-    title: string;          // Title of the post
-    description: string;    // Short summary for SEO and previews
-    pubDate: Date;          // Publication date
-    updatedDate?: Date;     // Optional update date
-    heroImage?: string;     // Optional cover image path (in public/)
-    tags: string[];         // Array of tags
-    draft: boolean;         // If true, will be hidden in production
-  }
-  ```
+```bash
+npm run build
+npm run preview
+```
 
-### 2. Projects (`src/content/projects/`)
-- **Type:** `content` (Markdown/MDX)
-- **Schema:**
-  ```typescript
-  {
-    title: string;          // Project name
-    description: string;    // Short description
-    techStack: string[];    // Array of technologies used (e.g., ["Python", "React"])
-    github?: string;        // URL to GitHub repo
-    demo?: string;          // URL to live demo
-    featured: boolean;      // If true, highlighted on the home page
-    pubDate?: Date;         // Date for sorting
-    heroImage?: string;     // Project screenshot or banner
-  }
-  ```
+## Content Structure
 
-### 3. Contributions (`src/content/contributions/`)
-- **Type:** `data` (JSON)
-- **File Format:** `.json` files representing individual contributions.
-- **Schema:**
-  ```typescript
-  {
-    project: string;        // Name of the OSS project (e.g., "pandas")
-    title: string;          // Title of the PR or Issue
-    type: "PR" | "Issue" | "Review" | "Other";
-    pr_url: string;         // URL to the contribution
-    impact: string;         // Description of the impact/change
-    date: Date;             // Date of contribution
-    status: "Merged" | "Open" | "Closed" | "Draft";
-    additions?: number;     // Lines added
-    deletions?: number;     // Lines deleted
-  }
-  ```
+Content is managed using [Astro Content Collections](https://docs.astro.build/en/guides/content-collections/) in `src/content/`:
 
-## 📜 Scripts & Workflow
+### Blog Posts (`src/content/blog/`)
+
+MDX format with frontmatter:
+
+```yaml
+title: Article Title
+description: SEO summary
+pubDate: 2024-01-01
+tags: [tag1, tag2]
+draft: false
+```
+
+### Projects (`src/content/projects/`)
+
+MDX format showcasing work:
+
+```yaml
+title: Project Name
+description: Brief overview
+techStack: [Python, React]
+github: https://github.com/...
+demo: https://...
+featured: true
+```
+
+### Contributions (`src/content/contributions/`)
+
+JSON files documenting open source work:
+
+```json
+{
+  "project": "pandas",
+  "title": "PR description",
+  "type": "PR",
+  "pr_url": "https://github.com/...",
+  "impact": "What changed",
+  "date": "2024-01-01",
+  "status": "Merged"
+}
+```
+
+## Scripts
 
 | Command | Description |
-| :--- | :--- |
-| `npm run dev` | Starts the local development server. |
-| `npm run build` | Builds the site for production into the `./dist` folder. |
-| `npm run preview` | Previews the production build locally. |
-| `npm run astro` | Runs Astro CLI commands (e.g., `astro doctor`). |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production to `dist/` |
+| `npm run preview` | Preview production build locally |
+| `npm run astro` | Run Astro CLI commands |
 
-## 🌍 Environment Variables
+## Deployment
 
-Currently, no secret environment variables are required for the build process. 
-The site URL is configured in `astro.config.mjs`:
-- `site`: `https://ahmedadel.dev`
+Auto-deploys to Vercel on push to main branch.
 
-## 📦 Deployment
+**Configuration:**
+- Framework: Astro
+- Build: `npm run build`
+- Output: `dist`
+- Domain: `ahmedadel.dev`
 
-The project is configured for deployment on **Vercel**.
-
-1. **Build Settings:**
-   - Framework Preset: `Astro`
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
-
-2. **Configuration:**
-   The `vercel.json` file handles specific Vercel configurations if needed.
+**Environment:**
+- Site URL: `https://ahmedadel.dev` (configured in `astro.config.mjs`)
+- No secret env vars required for build
