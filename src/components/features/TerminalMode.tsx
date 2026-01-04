@@ -11,6 +11,7 @@ import {
 import { useStore } from "@nanostores/react";
 import { Terminal, Power } from "lucide-react";
 import { terminalMode, toggleTerminalMode } from "../../stores/terminal";
+import { foundFlag } from "../../stores/ctf";
 
 type TerminalLineType = "command" | "output" | "system";
 
@@ -377,11 +378,48 @@ export const TerminalMode: FC<TerminalModeProps> = ({ className }) => {
         (command === "sudo" && rest[0] === "su") ||
         (command === "cat" && rest[0] === "/etc/shadow")
       ) {
+        const isNew = foundFlag("flag2_terminal");
         enqueueLines([
           "SYSTEM OVERRIDE INITIATED...",
           "Access granted... You found the secret flag!",
           "FLAG{terminal_hacker_elite}",
+          isNew ? ">> Achievement Unlocked: Terminal Access <<" : ">> Flag already claimed <<",
+          "Tip: Submit this flag with `submit <flag>` or check /root",
         ]);
+        return;
+      }
+
+      if (command === "submit") {
+        const flagValue = rest[0];
+        if (!flagValue) {
+          enqueueLines(["Usage: submit <flag_value>"]);
+          return;
+        }
+
+        if (flagValue === "FLAG{ahmed_recon_master_2026}") {
+           const isNew = foundFlag("flag1_robots");
+           enqueueLines([
+             "Success! Robots Protocol flag accepted.",
+             isNew ? ">> Achievement Unlocked: Robots Protocol <<" : ">> Flag already claimed <<",
+             "Tip: View your hacker profile at /root",
+           ]);
+        } else if (flagValue === "FLAG{terminal_hacker_elite}") {
+           const isNew = foundFlag("flag2_terminal");
+           enqueueLines([
+             "Success! Terminal Access flag accepted.",
+             isNew ? ">> Achievement Unlocked: Terminal Access <<" : ">> Flag already claimed <<",
+             "Tip: View your hacker profile at /root",
+           ]);
+        } else if (flagValue === "FLAG{social_engineer_supreme}") {
+           const isNew = foundFlag("flag3_chatbot");
+           enqueueLines([
+             "Success! AI Injection flag accepted.",
+             isNew ? ">> Achievement Unlocked: AI Injection <<" : ">> Flag already claimed <<",
+             "Tip: View your hacker profile at /root",
+           ]);
+        } else {
+           enqueueLines(["Error: Invalid flag."]);
+        }
         return;
       }
 

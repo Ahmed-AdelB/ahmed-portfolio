@@ -1,6 +1,9 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Terminal CTF Challenges", () => {
+  // Emulate reduced motion to disable typing animation for faster/reliable tests
+  test.use({ colorScheme: 'dark', reducedMotion: 'reduce' });
+
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => {
       localStorage.clear();
@@ -8,16 +11,15 @@ test.describe("Terminal CTF Challenges", () => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
     
-    // Enable Terminal Mode via Command Palette
-    await page.keyboard.press("Control+k");
-    const dialog = page.locator("[cmdk-dialog]");
-    await expect(dialog).toBeVisible();
-    const input = dialog.locator("[cmdk-input]");
-    await input.fill("Toggle Terminal Mode");
-    const terminalOption = dialog.locator("[cmdk-item]", {
-      hasText: /terminal mode/i,
-    });
-    await terminalOption.click();
+    // Enable Terminal Mode via Toggle Button
+    // Wait for the button to be available (lazy loaded)
+    const toggleBtn = page.locator(".terminal-toggle");
+    await toggleBtn.waitFor({ state: "attached", timeout: 15000 });
+    // Ensure it's visible (might be covered or animating)
+    await toggleBtn.waitFor({ state: "visible", timeout: 5000 });
+    
+    await toggleBtn.click();
+    
     await expect(page.locator("html")).toHaveAttribute("data-terminal", "true");
   });
 

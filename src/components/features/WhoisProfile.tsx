@@ -73,7 +73,7 @@ export default function WhoisProfile() {
             <div className="overflow-auto p-4 max-h-[70vh]">
               <pre className="font-mono text-sm leading-relaxed">
                 <code className="text-gray-300">
-                  <span className="text-purple-400">&#123;</span>
+                  <span className="text-purple-400">{"{"}</span>
                   
                   <span className="text-blue-400">  "name"</span>: <span className="text-green-400">"{profile.name}"</span>,
                   
@@ -83,17 +83,17 @@ export default function WhoisProfile() {
                   
                   <span className="text-blue-400">  "status"</span>: <span className="text-yellow-400">"{profile.status}"</span>,
                   
-                  <span className="text-blue-400">  "stack"</span>: <span className="text-purple-400">&#123;</span>
+                  <span className="text-blue-400">  "stack"</span>: <span className="text-purple-400">{"{"}</span>
                   
                     <span className="text-blue-400">    "languages"</span>: [<span className="text-green-400">"Python"</span>, <span className="text-green-400">"TypeScript"</span>, <span className="text-green-400">"Go"</span>],
                   
                     <span className="text-blue-400">    "security"</span>: [<span className="text-green-400">"AppSec"</span>, <span className="text-green-400">"CloudSec"</span>, <span className="text-green-400">"AI Safety"</span>]
                   
-                  <span className="text-purple-400">  &#125;</span>,
+                  <span className="text-purple-400">  {"}"}</span>,
                   
                   <span className="text-blue-400">  "contact"</span>: <span className="text-green-400">"{profile.email}"</span>
                   
-                  <span className="text-purple-400">&#125;</span>
+                  <span className="text-purple-400">{"}"}</span>
                 </code>
               </pre>
             </div>
