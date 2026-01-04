@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CommandCenterDashboard } from '../components/dashboard/CommandCenterDashboard';
+import { PrayerTimeWidget } from '../components/features/PrayerTimeWidget';
+
+const title = "Command Center | Ahmed Adel";
+const description = "Elite mode operational dashboard.";
+---
+
+<BaseLayout title={title} description={description}>
+    <CommandCenterDashboard client:only="react" />
+    <PrayerTimeWidget client:only="react" />
+</BaseLayout>

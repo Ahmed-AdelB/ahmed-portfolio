@@ -1,6 +1,8 @@
 ---
 import { Github, Linkedin, Twitter, Rss } from 'lucide-react';
 import { NewsletterForm } from './features/NewsletterForm';
+import { IslamicDateDisplay } from './ui/IslamicDateDisplay';
+import { getHijriDate } from '../lib/hijriDate';
 
 interface Props {
   lang?: 'en' | 'ar';
@@ -169,10 +171,15 @@ const navLinks = [
         <p class="text-base text-gray-400 dark:text-gray-500">
           &copy; {currentYear} Ahmed Adel. {t.rights}
         </p>
-        <p class="mt-4 text-base text-gray-400 dark:text-gray-500 md:mt-0">
-          {t.builtWith} <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="hover:text-gray-600 dark:hover:text-gray-300">Astro</a>
-        </p>
+        <div class="flex items-center gap-4 mt-4 md:mt-0">
+          <IslamicDateDisplay client:idle lang={lang} />
+          <p class="text-base text-gray-400 dark:text-gray-500">
+            {t.builtWith} <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="hover:text-gray-600 dark:hover:text-gray-300">Astro</a>
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </footer>
+
+

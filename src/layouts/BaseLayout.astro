@@ -2,13 +2,18 @@
 import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css';
 import '../styles/terminal.css';
+import '../styles/islamic-theme.css';
 import Schema from '../components/seo/Schema.astro';
 import CommandPalette from '../components/features/CommandPalette';
 import { AIChatbot } from '../components/features/AIChatbot';
 import { TerminalMode } from '../components/features/TerminalMode';
+import { ShortcutsHelp } from '../components/ui/ShortcutsHelp';
 import MatrixRain from '../components/effects/MatrixRain';
+import { IslamicEffects } from '../components/effects/IslamicEffects';
+import BootSequence from '../components/effects/BootSequence';
 import SecurityScan from '../components/features/SecurityScan';
 import WhoisProfile from '../components/features/WhoisProfile';
+import EasterEggManager from '../components/features/EasterEggManager';
 import BackToTop from '../components/features/BackToTop.astro';
 import CopyCodeButton from '../components/features/CopyCodeButton.astro';
 // Self-hosted fonts - Optimized: reduced weights for better performance
@@ -120,6 +125,11 @@ const metaDescription = description.length > 200 ? description.substring(0, 197)
 
     <!-- Theme + terminal detection script (FOUC prevention) -->
     <script is:inline>
+      // ﷽
+      if (import.meta.env.DEV) {
+        console.log('بسم الله الرحمن الرحيم');
+      }
+
       (function() {
         const root = document.documentElement;
         let terminalEnabled = false;
@@ -190,6 +200,9 @@ const metaDescription = description.length > 200 ? description.substring(0, 197)
   <body
     class="min-h-screen bg-background text-foreground font-sans antialiased transition-colors duration-300"
   >
+    <!-- بسم الله الرحمن الرحيم -->
+    <div class="bg-islamic-pattern" aria-hidden="true"></div>
+    
     <!-- Skip Links (WCAG 2.4.1) -->
     <div class="skip-links">
       <a
@@ -231,11 +244,17 @@ const metaDescription = description.length > 200 ? description.substring(0, 197)
 
     <!-- Terminal Mode - Lazy loaded -->
     <TerminalMode client:idle />
+
+    <!-- Keyboard Shortcuts Help -->
+    <ShortcutsHelp client:load />
     
     <!-- New Action Components -->
+    <BootSequence client:load />
     <MatrixRain client:idle />
     <SecurityScan client:idle />
     <WhoisProfile client:idle />
+    <EasterEggManager client:idle />
+    <IslamicEffects client:idle />
 
     <!-- Back to Top Button -->
     <BackToTop />

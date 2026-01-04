@@ -33,7 +33,6 @@ export async function getNextPrayer(): Promise<PrayerTime | null> {
   // Fetch if not in cache or expired
   if (!timings) {
     try {
-      const today = new Date();
       // Format date as DD-MM-YYYY for the API if needed, but timingsByCity usually takes query params
       // actually timingsByCity takes date, city, country, method. 
       // The endpoint is /timingsByCity/:date or query params. 
