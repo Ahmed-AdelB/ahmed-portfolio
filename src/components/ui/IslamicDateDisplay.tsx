@@ -11,13 +11,12 @@ export const IslamicDateDisplay: React.FC<IslamicDateDisplayProps> = ({ lang = '
 
   useEffect(() => {
     const checkVisibility = () => {
-       // Check if enabled in settings or by default (let's show it by default for now or stick to the toggle logic)
-       // The previous implementation used a localStorage toggle.
-       // I'll default to visible for this feature rollout, or check the store.
-       // The spec says "client-load only".
-       // Let's use the store if possible, or just always show if the component is mounted.
-       // I'll make it always show if mounted, controlling mounting from parent or just always showing it.
-       setIsVisible(true);
+       try {
+         const stored = localStorage.getItem('show-hijri-date');
+         setIsVisible(stored === 'true');
+       } catch {
+         setIsVisible(false);
+       }
     };
 
     const locale = lang === 'ar' ? 'ar-SA-u-ca-islamic' : 'en-IE-u-ca-islamic';
@@ -34,10 +33,14 @@ export const IslamicDateDisplay: React.FC<IslamicDateDisplayProps> = ({ lang = '
     }
   }, [lang]);
 
-  if (!isVisible || !dateStr) return null;
+  if (!dateStr) return <span id="hijri-date-toggle" className="hidden"></span>;
 
   return (
-    <span className={`font-mono text-sm text-zinc-500 ${className}`} title="Hijri Date">
+    <span 
+      id="hijri-date-toggle"
+      className={`font-mono text-sm text-zinc-500 ${className} ${isVisible ? '' : 'hidden'}`} 
+      title="Hijri Date"
+    >
       {dateStr}
     </span>
   );
