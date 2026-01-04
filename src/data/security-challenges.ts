@@ -1,43 +1,30 @@
-import {
-  type LucideIcon,
-  Shield,
-  CheckCircle2,
-  AlertTriangle,
-} from "lucide-react";
+import { AlertTriangle, CheckCircle2, Shield } from "lucide-react";
+export * from "../types/security";
+import type {
+  Challenge,
+  DefenseId,
+  DefenseMechanism,
+  Difficulty,
+  SimulationStatus,
+} from "../types/security";
 
-export type Difficulty = "Easy" | "Medium" | "Hard";
-export type SimulationStatus = "safe" | "blocked" | "compromised";
-export type DefenseId =
-  | "instruction-hierarchy"
-  | "input-sanitization"
-  | "context-isolation"
-  | "tool-gating"
-  | "output-filtering";
-
-export interface DefenseMechanism {
-  id: DefenseId;
-  name: string;
-  description: string;
-  strength: number;
-  guardrail: string;
-}
-
-export interface Challenge {
-  id: string;
-  title: string;
-  difficulty: Difficulty;
-  context: string;
-  systemPrompt: string;
-  userPrompt: string;
-  goal: string;
-  exploitPatterns: string[];
-  normalResponse: string;
-  safeResponse: string;
-  compromisedResponse: string;
-  lesson: string;
-  takeaways: string[];
-  recommendedDefenses: DefenseId[];
-}
+export const statusMeta = {
+  safe: {
+    label: "Safe Response",
+    icon: CheckCircle2,
+    tone: "border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-200",
+  },
+  blocked: {
+    label: "Attack Blocked",
+    icon: Shield,
+    tone: "border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-200",
+  },
+  compromised: {
+    label: "System Compromised",
+    icon: AlertTriangle,
+    tone: "border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-800 dark:bg-rose-950/50 dark:text-rose-200",
+  },
+} as const;
 
 export const defenseMechanisms = [
   {
@@ -235,34 +222,6 @@ export const challenges = [
   },
 ] as const satisfies Challenge[];
 
-export type ChallengeId = (typeof challenges)[number]["id"];
-
-export const challengeIds = challenges.map(
-  (challenge) => challenge.id,
-) as ChallengeId[];
-
-export interface ChallengeProgress {
-  attempts: number;
-  blocked: number;
-  compromised: number;
-  safe: number;
-  lastStatus: SimulationStatus | null;
-  lastUpdated: number | null;
-}
-
-export type ProgressState = Record<ChallengeId, ChallengeProgress>;
-
-export interface SimulationResult {
-  status: SimulationStatus;
-  score: number;
-  threshold: number;
-  matchedSignals: string[];
-  response: string;
-  reasoning: string;
-  recommendedDefenses: DefenseId[];
-  riskScore: number;
-}
-
 export const baseSignals = [
   "ignore previous",
   "ignore the",
@@ -297,30 +256,19 @@ export const difficultyThresholds: Record<Difficulty, number> = {
 };
 
 export const defaultDefenseState: Record<DefenseId, boolean> = {
+
   "instruction-hierarchy": true,
+
   "input-sanitization": true,
+
   "context-isolation": false,
+
   "tool-gating": true,
+
   "output-filtering": false,
+
 };
 
-export const statusMeta: Record<
-  SimulationStatus,
-  { label: string; tone: string; icon: LucideIcon }
-> = {
-  safe: {
-    label: "No injection detected",
-    tone: "text-slate-600 bg-slate-100/80 border-slate-200 dark:text-slate-300 dark:bg-slate-900/40 dark:border-slate-700",
-    icon: Shield,
-  },
-  blocked: {
-    label: "Blocked by defenses",
-    tone: "text-emerald-700 bg-emerald-50/80 border-emerald-200 dark:text-emerald-300 dark:bg-emerald-900/30 dark:border-emerald-800/60",
-    icon: CheckCircle2,
-  },
-  compromised: {
-    label: "Compromised response",
-    tone: "text-rose-700 bg-rose-50/80 border-rose-200 dark:text-rose-300 dark:bg-rose-900/30 dark:border-rose-800/60",
-    icon: AlertTriangle,
-  },
-};
+
+
+export const challengeIds = challenges.map((c) => c.id);

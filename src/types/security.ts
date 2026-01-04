@@ -1,3 +1,5 @@
+import type { Shield } from "lucide-react";
+
 export type Difficulty = "Easy" | "Medium" | "Hard";
 export type SimulationStatus = "safe" | "blocked" | "compromised";
 export type DefenseId =

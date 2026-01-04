@@ -1,5 +1,6 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
+import { config, isUpstashConfigured } from "./config";
 
 export type RateLimitTarget = "chat" | "newsletter";
 
@@ -25,14 +26,10 @@ const RATE_LIMIT_CONFIG: Record<RateLimitTarget, RateLimitConfig> = {
   newsletter: { limit: 5, window: "1 m", prefix: "ratelimit:newsletter" },
 };
 
-const UPSTASH_REDIS_REST_URL = import.meta.env.UPSTASH_REDIS_REST_URL;
-const UPSTASH_REDIS_REST_TOKEN = import.meta.env.UPSTASH_REDIS_REST_TOKEN;
+const UPSTASH_REDIS_REST_URL = config.UPSTASH_REDIS_REST_URL;
+const UPSTASH_REDIS_REST_TOKEN = config.UPSTASH_REDIS_REST_TOKEN;
 
-const upstashEnabled =
-  typeof UPSTASH_REDIS_REST_URL === "string" &&
-  UPSTASH_REDIS_REST_URL.length > 0 &&
-  typeof UPSTASH_REDIS_REST_TOKEN === "string" &&
-  UPSTASH_REDIS_REST_TOKEN.length > 0;
+const upstashEnabled = isUpstashConfigured();
 
 const redis = upstashEnabled
   ? new Redis({

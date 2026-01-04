@@ -10,6 +10,9 @@ export const BLOCKED_PATTERNS: ReadonlyArray<RegExp> = [
 export const BLOCKED_RESPONSE =
   "I can only answer questions about Ahmed's professional background, skills, and projects.";
 
+export const BLOCKED_RESPONSE_AR =
+  "يمكنني فقط الإجابة على الأسئلة المتعلقة بالخلفية المهنية لأحمد ومهاراته ومشاريعه.";
+
 export type GuardrailResult = {
   allowed: boolean;
   matchedPattern?: string;

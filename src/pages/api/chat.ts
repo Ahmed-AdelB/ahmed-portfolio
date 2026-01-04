@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { z } from "zod";
+import { config } from "../../lib/config";
 import { SYSTEM_PROMPT } from "../../lib/chatContext";
 import { checkRateLimit } from "../../lib/ratelimit";
 import {
@@ -73,7 +74,7 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
       });
     }
 
-    const apiKey = import.meta.env.ANTHROPIC_API_KEY;
+    const apiKey = config.ANTHROPIC_API_KEY;
 
     // Fallback/Mock if no API key is present (for development/demo)
     if (!apiKey) {

@@ -5,6 +5,7 @@ import { ChatMessage, type Message, type MessageRole } from "./ChatMessage";
 import { INITIAL_QUESTIONS } from "../../lib/chatContext";
 import {
   BLOCKED_RESPONSE,
+  BLOCKED_RESPONSE_AR,
   validateUserInput,
 } from "../../lib/validators";
 
@@ -15,6 +16,11 @@ export const AIChatbot = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isRtl, setIsRtl] = useState(false);
+
+  useEffect(() => {
+    setIsRtl(document.documentElement.dir === "rtl");
+  }, []);
 
   // Load messages from localStorage on mount
   useEffect(() => {
@@ -66,7 +72,7 @@ export const AIChatbot = () => {
       const blockedMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: BLOCKED_RESPONSE,
+        content: isRtl ? BLOCKED_RESPONSE_AR : BLOCKED_RESPONSE,
         timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, userMsg, blockedMsg]);
@@ -90,7 +96,12 @@ export const AIChatbot = () => {
         }),
       });
 
-      if (!response.ok) throw new Error("Failed to fetch response");
+      if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error("Too Many Requests");
+        }
+        throw new Error("Failed to fetch response");
+      }
 
       const data = await response.json();
 
@@ -99,17 +110,29 @@ export const AIChatbot = () => {
         role: "assistant",
         content:
           data.response ||
-          "I'm having trouble connecting right now. Please try again later.",
+          (isRtl
+            ? "أواجه مشكلة في الاتصال الآن. يرجى المحاولة مرة أخرى لاحقًا."
+            : "I'm having trouble connecting right now. Please try again later."),
         timestamp: Date.now(),
       };
 
       setMessages((prev) => [...prev, botMsg]);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Chat error:", error);
+      let errorMessage = isRtl
+        ? "عذراً، واجهت خطأ. يرجى المحاولة مرة أخرى."
+        : "Sorry, I encountered an error. Please try again.";
+
+      if (error.message === "Too Many Requests") {
+        errorMessage = isRtl
+          ? "أنت ترسل الرسائل بسرعة كبيرة. يرجى الانتظار لحظة."
+          : "You are sending messages too fast. Please wait a moment.";
+      }
+
       const errorMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: "Sorry, I encountered an error. Please try again.",
+        content: errorMessage,
         timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, errorMsg]);

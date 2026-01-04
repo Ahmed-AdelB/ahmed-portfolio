@@ -42,7 +42,7 @@ export const ChallengeList: FC<ChallengeListProps> = ({
         <div className="mt-4 space-y-3">
           {challenges.map((challenge) => {
             const isActive = challenge.id === selectedChallengeId;
-            const progressEntry = progress[challenge.id];
+            const progressEntry = progress[challenge.id as ChallengeId];
             const status = progressEntry.lastStatus;
             const statusTone =
               status === "blocked"
@@ -55,7 +55,7 @@ export const ChallengeList: FC<ChallengeListProps> = ({
               <button
                 key={challenge.id}
                 type="button"
-                onClick={() => onSelectChallenge(challenge.id)}
+                onClick={() => onSelectChallenge(challenge.id as ChallengeId)}
                 className={`w-full rounded-xl border px-4 py-3 text-left transition-all ${
                   isActive
                     ? "border-emerald-400/70 bg-emerald-50/60 shadow-md dark:border-emerald-500/40 dark:bg-emerald-950/40"
