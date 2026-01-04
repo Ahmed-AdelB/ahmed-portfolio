@@ -34,21 +34,21 @@ const missing = requiredForProduction.filter((key) => !env[key]);
 
 if (missing.length > 0) {
   console.warn(
-    `⚠️  Missing environment variables for full functionality: ${missing.join(", ")}`
+    `⚠️  Missing environment variables for full functionality: ${missing.join(", ")}`,
   );
   console.warn(
-    "   Rate limiting and other features might be disabled or fallback to mock mode."
+    "   Rate limiting and other features might be disabled or fallback to mock mode.",
   );
-  
+
   // If CI is set to true (usually in production builds), we might want to fail
   if (process.env.CI === "true" || process.env.NODE_ENV === "production") {
-      // Allow build to proceed even if missing, as per current loose requirement, 
-      // but strictly warning is good. 
-      // If we want to enforce P0, we should exit(1) here if it's a production build.
-      // But looking at MASTER_PLAN, it says "Add runtime validation", 
-      // and ratelimit.ts handles missing env gracefully.
-      // So I will keep it as a warning to not break build on Vercel if vars are set via UI not .env file.
-      // Wait, process.env IS populated from Vercel UI during build.
+    // Allow build to proceed even if missing, as per current loose requirement,
+    // but strictly warning is good.
+    // If we want to enforce P0, we should exit(1) here if it's a production build.
+    // But looking at MASTER_PLAN, it says "Add runtime validation",
+    // and ratelimit.ts handles missing env gracefully.
+    // So I will keep it as a warning to not break build on Vercel if vars are set via UI not .env file.
+    // Wait, process.env IS populated from Vercel UI during build.
   }
 }
 

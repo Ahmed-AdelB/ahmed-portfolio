@@ -1,6 +1,10 @@
 import type { FC } from "react";
 import { Sparkles } from "lucide-react";
-import type { Challenge, ChallengeId, ProgressState } from "../../../types/security";
+import type {
+  Challenge,
+  ChallengeId,
+  ProgressState,
+} from "../../../types/security";
 
 interface ChallengeListProps {
   challenges: ReadonlyArray<Challenge>;

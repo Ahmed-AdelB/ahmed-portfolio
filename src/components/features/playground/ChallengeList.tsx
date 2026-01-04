@@ -95,7 +95,9 @@ export const ChallengeList: FC<ChallengeListProps> = ({
               Progress Tracker
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              {isReady ? "Saved locally in your browser" : "Loading progress..."}
+              {isReady
+                ? "Saved locally in your browser"
+                : "Loading progress..."}
             </p>
           </div>
           <button
@@ -124,9 +126,7 @@ export const ChallengeList: FC<ChallengeListProps> = ({
             </span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-slate-500 dark:text-slate-400">
-              Blocked
-            </span>
+            <span className="text-slate-500 dark:text-slate-400">Blocked</span>
             <span className="text-base font-semibold text-emerald-600 dark:text-emerald-300">
               {progressSummary.blocked}
             </span>

@@ -105,3 +105,162 @@ html.dark .copy-code-button[data-state="error"] {
     padding: 0.3rem 0.55rem;
   }
 }
+
+/* --- HACKER MODE / CYBERPUNK THEME --- */
+
+html.hacker {
+  --hacker-bg: #050505;
+  --hacker-text: #00ff41;
+  --hacker-dim: #008f11;
+  --hacker-border: #003b00;
+  
+  background-color: var(--hacker-bg);
+  color: var(--hacker-text);
+  font-family: var(--font-mono);
+  overflow-x: hidden;
+}
+
+html.hacker body {
+  background-color: var(--hacker-bg);
+  color: var(--hacker-text);
+}
+
+html.hacker * {
+  border-color: var(--hacker-border) !important;
+  font-family: var(--font-mono) !important;
+}
+
+/* CRT Scanline Overlay */
+html.hacker::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 9999;
+  pointer-events: none;
+  animation: scanline 10s linear infinite;
+}
+
+/* Screen Flicker Overlay */
+html.hacker::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(18, 16, 16, 0.1);
+  opacity: 0;
+  z-index: 9998;
+  pointer-events: none;
+  animation: flicker 0.15s infinite;
+}
+
+/* Text Glow */
+html.hacker h1,
+html.hacker h2,
+html.hacker h3,
+html.hacker h4,
+html.hacker h5,
+html.hacker h6,
+html.hacker strong,
+html.hacker b,
+html.hacker a:hover {
+  text-shadow: 0 0 5px var(--hacker-dim), 0 0 10px var(--hacker-dim);
+}
+
+html.hacker p, 
+html.hacker span, 
+html.hacker li, 
+html.hacker td, 
+html.hacker div {
+   text-shadow: 0.4px 0 0.5px rgba(0, 255, 65, 0.5); /* Slight chromatic aberration-ish blur */
+}
+
+/* Button Overrides */
+html.hacker button {
+  border: 1px solid var(--hacker-dim) !important;
+  background-color: rgba(0, 59, 0, 0.3);
+  color: var(--hacker-text);
+  box-shadow: 0 0 5px var(--hacker-border);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+html.hacker button:hover {
+  background-color: var(--hacker-dim);
+  color: var(--hacker-bg);
+  box-shadow: 0 0 10px var(--hacker-dim);
+}
+
+/* Image/Media Filter */
+html.hacker img,
+html.hacker video {
+  filter: grayscale(100%) sepia(100%) hue-rotate(90deg) contrast(1.2) brightness(0.9);
+  opacity: 0.9;
+}
+
+/* Scrollbar */
+html.hacker ::-webkit-scrollbar {
+  width: 10px;
+}
+
+html.hacker ::-webkit-scrollbar-track {
+  background: var(--hacker-bg); 
+}
+ 
+html.hacker ::-webkit-scrollbar-thumb {
+  background: var(--hacker-dim); 
+  border: 1px solid var(--hacker-text);
+}
+
+html.hacker ::-webkit-scrollbar-thumb:hover {
+  background: var(--hacker-text); 
+}
+
+/* Animations */
+@keyframes scanline {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+@keyframes flicker {
+  0% { opacity: 0.02; }
+  5% { opacity: 0.05; }
+  10% { opacity: 0.01; }
+  15% { opacity: 0.06; }
+  20% { opacity: 0.02; }
+  25% { opacity: 0.03; }
+  30% { opacity: 0.01; }
+  35% { opacity: 0.05; }
+  40% { opacity: 0.02; }
+  45% { opacity: 0.03; }
+  50% { opacity: 0.01; }
+  55% { opacity: 0.05; }
+  60% { opacity: 0.02; }
+  65% { opacity: 0.05; }
+  70% { opacity: 0.01; }
+  75% { opacity: 0.03; }
+  80% { opacity: 0.02; }
+  85% { opacity: 0.01; }
+  90% { opacity: 0.05; }
+  95% { opacity: 0.02; }
+  100% { opacity: 0.04; }
+}
+
+/* Selection Color */
+html.hacker ::selection {
+  background: var(--hacker-text);
+  color: var(--hacker-bg);
+  text-shadow: none;
+}

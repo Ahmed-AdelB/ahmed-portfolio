@@ -6,8 +6,13 @@ test.describe("AI Chatbot", () => {
       window.localStorage.clear();
     });
     await page.goto("/");
-    // Hide Astro Dev Toolbar to prevent interference
-    await page.addStyleTag({ content: "astro-dev-toolbar { display: none !important; }" });
+    // Hide Astro Dev Toolbar and Terminal Mode to prevent interference
+    await page.addStyleTag({
+      content: `
+      astro-dev-toolbar { display: none !important; }
+      .terminal-shell { display: none !important; }
+    `,
+    });
   });
 
   test("opens and closes the chat widget", async ({ page }) => {
@@ -101,7 +106,9 @@ test.describe("AI Chatbot", () => {
     await page.getByLabel("Send message").click();
 
     await expect(
-      page.getByText("You are sending messages too fast. Please wait a moment.")
+      page.getByText(
+        "You are sending messages too fast. Please wait a moment.",
+      ),
     ).toBeVisible();
   });
 
@@ -117,8 +124,9 @@ test.describe("AI Chatbot", () => {
     await page.getByLabel("Send message").click();
 
     // The expected response defined in validators.ts
-    const expectedResponse = "I can only answer questions about Ahmed's professional background, skills, and projects.";
-    
+    const expectedResponse =
+      "I can only answer questions about Ahmed's professional background, skills, and projects.";
+
     await expect(page.getByText(expectedResponse)).toBeVisible();
   });
 });

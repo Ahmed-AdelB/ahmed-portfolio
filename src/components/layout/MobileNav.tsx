@@ -277,7 +277,7 @@ export default function MobileNav({ navLinks, currentPath }: MobileNavProps) {
                 <div className="flex items-center justify-center gap-4 px-4 py-2">
                   {/* GitHub */}
                   <a
-                    href="https://github.com/ahmedadel"
+                    href="https://github.com/Ahmed-AdelB"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
@@ -297,7 +297,7 @@ export default function MobileNav({ navLinks, currentPath }: MobileNavProps) {
 
                   {/* LinkedIn */}
                   <a
-                    href="https://linkedin.com/in/ahmedadel"
+                    href="https://linkedin.com/in/ahmedadel1991"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
@@ -317,7 +317,7 @@ export default function MobileNav({ navLinks, currentPath }: MobileNavProps) {
 
                   {/* Twitter/X */}
                   <a
-                    href="https://twitter.com/ahmedadel"
+                    href="https://twitter.com/ahmedalderai"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"

@@ -26,11 +26,16 @@ import {
   ArrowRight,
   Terminal as TerminalIcon,
   Github,
+  Shield,
+  Fingerprint,
+  Code,
   type LucideIcon,
 } from "lucide-react";
 import { terminalMode, toggleTerminalMode } from "../../stores/terminal";
 import { useCommandPalette } from "../../hooks/useCommandPalette";
 import { setTheme } from "../../stores/theme";
+import { toggleMatrix } from "../../stores/matrix";
+import { openScan, openWhois } from "../../stores/portfolioActions";
 
 // Types
 interface CommandItem {
@@ -84,6 +89,18 @@ export default function CommandPalette() {
       setQuery("");
       setTerminalOutput(null);
     }
+  }, [isOpen]);
+
+  // Lock body scroll when open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isOpen]);
 
   // Navigate handler
@@ -249,6 +266,42 @@ export default function CommandPalette() {
       },
       // Actions
       {
+        id: "scan-site",
+        label: "Scan Site",
+        description: "Run security diagnostics",
+        icon: Shield,
+        category: "action",
+        keywords: ["scan", "security", "uptime", "ssl", "status"],
+        action: () => {
+          openScan();
+          close();
+        },
+      },
+      {
+        id: "whois-ahmed",
+        label: "Whois Ahmed",
+        description: "Display profile summary",
+        icon: Fingerprint,
+        category: "action",
+        keywords: ["whois", "profile", "summary", "info", "json"],
+        action: () => {
+          openWhois();
+          close();
+        },
+      },
+      {
+        id: "theme-matrix",
+        label: "Matrix Mode",
+        description: "Toggle matrix rain effect",
+        icon: Code,
+        category: "action",
+        keywords: ["matrix", "rain", "effect", "hack", "theme"],
+        action: () => {
+          toggleMatrix();
+          close();
+        },
+      },
+      {
         id: "copy-email",
         label: "Copy Email",
         description: "Copy contact@ahmedalderai.com to clipboard",
@@ -329,9 +382,10 @@ export default function CommandPalette() {
     <Command.Dialog
       open={isOpen}
       onOpenChange={(open) => !open && close()}
-      label="Command Menu"
+      label="Command palette"
       aria-label="Command palette"
       aria-modal="true"
+      loop
       className="fixed inset-0 z-[100] flex items-start justify-center pt-[20%] sm:pt-[10%] px-4"
       onKeyDown={(e) => {
         if (isTerminalMode && e.key === "Enter" && query.trim()) {
@@ -353,6 +407,10 @@ export default function CommandPalette() {
         aria-hidden="true"
         onClick={close}
       />
+
+      <p id="command-palette-description" className="sr-only">
+        Search for navigation, actions, and theme settings.
+      </p>
 
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: -20 }}

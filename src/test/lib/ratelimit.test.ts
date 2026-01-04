@@ -51,7 +51,7 @@ describe("Rate Limiting", () => {
     });
 
     it("returns x-real-ip if present", async () => {
-        const { getClientIp } = await import("../../lib/ratelimit");
+      const { getClientIp } = await import("../../lib/ratelimit");
       const req = new Request("http://localhost", {
         headers: { "x-real-ip": "10.0.0.1" },
       });
@@ -59,21 +59,21 @@ describe("Rate Limiting", () => {
     });
 
     it("returns cf-connecting-ip if present", async () => {
-        const { getClientIp } = await import("../../lib/ratelimit");
-        const req = new Request("http://localhost", {
-          headers: { "cf-connecting-ip": "192.168.1.1" },
-        });
-        expect(getClientIp(req)).toBe("192.168.1.1");
+      const { getClientIp } = await import("../../lib/ratelimit");
+      const req = new Request("http://localhost", {
+        headers: { "cf-connecting-ip": "192.168.1.1" },
       });
+      expect(getClientIp(req)).toBe("192.168.1.1");
+    });
 
     it("returns clientAddress if provided", async () => {
-        const { getClientIp } = await import("../../lib/ratelimit");
+      const { getClientIp } = await import("../../lib/ratelimit");
       const req = new Request("http://localhost");
       expect(getClientIp(req, "127.0.0.1")).toBe("127.0.0.1");
     });
 
     it("returns 'unknown' as fallback", async () => {
-        const { getClientIp } = await import("../../lib/ratelimit");
+      const { getClientIp } = await import("../../lib/ratelimit");
       const req = new Request("http://localhost");
       expect(getClientIp(req)).toBe("unknown");
     });
@@ -123,27 +123,27 @@ describe("Rate Limiting", () => {
     });
 
     it("handles missing environment variables gracefully (fail open)", async () => {
-        vi.mocked(isUpstashConfigured).mockReturnValue(false);
-        
-        // We need to re-import ratelimit to ensure it picks up the mocked config value change if it logic depended on it at module level. 
-        // BUT ratelimit.ts creates 'redis' and 'rateLimiters' at top level based on 'upstashEnabled'. 
-        // Since we are mocking the module "../../lib/config", the import inside ratelimit.ts will get the mocked functions.
-        // However, 'upstashEnabled' is a const calculated at module load time in 'ratelimit.ts'. 
-        // "const upstashEnabled = isUpstashConfigured();"
-        // So we MUST use vi.resetModules() and re-import to re-evaluate top-level consts.
-        
-        vi.resetModules();
-        const { checkRateLimit } = await import("../../lib/ratelimit");
+      vi.mocked(isUpstashConfigured).mockReturnValue(false);
 
-        const req = new Request("http://localhost");
-        const result = await checkRateLimit({
-            request: req,
-            type: "chat",
-            ip: "1.2.3.4",
-        });
-        
-        // Should be allowed (fail open)
-        expect(result.allowed).toBe(true);
+      // We need to re-import ratelimit to ensure it picks up the mocked config value change if it logic depended on it at module level.
+      // BUT ratelimit.ts creates 'redis' and 'rateLimiters' at top level based on 'upstashEnabled'.
+      // Since we are mocking the module "../../lib/config", the import inside ratelimit.ts will get the mocked functions.
+      // However, 'upstashEnabled' is a const calculated at module load time in 'ratelimit.ts'.
+      // "const upstashEnabled = isUpstashConfigured();"
+      // So we MUST use vi.resetModules() and re-import to re-evaluate top-level consts.
+
+      vi.resetModules();
+      const { checkRateLimit } = await import("../../lib/ratelimit");
+
+      const req = new Request("http://localhost");
+      const result = await checkRateLimit({
+        request: req,
+        type: "chat",
+        ip: "1.2.3.4",
+      });
+
+      // Should be allowed (fail open)
+      expect(result.allowed).toBe(true);
     });
   });
 });

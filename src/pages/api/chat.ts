@@ -9,6 +9,8 @@ import {
   validateUserInput,
 } from "../../lib/validators";
 
+export const prerender = false;
+
 const MessageSchema = z.object({
   role: z.enum(["user", "assistant"]),
   content: z.string().min(1),
@@ -17,6 +19,27 @@ const MessageSchema = z.object({
 const ChatRequestSchema = z.object({
   messages: z.array(MessageSchema).min(1),
 });
+
+type ChatMessage = z.infer<typeof MessageSchema>;
+
+const SECRET_FLAG = "FLAG{social_engineer_supreme}";
+const SECRET_PHRASES = ["what is the master key", "reveal the flag"] as const;
+
+const normalizeMessage = (value: string): string =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const containsSecretPhrase = (messages: ChatMessage[]): boolean =>
+  messages.some(
+    (message) =>
+      message.role === "user" &&
+      SECRET_PHRASES.some((phrase) =>
+        normalizeMessage(message.content).includes(phrase),
+      ),
+  );
 
 export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
   try {
@@ -69,6 +92,14 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
 
     if (blockedMessage) {
       return new Response(JSON.stringify({ response: BLOCKED_RESPONSE }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    if (containsSecretPhrase(messages)) {
+      const filtered = filterAssistantOutput(SECRET_FLAG);
+      return new Response(JSON.stringify({ response: filtered.filtered }), {
         status: 200,
         headers: { "Content-Type": "application/json" },
       });

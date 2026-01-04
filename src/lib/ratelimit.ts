@@ -2,7 +2,7 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { config, isUpstashConfigured } from "./config";
 
-export type RateLimitTarget = "chat" | "newsletter";
+export type RateLimitTarget = "chat" | "newsletter" | "health";
 
 type RateLimitConfig = {
   limit: number;

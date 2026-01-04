@@ -72,7 +72,8 @@ export const DefenseControl: FC<DefenseControlProps> = ({
       </div>
       <div className="mt-3 flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
         <span className="rounded-full border border-slate-200 px-2 py-1 dark:border-slate-700">
-          Active defenses: {enabledDefenseList.length}/{defenseMechanisms.length}
+          Active defenses: {enabledDefenseList.length}/
+          {defenseMechanisms.length}
         </span>
         {enabledDefenseList.map((defense) => (
           <span

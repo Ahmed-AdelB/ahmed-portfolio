@@ -103,7 +103,7 @@ export const evaluateSimulation = (
   const matchedSignals = Array.from(
     new Set([...matchedBase, ...matchedChallenge]),
   );
-  
+
   const activeDefenses = defenseMechanisms.filter(
     (defense) => enabledDefenses[defense.id],
   );

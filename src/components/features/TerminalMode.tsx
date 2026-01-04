@@ -372,6 +372,19 @@ export const TerminalMode: FC<TerminalModeProps> = ({ className }) => {
       const [commandToken, ...rest] = trimmed.split(/\s+/);
       const command = commandToken.toLowerCase();
 
+      // CTF Challenge - Flag 2
+      if (
+        (command === "sudo" && rest[0] === "su") ||
+        (command === "cat" && rest[0] === "/etc/shadow")
+      ) {
+        enqueueLines([
+          "SYSTEM OVERRIDE INITIATED...",
+          "Access granted... You found the secret flag!",
+          "FLAG{terminal_hacker_elite}",
+        ]);
+        return;
+      }
+
       if (command === "clear") {
         clearLines([]);
         return;

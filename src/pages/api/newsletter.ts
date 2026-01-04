@@ -2,6 +2,8 @@ import type { APIRoute } from "astro";
 import { z } from "zod";
 import { checkRateLimit } from "../../lib/ratelimit";
 
+export const prerender = false;
+
 interface NewsletterResponse {
   success: boolean;
   message: string;

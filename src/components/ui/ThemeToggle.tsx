@@ -13,7 +13,7 @@
 
 import { useState, useEffect } from "react";
 import { useStore } from "@nanostores/react";
-import { Sun, Moon, Monitor } from "lucide-react";
+import { Sun, Moon, Monitor, Terminal } from "lucide-react";
 import { themeStore, setTheme, type Theme } from "../../stores/theme";
 
 interface ThemeOption {
@@ -26,6 +26,7 @@ const themeOptions: ThemeOption[] = [
   { value: "light", label: "Light theme", icon: Sun },
   { value: "dark", label: "Dark theme", icon: Moon },
   { value: "system", label: "System theme", icon: Monitor },
+  { value: "hacker", label: "Hacker Mode", icon: Terminal },
 ];
 
 export default function ThemeToggle() {

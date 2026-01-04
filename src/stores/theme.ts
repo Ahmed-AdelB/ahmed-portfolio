@@ -1,6 +1,6 @@
 import { atom } from "nanostores";
 
-export type Theme = "light" | "dark" | "system";
+export type Theme = "light" | "dark" | "system" | "hacker";
 
 const getInitialTheme = (): Theme => {
   if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
@@ -29,12 +29,12 @@ export const setTheme = (theme: Theme) => {
           : "light"
         : theme;
 
-    document.documentElement.classList.toggle(
-      "dark",
-      effectiveTheme === "dark",
-    );
-    document.documentElement.style.colorScheme =
-      effectiveTheme === "dark" ? "dark" : "light";
+    const isDark = effectiveTheme === "dark" || theme === "hacker";
+
+    document.documentElement.classList.toggle("dark", isDark);
+    document.documentElement.classList.toggle("hacker", theme === "hacker");
+
+    document.documentElement.style.colorScheme = isDark ? "dark" : "light";
   }
 };
 

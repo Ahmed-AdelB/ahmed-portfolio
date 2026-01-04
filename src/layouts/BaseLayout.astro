@@ -6,6 +6,9 @@ import Schema from '../components/seo/Schema.astro';
 import CommandPalette from '../components/features/CommandPalette';
 import { AIChatbot } from '../components/features/AIChatbot';
 import { TerminalMode } from '../components/features/TerminalMode';
+import MatrixRain from '../components/effects/MatrixRain';
+import SecurityScan from '../components/features/SecurityScan';
+import WhoisProfile from '../components/features/WhoisProfile';
 import BackToTop from '../components/features/BackToTop.astro';
 import CopyCodeButton from '../components/features/CopyCodeButton.astro';
 // Self-hosted fonts - Optimized: reduced weights for better performance
@@ -229,6 +232,11 @@ const metaDescription = description.length > 200 ? description.substring(0, 197)
     <!-- Terminal Mode - Lazy loaded -->
     <TerminalMode client:idle />
     
+    <!-- New Action Components -->
+    <MatrixRain client:idle />
+    <SecurityScan client:idle />
+    <WhoisProfile client:idle />
+
     <!-- Back to Top Button -->
     <BackToTop />
     <CopyCodeButton />
