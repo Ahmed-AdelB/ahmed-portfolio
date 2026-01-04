@@ -31,6 +31,17 @@ export const useGitHubStats = () => {
 
   useEffect(() => {
     const fetchStats = async () => {
+      const statsEndpoint = import.meta.env.PUBLIC_GITHUB_STATS_ENDPOINT;
+
+      if (!statsEndpoint) {
+        setStats({
+          ...FALLBACK_STATS,
+          loading: false,
+          error: true,
+        });
+        return;
+      }
+
       // Check cache
       const cached = localStorage.getItem(CACHE_KEY);
       if (cached) {
@@ -42,63 +53,20 @@ export const useGitHubStats = () => {
       }
 
       try {
-        const username = "aadel";
-        const headers = { Accept: "application/vnd.github.v3+json" };
+        const response = await fetch(statsEndpoint, {
+          headers: { Accept: "application/json" },
+        });
 
-        // 1. User Profile (Repos, Followers as proxy for impact?)
-        const userRes = await fetch(
-          `https://api.github.com/users/${username}`,
-          { headers },
-        );
-        const userData = await userRes.json();
-
-        if (!userRes.ok) throw new Error("GitHub API limit");
-
-        // 2. Search for PRs (Merged)
-        // Note: Search API has strict rate limits.
-        const prsRes = await fetch(
-          `https://api.github.com/search/issues?q=author:${username}+type:pr+is:merged`,
-          { headers },
-        );
-        const prsData = prsRes.ok
-          ? await prsRes.json()
-          : { total_count: FALLBACK_STATS.prs };
-
-        // 3. Commits - This is tricky via API without token.
-        // We often use a rough estimate or a 3rd party.
-        // For now, we'll try search but expect it might fail, so we fallback or use a multiplier of repos/activity.
-        // A common trick is to not fetch this client-side to avoid exposing rate limits, but we have to.
-        // Let's use a conservative estimate based on events or just fallback.
-        // Or try the search endpoint once.
-        let commitsCount = FALLBACK_STATS.commits;
-        try {
-          const commitsRes = await fetch(
-            `https://api.github.com/search/commits?q=author:${username}`,
-            { headers },
-          );
-          if (commitsRes.ok) {
-            const commitsData = await commitsRes.json();
-            commitsCount = commitsData.total_count;
-          }
-        } catch (e) {
-          console.warn("Failed to fetch commits count", e);
+        if (!response.ok) {
+          throw new Error("GitHub stats endpoint error");
         }
 
-        // 4. Contributions (Total for last year)
-        // We can't get "Total all time" easily.
-        // We'll use a scraper API or similar if available, or just map "Contributions" to "Commits + PRs + Issues".
-        // Let's sum up what we have or use a safe fallback.
-        const contributionsCount =
-          commitsCount + prsData.total_count + userData.public_repos * 5; // Rough heuristic if real data fails
-
+        const data = (await response.json()) as Partial<GitHubStats>;
         const newStats = {
-          repos: userData.public_repos,
-          commits: commitsCount,
-          prs: prsData.total_count || FALLBACK_STATS.prs,
-          contributions:
-            contributionsCount > 100
-              ? contributionsCount
-              : FALLBACK_STATS.contributions,
+          repos: data.repos ?? FALLBACK_STATS.repos,
+          commits: data.commits ?? FALLBACK_STATS.commits,
+          prs: data.prs ?? FALLBACK_STATS.prs,
+          contributions: data.contributions ?? FALLBACK_STATS.contributions,
         };
 
         setStats({ ...newStats, loading: false, error: false });
@@ -111,7 +79,7 @@ export const useGitHubStats = () => {
           }),
         );
       } catch (error) {
-        console.error("Error fetching GitHub stats:", error);
+        console.warn("Error fetching GitHub stats:", error);
         setStats({
           ...FALLBACK_STATS,
           loading: false,

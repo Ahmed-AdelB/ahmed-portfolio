@@ -224,6 +224,10 @@ const GitHubStats: React.FC = () => {
                     src={project.logo}
                     alt={project.alt || `${project.name} logo`}
                     className="w-full h-full object-contain"
+                    width={56}
+                    height={56}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <span className="text-xs font-medium text-slate-600 group-hover:text-emerald-400 transition-colors">

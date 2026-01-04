@@ -1,21 +1,22 @@
 /* Subtle Islamic Geometric Pattern */
 :root {
-  --pattern-opacity: 0.03;
+  --pattern-opacity: 0.035;
+  --pattern-size: 120px;
+  --pattern-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2310b981' stroke-width='1' stroke-linejoin='round'%3E%3Cpolygon points='40 0 52 28 80 40 52 52 40 80 28 52 0 40 28 28'/%3E%3Cpolygon points='40 24 56 40 40 56 24 40'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-.dark {
-  --pattern-opacity: 0.05;
+html.dark {
+  --pattern-opacity: 0.045;
+  --pattern-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2334d399' stroke-width='1' stroke-linejoin='round'%3E%3Cpolygon points='40 0 52 28 80 40 52 52 40 80 28 52 0 40 28 28'/%3E%3Cpolygon points='40 24 56 40 40 56 24 40'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 .bg-islamic-pattern {
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-image: var(--pattern-image);
+  background-size: var(--pattern-size) var(--pattern-size);
   background-repeat: repeat;
   opacity: var(--pattern-opacity);
   pointer-events: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   z-index: 0;
 }

@@ -4,8 +4,6 @@ const robotsTxt = `
 User-agent: *
 Allow: /
 
-<!-- FLAG{ahmed_recon_master_2026} -->
-
 Sitemap: ${new URL("sitemap-index.xml", import.meta.env.SITE).href}
 `.trim();
 

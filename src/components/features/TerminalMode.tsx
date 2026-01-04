@@ -12,6 +12,7 @@ import { useStore } from "@nanostores/react";
 import { Terminal, Power } from "lucide-react";
 import { terminalMode, toggleTerminalMode } from "../../stores/terminal";
 import { foundFlag } from "../../stores/ctf";
+import { unlockEgg } from "../../stores/easter-eggs";
 
 type TerminalLineType = "command" | "output" | "system";
 
@@ -93,6 +94,114 @@ const README_OUTPUT = [
   "Tip: use `ls` and `cat` to explore.",
 ];
 
+const SALAAM_OUTPUT = [
+  "وعليكم السلام ورحمة الله وبركاته - Welcome, brother/sister!",
+];
+
+const BISMILLAH_OUTPUT = ["بسم الله الرحمن الرحيم"];
+
+const ASMA_UL_HUSNA = [
+  "الله",
+  "الرحمن",
+  "الرحيم",
+  "الملك",
+  "القدوس",
+  "السلام",
+  "المؤمن",
+  "المهيمن",
+  "العزيز",
+  "الجبار",
+  "المتكبر",
+  "الخالق",
+  "البارئ",
+  "المصور",
+  "الغفار",
+  "القهار",
+  "الوهاب",
+  "الرزاق",
+  "الفتاح",
+  "العليم",
+  "القابض",
+  "الباسط",
+  "الخافض",
+  "الرافع",
+  "المعز",
+  "المذل",
+  "السميع",
+  "البصير",
+  "الحكم",
+  "العدل",
+  "اللطيف",
+  "الخبير",
+  "الحليم",
+  "العظيم",
+  "الغفور",
+  "الشكور",
+  "العلي",
+  "الكبير",
+  "الحفيظ",
+  "المقيت",
+  "الحسيب",
+  "الجليل",
+  "الكريم",
+  "الرقيب",
+  "المجيب",
+  "الواسع",
+  "الحكيم",
+  "الودود",
+  "المجيد",
+  "الباعث",
+  "الشهيد",
+  "الحق",
+  "الوكيل",
+  "القوي",
+  "المتين",
+  "الولي",
+  "الحميد",
+  "المحصي",
+  "المبدئ",
+  "المعيد",
+  "المحيي",
+  "المميت",
+  "الحي",
+  "القيوم",
+  "الواجد",
+  "الماجد",
+  "الواحد",
+  "الأحد",
+  "الصمد",
+  "القادر",
+  "المقتدر",
+  "المقدم",
+  "المؤخر",
+  "الأول",
+  "الآخر",
+  "الظاهر",
+  "الباطن",
+  "المتعالي",
+  "البر",
+  "التواب",
+  "المنتقم",
+  "العفو",
+  "الرؤوف",
+  "مالك الملك",
+  "ذو الجلال والإكرام",
+  "المقسط",
+  "الجامع",
+  "الغني",
+  "المغني",
+  "المانع",
+  "الضار",
+  "النافع",
+  "النور",
+  "الهادي",
+  "البديع",
+  "الباقي",
+  "الوارث",
+  "الرشيد",
+  "الصبور",
+] as const;
+
 const HELP_OUTPUT = [
   "Available commands:",
   "ls - list sections/files",
@@ -104,6 +213,9 @@ const HELP_OUTPUT = [
   "projects - featured work",
   "skills - core skills",
   "contact - contact details",
+  "salam/salaam - share a greeting of peace",
+  "bismillah - display the basmala",
+  "asma - show a random Name from the 99 Names of Allah",
 ];
 
 const DIRECTORY_LISTINGS: Record<TerminalDirectory, string[]> = {
@@ -441,6 +553,24 @@ export const TerminalMode: FC<TerminalModeProps> = ({ className }) => {
 
       if (command === "whoami") {
         enqueueLines([PROMPT_USER]);
+        return;
+      }
+
+      if (command === "salam" || command === "salaam") {
+        unlockEgg("salaam");
+        enqueueLines(SALAAM_OUTPUT);
+        return;
+      }
+
+      if (command === "bismillah") {
+        unlockEgg("bismillah");
+        enqueueLines(BISMILLAH_OUTPUT);
+        return;
+      }
+
+      if (command === "asma") {
+        const randomIndex = Math.floor(Math.random() * ASMA_UL_HUSNA.length);
+        enqueueLines([ASMA_UL_HUSNA[randomIndex] ?? ""]);
         return;
       }
 

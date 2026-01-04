@@ -5,6 +5,7 @@ import {
   enableMatrix,
   isMatrixEnabled,
   toggleMatrix,
+  matrixIntensity,
 } from "../../stores/matrix";
 
 const MATRIX_CHARACTERS = Array.from(
@@ -99,6 +100,7 @@ export const MatrixRain: FC<MatrixRainProps> = ({
   zIndex = DEFAULT_Z_INDEX,
 }) => {
   const isEnabled = useStore(isMatrixEnabled);
+  const intensity = useStore(matrixIntensity);
   const prefersReducedMotion = usePrefersReducedMotion();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationRef = useRef<number | null>(null);
@@ -115,10 +117,10 @@ export const MatrixRain: FC<MatrixRainProps> = ({
     if (!context) return;
 
     const fontSize = DEFAULT_FONT_SIZE;
-    const fadeAlpha = DEFAULT_FADE_ALPHA;
-    const resetThreshold = DEFAULT_RESET_THRESHOLD;
-    const headHighlightChance = DEFAULT_HEAD_HIGHLIGHT_CHANCE;
-    const speedMultiplier = prefersReducedMotion ? 0.5 : 1;
+    const fadeAlpha = Math.max(0.01, DEFAULT_FADE_ALPHA / intensity); // Slower fade for more trails
+    const resetThreshold = Math.max(0.8, DEFAULT_RESET_THRESHOLD - (intensity - 1) * 0.05);
+    const headHighlightChance = DEFAULT_HEAD_HIGHLIGHT_CHANCE * intensity;
+    const speedMultiplier = (prefersReducedMotion ? 0.5 : 1) * intensity;
 
     const resetColumns = (width: number, height: number) => {
       const columns = Math.max(1, Math.ceil(width / fontSize));
@@ -210,7 +212,7 @@ export const MatrixRain: FC<MatrixRainProps> = ({
       }
       animationRef.current = null;
     };
-  }, [isEnabled, prefersReducedMotion]);
+  }, [isEnabled, prefersReducedMotion, intensity]);
 
   if (!isEnabled || prefersReducedMotion) return null;
 

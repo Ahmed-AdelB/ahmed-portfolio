@@ -43,6 +43,19 @@ const containsSecretPhrase = (messages: ChatMessage[]): boolean =>
 
 export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
   try {
+    // CSRF Check: Verify Origin matches the site URL
+    const origin = request.headers.get("origin");
+    const allowedOrigin = config.PUBLIC_SITE_URL
+      ? new URL(config.PUBLIC_SITE_URL).origin
+      : new URL(request.url).origin;
+
+    if (origin && origin !== allowedOrigin) {
+      return new Response(JSON.stringify({ error: "Cross-site requests are not allowed" }), {
+        status: 403,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
     const rateLimit = await checkRateLimit({
       request,
       clientAddress,

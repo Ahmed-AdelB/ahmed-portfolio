@@ -1,8 +1,18 @@
 @import "tailwindcss";
+@import "./islamic-pattern.css";
+@import "./islamic-theme.css";
 
 @theme {
   --font-sans: "Space Grotesk", "IBM Plex Sans Arabic", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+}
+
+:root {
+  --crt-boot-bg: #000000;
+  --crt-boot-text: #00ff41;
+  --crt-boot-dim: #008f11;
+  --crt-off-name: none;
+  --crt-off-duration: 0s;
 }
 
 /* Screen Reader Only Utility */
@@ -16,6 +26,31 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  position: fixed;
+  width: auto;
+  height: auto;
+  margin: 0;
+  clip: auto;
+  clip-path: none;
+  white-space: normal;
+}
+
+/* Subtle Islamic pattern drift (applied via .islamic-pattern on hero/about) */
+.islamic-pattern::before {
+  animation: islamic-pattern-drift 180s linear infinite;
+}
+
+@keyframes islamic-pattern-drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 240px 240px;
+  }
 }
 
 /* Code block copy button */
@@ -113,6 +148,11 @@ html.hacker {
   --hacker-text: #00ff41;
   --hacker-dim: #008f11;
   --hacker-border: #003b00;
+  --crt-boot-bg: #020202;
+  --crt-boot-text: var(--hacker-text);
+  --crt-boot-dim: var(--hacker-dim);
+  --crt-off-name: crt-off;
+  --crt-off-duration: 0.85s;
   
   background-color: var(--hacker-bg);
   color: var(--hacker-text);
@@ -263,4 +303,94 @@ html.hacker ::selection {
   background: var(--hacker-text);
   color: var(--hacker-bg);
   text-shadow: none;
+}
+
+/* CRT Boot Sequence */
+.crt-boot {
+  position: fixed;
+  inset: 0;
+  background: var(--crt-boot-bg);
+  color: var(--crt-boot-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9990;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.crt-boot[data-state="active"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.crt-boot__content {
+  width: min(520px, 90vw);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: left;
+}
+
+.crt-boot__line {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  color: var(--crt-boot-text);
+  text-shadow: 0 0 6px var(--crt-boot-dim);
+}
+
+.crt-boot__ascii {
+  margin: 0 0 0.55rem;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  white-space: pre;
+  color: var(--crt-boot-text);
+  text-shadow: 0 0 6px var(--crt-boot-dim);
+}
+
+.crt-boot__status {
+  margin: 0;
+  font-size: 0.7rem;
+  color: var(--crt-boot-dim);
+  text-shadow: 0 0 6px var(--crt-boot-dim);
+}
+
+.crt-boot__status[data-ready="true"] {
+  color: var(--crt-boot-text);
+}
+
+/* CRT nav turn-off animation */
+@keyframes crt-off {
+  0% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1, 0.05);
+  }
+  100% {
+    transform: scale(0.02, 0.02);
+  }
+}
+
+::view-transition-old(root) {
+  animation-name: var(--crt-off-name);
+  animation-duration: var(--crt-off-duration);
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+  transform-origin: center center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root) {
+    animation-duration: 0s;
+  }
+
+  .crt-boot {
+    transition-duration: 0s;
+  }
+
+  .islamic-pattern::before {
+    animation: none;
+  }
 }

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useStore } from "@nanostores/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Sparkles, Loader2 } from "lucide-react";
+import { MessageCircle, X, Send, Sparkles, Loader2, Mic } from "lucide-react";
 import { ChatMessage, type Message, type MessageRole } from "./ChatMessage";
 import { INITIAL_QUESTIONS } from "../../lib/chatContext";
 import {
@@ -8,15 +9,40 @@ import {
   BLOCKED_RESPONSE_AR,
   validateUserInput,
 } from "../../lib/validators";
+import { useVoice } from "../../hooks/useVoice";
+import { VoiceWaveform } from "../ui/VoiceWaveform";
+import {
+  closeChatbot,
+  isChatbotOpen,
+  toggleChatbot,
+} from "../../stores/aiChatbot";
+
+const SALAAM_GREETING =
+  "وعليكم السلام ورحمة الله وبركاته - Welcome, brother/sister!";
+const SALAAM_PATTERN = /\b(salaam|salam)\b/i;
 
 export const AIChatbot = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpen = useStore(isChatbotOpen);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isRtl, setIsRtl] = useState(false);
+  const lastVoiceMessageRef = useRef<string>("");
+
+  const {
+    isSupported: isVoiceSupported,
+    isListening,
+    transcript,
+    finalTranscript,
+    error: voiceError,
+    startListening,
+    stopListening,
+    resetTranscript,
+    speak,
+    cancelSpeech,
+  } = useVoice({ lang: isRtl ? "ar-SA" : "en-US" });
 
   useEffect(() => {
     setIsRtl(document.documentElement.dir === "rtl");
@@ -59,7 +85,12 @@ export const AIChatbot = () => {
     const normalizedContent = content.trim();
     if (!normalizedContent) return;
 
+    cancelSpeech();
+
     const guardrailResult = validateUserInput(normalizedContent);
+    const shouldPrependSalaam = SALAAM_PATTERN.test(normalizedContent);
+    const withSalaam = (message: string) =>
+      shouldPrependSalaam ? `${SALAAM_GREETING}\n${message}` : message;
 
     const userMsg: Message = {
       id: Date.now().toString(),
@@ -72,11 +103,12 @@ export const AIChatbot = () => {
       const blockedMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: isRtl ? BLOCKED_RESPONSE_AR : BLOCKED_RESPONSE,
+        content: withSalaam(isRtl ? BLOCKED_RESPONSE_AR : BLOCKED_RESPONSE),
         timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, userMsg, blockedMsg]);
       setInputValue("");
+      speak(blockedMsg.content);
       return;
     }
 
@@ -105,18 +137,21 @@ export const AIChatbot = () => {
 
       const data = await response.json();
 
+      const responseText =
+        data.response ||
+        (isRtl
+          ? "أواجه مشكلة في الاتصال الآن. يرجى المحاولة مرة أخرى لاحقًا."
+          : "I'm having trouble connecting right now. Please try again later.");
+
       const botMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content:
-          data.response ||
-          (isRtl
-            ? "أواجه مشكلة في الاتصال الآن. يرجى المحاولة مرة أخرى لاحقًا."
-            : "I'm having trouble connecting right now. Please try again later."),
+        content: withSalaam(responseText),
         timestamp: Date.now(),
       };
 
       setMessages((prev) => [...prev, botMsg]);
+      speak(botMsg.content);
     } catch (error: any) {
       console.error("Chat error:", error);
       let errorMessage = isRtl
@@ -132,14 +167,30 @@ export const AIChatbot = () => {
       const errorMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: errorMessage,
+        content: withSalaam(errorMessage),
         timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, errorMsg]);
+      speak(errorMsg.content);
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!isListening) return;
+    setInputValue(transcript);
+  }, [isListening, transcript]);
+
+  useEffect(() => {
+    if (isListening) return;
+    const normalized = finalTranscript.trim();
+    if (!normalized) return;
+    if (normalized === lastVoiceMessageRef.current) return;
+    lastVoiceMessageRef.current = normalized;
+    handleSendMessage(normalized);
+    resetTranscript();
+  }, [finalTranscript, handleSendMessage, isListening, resetTranscript]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -175,7 +226,7 @@ export const AIChatbot = () => {
                   </div>
                 </div>
                 <button
-                  onClick={() => setIsOpen(false)}
+                  onClick={closeChatbot}
                   className="rounded-full p-1 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
                   aria-label="Close chat"
                 >
@@ -241,6 +292,37 @@ export const AIChatbot = () => {
                     disabled={isLoading}
                   />
                   <button
+                    onClick={() => {
+                      if (!isVoiceSupported) return;
+                      if (isListening) {
+                        stopListening();
+                      } else {
+                        cancelSpeech();
+                        startListening();
+                      }
+                    }}
+                    disabled={!isVoiceSupported}
+                    className={`rounded-lg border p-1.5 transition-colors ${
+                      isListening
+                        ? "border-blue-500 bg-blue-50 text-blue-600 dark:border-blue-400 dark:bg-blue-900/30 dark:text-blue-300"
+                        : "border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+                    } ${!isVoiceSupported ? "opacity-50 cursor-not-allowed" : ""}`}
+                    aria-label={
+                      isListening ? "Stop voice input" : "Start voice input"
+                    }
+                    aria-pressed={isListening}
+                    title={
+                      isVoiceSupported
+                        ? "Voice input"
+                        : "Voice input not supported"
+                    }
+                  >
+                    <Mic
+                      size={16}
+                      className={isListening ? "animate-pulse" : ""}
+                    />
+                  </button>
+                  <button
                     onClick={() => handleSendMessage(inputValue)}
                     disabled={!inputValue.trim() || isLoading}
                     className="rounded-lg bg-blue-600 p-1.5 text-white transition-colors hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -253,6 +335,17 @@ export const AIChatbot = () => {
                     )}
                   </button>
                 </div>
+                {isListening && (
+                  <div className="mt-2 flex items-center gap-2 text-xs text-blue-600 dark:text-blue-400">
+                    <VoiceWaveform isActive={isListening} />
+                    <span>Listening...</span>
+                  </div>
+                )}
+                {voiceError && (
+                  <p className="mt-2 text-xs text-red-500" role="status">
+                    {voiceError}
+                  </p>
+                )}
               </div>
             </motion.div>
           )}
@@ -260,7 +353,7 @@ export const AIChatbot = () => {
 
         <motion.button
           layout
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={toggleChatbot}
           className={`flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
             isOpen
               ? "bg-zinc-200 text-zinc-600 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"

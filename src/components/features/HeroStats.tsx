@@ -100,65 +100,39 @@ export default function HeroStats() {
   useEffect(() => {
     async function fetchGitHubStats() {
       try {
-        // Attempt to fetch from GitHub API
-        const username = "aadel";
+        const statsEndpoint = import.meta.env.PUBLIC_GITHUB_STATS_ENDPOINT;
 
-        // Fetch user events to count PRs
-        const eventsResponse = await fetch(
-          `https://api.github.com/users/${username}/events?per_page=100`,
-          {
-            headers: {
-              Accept: "application/vnd.github.v3+json",
-            },
-          },
-        );
-
-        if (!eventsResponse.ok) {
-          throw new Error("Failed to fetch GitHub data");
+        if (!statsEndpoint) {
+          setStats(fallbackStats);
+          setError("Using cached stats");
+          setLoading(false);
+          return;
         }
 
-        const events = await eventsResponse.json();
+        const statsResponse = await fetch(statsEndpoint, {
+          headers: { Accept: "application/json" },
+        });
 
-        // Count merged PRs from events
-        const prEvents = events.filter(
-          (event: { type: string; payload?: { action?: string } }) =>
-            event.type === "PullRequestEvent" &&
-            event.payload?.action === "closed",
-        );
-
-        // Get unique repos contributed to
-        const repos = new Set(
-          events.map((event: { repo?: { name?: string } }) => event.repo?.name),
-        );
-
-        // Fetch user's starred repos for stars count
-        const reposResponse = await fetch(
-          `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`,
-          {
-            headers: {
-              Accept: "application/vnd.github.v3+json",
-            },
-          },
-        );
-
-        let totalStars = 0;
-        if (reposResponse.ok) {
-          const reposData = await reposResponse.json();
-          totalStars = reposData.reduce(
-            (acc: number, repo: { stargazers_count?: number }) =>
-              acc + (repo.stargazers_count || 0),
-            0,
-          );
+        if (!statsResponse.ok) {
+          throw new Error("Failed to fetch GitHub stats");
         }
+
+        const statsData = (await statsResponse.json()) as Partial<GitHubStats>;
 
         setStats({
-          prsmerged: Math.max(prEvents.length, fallbackStats.prsmerged),
+          prsmerged: Math.max(statsData.prsmerged ?? 0, fallbackStats.prsmerged),
           reposContributed: Math.max(
-            repos.size,
+            statsData.reposContributed ?? 0,
             fallbackStats.reposContributed,
           ),
-          totalStars: Math.max(totalStars, fallbackStats.totalStars),
+          totalStars: Math.max(
+            statsData.totalStars ?? 0,
+            fallbackStats.totalStars,
+          ),
         });
+        setError(null);
+        setLoading(false);
+        return;
       } catch (err) {
         console.warn("Using fallback GitHub stats:", err);
         setError("Using cached stats");

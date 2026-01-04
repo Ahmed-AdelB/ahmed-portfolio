@@ -108,35 +108,35 @@ const {
   </header>
 
   <!-- Logo Grid -->
-  <div
+  <ul
     class="grid grid-cols-3 gap-6 sm:grid-cols-4 md:grid-cols-7 md:gap-8"
-    role="list"
     aria-label="Open source projects"
   >
     {
       projects.map((project) => (
-        <a
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          role="listitem"
-          class="group flex flex-col items-center gap-3 rounded-xl p-4 transition-all duration-300 hover:bg-gray-100/80 dark:hover:bg-gray-700/50"
-          title={project.alt || project.name}
-        >
-          <div class="relative h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16">
-            <Image
-              src={project.logo}
-              alt={project.alt || `${project.name} logo`}
-              class="h-full w-full object-contain grayscale transition-all duration-300 group-hover:grayscale-0 dark:brightness-90 dark:group-hover:brightness-100"
-            />
-          </div>
-          <span class="text-xs font-medium text-gray-500 transition-colors group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white sm:text-sm">
-            {project.name}
-          </span>
-        </a>
+        <li>
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group flex flex-col items-center gap-3 rounded-xl p-4 transition-all duration-300 hover:bg-gray-100/80 dark:hover:bg-gray-700/50"
+            title={project.alt || project.name}
+          >
+            <div class="relative h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16">
+              <Image
+                src={project.logo}
+                alt={project.alt || `${project.name} logo`}
+                class="h-full w-full object-contain grayscale transition-all duration-300 group-hover:grayscale-0 dark:brightness-90 dark:group-hover:brightness-100"
+              />
+            </div>
+            <span class="text-xs font-medium text-gray-500 transition-colors group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white sm:text-sm">
+              {project.name}
+            </span>
+          </a>
+        </li>
       ))
     }
-  </div>
+  </ul>
 
   <!-- Footer CTA (Optional) -->
   <div class="mt-10 flex justify-center">

@@ -54,6 +54,19 @@ const extractErrorMessage = (payload: unknown): string | null => {
 
 export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
   try {
+    // CSRF Check: Verify Origin matches the site URL
+    const origin = request.headers.get("origin");
+    const allowedOrigin = import.meta.env.PUBLIC_SITE_URL
+      ? new URL(import.meta.env.PUBLIC_SITE_URL).origin
+      : new URL(request.url).origin;
+
+    if (origin && origin !== allowedOrigin) {
+      return jsonResponse(403, {
+        success: false,
+        message: "Cross-site requests are not allowed.",
+      });
+    }
+
     const rateLimit = await checkRateLimit({
       request,
       clientAddress,
@@ -73,10 +86,27 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
     }
 
     const apiKey = import.meta.env.BUTTONDOWN_API_KEY;
+    
+    // Mock backend if API key is missing
     if (!apiKey) {
-      return jsonResponse(500, {
-        success: false,
-        message: MESSAGES.missingConfig,
+      const body = await request.json().catch(() => null);
+      const result = SubscribeSchema.safeParse(body);
+      
+      if (!result.success) {
+        return jsonResponse(400, {
+          success: false,
+          message: result.error.errors[0]?.message || MESSAGES.invalidEmail,
+        });
+      }
+      
+      console.log("[MOCK EMAIL STORAGE]", result.data.email);
+      
+      // Simulate network delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      return jsonResponse(200, {
+        success: true,
+        message: MESSAGES.subscribeSuccess,
       });
     }
 
