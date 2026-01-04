@@ -1,6 +1,12 @@
 import type { APIRoute } from "astro";
 import { z } from "zod";
 import { SYSTEM_PROMPT } from "../../lib/chatContext";
+import { checkRateLimit } from "../../lib/ratelimit";
+import {
+  BLOCKED_RESPONSE,
+  filterAssistantOutput,
+  validateUserInput,
+} from "../../lib/validators";
 
 const MessageSchema = z.object({
   role: z.enum(["user", "assistant"]),
@@ -11,71 +17,23 @@ const ChatRequestSchema = z.object({
   messages: z.array(MessageSchema).min(1),
 });
 
-const RATE_LIMIT_WINDOW_MS = 60_000;
-const RATE_LIMIT_MAX = 10;
-
-type RateLimitEntry = {
-  count: number;
-  resetAt: number;
-};
-
-const rateLimitStore = new Map<string, RateLimitEntry>();
-
-const getClientIp = (
-  request: Request,
-  clientAddress?: string | null,
-): string => {
-  const forwardedFor = request.headers.get("x-forwarded-for");
-  if (forwardedFor) {
-    const [first] = forwardedFor.split(",");
-    if (first?.trim()) {
-      return first.trim();
-    }
-  }
-
-  const realIp = request.headers.get("x-real-ip");
-  if (realIp?.trim()) {
-    return realIp.trim();
-  }
-
-  const cfIp = request.headers.get("cf-connecting-ip");
-  if (cfIp?.trim()) {
-    return cfIp.trim();
-  }
-
-  if (clientAddress?.trim()) {
-    return clientAddress.trim();
-  }
-
-  return "unknown";
-};
-
-export const POST: APIRoute = async ({ request, clientAddress }) => {
+export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
   try {
-    const ip = getClientIp(request, clientAddress);
-    const now = Date.now();
-    const entry = rateLimitStore.get(ip);
+    const rateLimit = await checkRateLimit({
+      request,
+      clientAddress,
+      type: "chat",
+      ip: locals.clientIp,
+    });
 
-    if (!entry || now > entry.resetAt) {
-      rateLimitStore.set(ip, {
-        count: 1,
-        resetAt: now + RATE_LIMIT_WINDOW_MS,
-      });
-    } else if (entry.count >= RATE_LIMIT_MAX) {
-      const retryAfterSeconds = Math.max(
-        1,
-        Math.ceil((entry.resetAt - now) / 1000),
-      );
+    if (!rateLimit.allowed) {
+      const headers = new Headers({ "Content-Type": "application/json" });
+      rateLimit.headers.forEach((value, key) => headers.set(key, value));
+
       return new Response(JSON.stringify({ error: "Too Many Requests" }), {
         status: 429,
-        headers: {
-          "Content-Type": "application/json",
-          "Retry-After": retryAfterSeconds.toString(),
-        },
+        headers,
       });
-    } else {
-      entry.count += 1;
-      rateLimitStore.set(ip, entry);
     }
 
     let body: unknown;
@@ -103,6 +61,17 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     }
 
     const { messages } = result.data;
+    const blockedMessage = messages.find(
+      (message) =>
+        message.role === "user" && !validateUserInput(message.content).allowed,
+    );
+
+    if (blockedMessage) {
+      return new Response(JSON.stringify({ response: BLOCKED_RESPONSE }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
 
     const apiKey = import.meta.env.ANTHROPIC_API_KEY;
 
@@ -131,7 +100,9 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
           "Ahmed has contributed to several Python projects and authored the 'github-reputation-toolkit'. He has over 7 PRs to major repositories.";
       }
 
-      return new Response(JSON.stringify({ response: mockResponse }), {
+      const filtered = filterAssistantOutput(mockResponse);
+
+      return new Response(JSON.stringify({ response: filtered.filtered }), {
         status: 200,
         headers: { "Content-Type": "application/json" },
       });
@@ -160,10 +131,21 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         throw new Error("Anthropic API request failed");
       }
 
-      const data = await response.json();
-      const content = data.content[0].text;
+      const data = (await response.json()) as {
+        content?: Array<{ text?: string }>;
+      };
+      const content = data.content?.[0]?.text;
+      const safeContent =
+        typeof content === "string" && content.trim().length > 0
+          ? content
+          : BLOCKED_RESPONSE;
+      const filtered = filterAssistantOutput(safeContent);
 
-      return new Response(JSON.stringify({ response: content }), {
+      if (filtered.blocked) {
+        console.warn("Filtered assistant output due to guardrails.");
+      }
+
+      return new Response(JSON.stringify({ response: filtered.filtered }), {
         status: 200,
         headers: { "Content-Type": "application/json" },
       });

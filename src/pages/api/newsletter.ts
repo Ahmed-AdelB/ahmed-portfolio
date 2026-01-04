@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { z } from "zod";
+import { checkRateLimit } from "../../lib/ratelimit";
 
 interface NewsletterResponse {
   success: boolean;
@@ -20,11 +21,23 @@ const SubscribeSchema = z.object({
   email: z.string().email(MESSAGES.invalidEmail),
 });
 
-const jsonResponse = (status: number, payload: NewsletterResponse): Response =>
-  new Response(JSON.stringify(payload), {
+const jsonResponse = (
+  status: number,
+  payload: NewsletterResponse,
+  headers?: HeadersInit,
+): Response => {
+  const responseHeaders = new Headers({ "Content-Type": "application/json" });
+
+  if (headers) {
+    const merged = new Headers(headers);
+    merged.forEach((value, key) => responseHeaders.set(key, value));
+  }
+
+  return new Response(JSON.stringify(payload), {
     status,
-    headers: { "Content-Type": "application/json" },
+    headers: responseHeaders,
   });
+};
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null;
@@ -37,8 +50,26 @@ const extractErrorMessage = (payload: unknown): string | null => {
   return null;
 };
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
   try {
+    const rateLimit = await checkRateLimit({
+      request,
+      clientAddress,
+      type: "newsletter",
+      ip: locals.clientIp,
+    });
+
+    if (!rateLimit.allowed) {
+      return jsonResponse(
+        429,
+        {
+          success: false,
+          message: "Too many requests. Please try again shortly.",
+        },
+        rateLimit.headers,
+      );
+    }
+
     const apiKey = import.meta.env.BUTTONDOWN_API_KEY;
     if (!apiKey) {
       return jsonResponse(500, {

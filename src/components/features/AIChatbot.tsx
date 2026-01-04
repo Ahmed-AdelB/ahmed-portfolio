@@ -3,6 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Sparkles, Loader2 } from "lucide-react";
 import { ChatMessage, type Message, type MessageRole } from "./ChatMessage";
 import { INITIAL_QUESTIONS } from "../../lib/chatContext";
+import {
+  BLOCKED_RESPONSE,
+  validateUserInput,
+} from "../../lib/validators";
 
 export const AIChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,14 +50,29 @@ export const AIChatbot = () => {
   }, [isOpen]);
 
   const handleSendMessage = async (content: string) => {
-    if (!content.trim()) return;
+    const normalizedContent = content.trim();
+    if (!normalizedContent) return;
+
+    const guardrailResult = validateUserInput(normalizedContent);
 
     const userMsg: Message = {
       id: Date.now().toString(),
       role: "user",
-      content: content,
+      content: normalizedContent,
       timestamp: Date.now(),
     };
+
+    if (!guardrailResult.allowed) {
+      const blockedMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: BLOCKED_RESPONSE,
+        timestamp: Date.now(),
+      };
+      setMessages((prev) => [...prev, userMsg, blockedMsg]);
+      setInputValue("");
+      return;
+    }
 
     setMessages((prev) => [...prev, userMsg]);
     setInputValue("");
