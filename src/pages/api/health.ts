@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { z } from "zod";
+import { checkRateLimit } from "../../lib/ratelimit";
 
 export const prerender = false;
 
@@ -34,7 +35,19 @@ const jsonResponse = (status: number, payload: HealthResponse): Response =>
     },
   });
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ request, clientAddress }) => {
+  // Rate limiting for health endpoint (more lenient than other endpoints)
+  const rateLimitResult = await checkRateLimit(request, clientAddress, "health");
+  if (!rateLimitResult.success) {
+    return new Response(JSON.stringify({ error: "Too many requests" }), {
+      status: 429,
+      headers: {
+        "Content-Type": "application/json",
+        "Retry-After": "60",
+      },
+    });
+  }
+
   const checks: HealthResponse["checks"] = [];
   let overallStatus: HealthResponse["status"] = "healthy";
 
