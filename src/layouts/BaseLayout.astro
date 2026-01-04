@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import '../styles/terminal.css';
 import '../styles/islamic-theme.css';
@@ -125,11 +125,6 @@ const metaDescription = description.length > 200 ? description.substring(0, 197)
 
     <!-- Theme + terminal detection script (FOUC prevention) -->
     <script is:inline>
-      // ﷽
-      if (import.meta.env.DEV) {
-        console.log('بسم الله الرحمن الرحيم');
-      }
-
       (function() {
         const root = document.documentElement;
         let terminalEnabled = false;
@@ -183,7 +178,7 @@ const metaDescription = description.length > 200 ? description.substring(0, 197)
     </script>
 
     <!-- View Transitions API -->
-    <ViewTransitions fallback="swap" />
+    <ClientRouter fallback="swap" />
 
     {umamiWebsiteId ? (
       <script
@@ -210,12 +205,6 @@ const metaDescription = description.length > 200 ? description.substring(0, 197)
         class="skip-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-emerald-600 focus:text-white focus:rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:font-medium"
       >
         Skip to main content
-      </a>
-      <a
-        href="#main-nav"
-        class="skip-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-48 focus:z-50 focus:px-4 focus:py-2 focus:bg-emerald-600 focus:text-white focus:rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:font-medium"
-      >
-        Skip to navigation
       </a>
     </div>
 

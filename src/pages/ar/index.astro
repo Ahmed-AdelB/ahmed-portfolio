@@ -5,6 +5,7 @@ import Hero from '../../components/features/Hero.astro';
 import GitHubStats from '../../components/features/GitHubStats.astro';
 import ProjectCard from '../../components/features/ProjectCard.astro';
 import LogoWall from '../../components/features/LogoWall.astro';
+import Footer from '../../components/Footer.astro';
 
 // Fetch Featured Projects
 const allProjects = await getCollection('projects');
@@ -214,4 +215,5 @@ const description = "محفظة أعمال أحمد عادل، باحث أمني
     </div>
   </section>
 
+  <Footer lang="ar" />
 </BaseLayout>

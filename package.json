@@ -2,6 +2,7 @@
   "name": "ahmed-portfolio",
   "type": "module",
   "version": "0.0.1",
+  "description": "Ahmed Adel's Portfolio - Built with Basmala",
   "scripts": {
     "dev": "node scripts/validate-env.mjs && astro dev",
     "build": "node scripts/validate-env.mjs && astro build",
@@ -42,6 +43,8 @@
     "nanostores": "^1.1.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "react-force-graph-2d": "^1.29.0",
+    "scheduler": "^0.27.0",
     "tailwindcss": "^4.1.18",
     "zod": "^3.25.76"
   },
@@ -59,6 +62,6 @@
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "vitest": "^2.0.0"
+    "vitest": "^4.0.16"
   }
 }
