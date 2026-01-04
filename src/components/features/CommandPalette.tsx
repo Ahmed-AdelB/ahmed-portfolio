@@ -330,6 +330,8 @@ export default function CommandPalette() {
       open={isOpen}
       onOpenChange={(open) => !open && close()}
       label="Command Menu"
+      aria-label="Command palette"
+      aria-modal="true"
       className="fixed inset-0 z-[100] flex items-start justify-center pt-[20%] sm:pt-[10%] px-4"
       onKeyDown={(e) => {
         if (isTerminalMode && e.key === "Enter" && query.trim()) {
@@ -365,6 +367,7 @@ export default function CommandPalette() {
             value={query}
             onValueChange={setQuery}
             placeholder="Search pages, actions..."
+            aria-label="Search commands"
             className="flex-1 border-0 bg-transparent px-4 py-4 text-base text-gray-900 placeholder-gray-400 outline-none focus:ring-0 dark:text-white dark:placeholder-gray-500"
           />
           <div className="hidden sm:flex items-center gap-1">

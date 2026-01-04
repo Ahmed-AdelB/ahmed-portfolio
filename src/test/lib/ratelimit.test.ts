@@ -1,9 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
-// Mock environment variables
-vi.stubEnv("UPSTASH_REDIS_REST_URL", "https://mock-url.upstash.io");
-vi.stubEnv("UPSTASH_REDIS_REST_TOKEN", "mock-token");
-
 // Mock @upstash/redis
 const mockLimit = vi.fn();
 
@@ -27,16 +23,22 @@ vi.mock("@upstash/redis", () => ({
   },
 }));
 
+// Mock config
+vi.mock("../../lib/config", () => ({
+  config: {
+    UPSTASH_REDIS_REST_URL: "https://mock-url.upstash.io",
+    UPSTASH_REDIS_REST_TOKEN: "mock-token",
+  },
+  isUpstashConfigured: vi.fn(() => true),
+}));
+
+import { isUpstashConfigured } from "../../lib/config";
+
 describe("Rate Limiting", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.resetModules();
-    vi.stubEnv("UPSTASH_REDIS_REST_URL", "https://mock-url.upstash.io");
-    vi.stubEnv("UPSTASH_REDIS_REST_TOKEN", "mock-token");
-  });
-
-  afterEach(() => {
-    vi.unstubAllEnvs();
+    vi.mocked(isUpstashConfigured).mockReturnValue(true);
   });
 
   describe("getClientIp", () => {
@@ -121,10 +123,16 @@ describe("Rate Limiting", () => {
     });
 
     it("handles missing environment variables gracefully (fail open)", async () => {
-        vi.resetModules();
-        vi.stubEnv("UPSTASH_REDIS_REST_URL", "");
-        vi.stubEnv("UPSTASH_REDIS_REST_TOKEN", "");
+        vi.mocked(isUpstashConfigured).mockReturnValue(false);
         
+        // We need to re-import ratelimit to ensure it picks up the mocked config value change if it logic depended on it at module level. 
+        // BUT ratelimit.ts creates 'redis' and 'rateLimiters' at top level based on 'upstashEnabled'. 
+        // Since we are mocking the module "../../lib/config", the import inside ratelimit.ts will get the mocked functions.
+        // However, 'upstashEnabled' is a const calculated at module load time in 'ratelimit.ts'. 
+        // "const upstashEnabled = isUpstashConfigured();"
+        // So we MUST use vi.resetModules() and re-import to re-evaluate top-level consts.
+        
+        vi.resetModules();
         const { checkRateLimit } = await import("../../lib/ratelimit");
 
         const req = new Request("http://localhost");

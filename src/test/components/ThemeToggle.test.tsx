@@ -109,7 +109,13 @@ describe("ThemeToggle", () => {
       value: storage,
       configurable: true,
     });
-    setMatchMedia(true);
+    // Override mock to return true for this test
+    (window.matchMedia as any).mockImplementation((query: string) => ({
+      matches: true,
+      media: query,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    }));
 
     render(<ThemeToggle />);
 

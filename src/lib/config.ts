@@ -2,8 +2,8 @@ import { z } from "zod";
 
 const envSchema = z.object({
   // Optional for development/demo, required for production features
-  UPSTASH_REDIS_REST_URL: z.string().url().optional(),
-  UPSTASH_REDIS_REST_TOKEN: z.string().min(1).optional(),
+  UPSTASH_REDIS_REST_URL: z.union([z.string().url(), z.literal("")]).optional(),
+  UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
   ANTHROPIC_API_KEY: z.string().optional(),
   UMAMI_WEBSITE_ID: z.string().optional(),
   PUBLIC_SITE_URL: z.string().url().optional(),

@@ -10,24 +10,26 @@ import type { Challenge, DefenseId, SimulationStatus } from "../types/security";
 const mockChallenge: Challenge = {
   id: "test-challenge",
   title: "Test Challenge",
-  description: "A test challenge",
   difficulty: "Easy",
+  context: "Test context",
   systemPrompt: "You are a secure system.",
   userPrompt: "Do something",
+  goal: "Test goal",
   exploitPatterns: ["exploit", "hack"],
-  recommendedDefenses: ["input-filtering"],
+  recommendedDefenses: ["input-sanitization"],
   safeResponse: "Blocked.",
   compromisedResponse: "Compromised!",
   normalResponse: "Hello.",
-  category: "injection",
+  lesson: "Test lesson",
+  takeaways: ["Takeaway 1"],
 };
 
 const mockDefenses: Record<DefenseId, boolean> = {
   "instruction-hierarchy": false,
-  "input-filtering": false,
-  "output-validation": false,
-  "sandwich-defense": false,
-  "xml-tagging": false,
+  "input-sanitization": false,
+  "output-filtering": false,
+  "context-isolation": false,
+  "tool-gating": false,
 };
 
 describe("security-utils", () => {

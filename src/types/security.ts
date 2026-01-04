@@ -56,4 +56,7 @@ export interface SimulationResult {
   reasoning: string;
   recommendedDefenses: DefenseId[];
   riskScore: number;
+  attackPower: number;
+  defensePower: number;
+  activeDefenses: DefenseMechanism[];
 }

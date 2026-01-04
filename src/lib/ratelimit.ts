@@ -24,6 +24,7 @@ type RateLimitCheckOptions = {
 const RATE_LIMIT_CONFIG: Record<RateLimitTarget, RateLimitConfig> = {
   chat: { limit: 10, window: "1 m", prefix: "ratelimit:chat" },
   newsletter: { limit: 5, window: "1 m", prefix: "ratelimit:newsletter" },
+  health: { limit: 60, window: "1 m", prefix: "ratelimit:health" },
 };
 
 const UPSTASH_REDIS_REST_URL = config.UPSTASH_REDIS_REST_URL;
@@ -55,6 +56,14 @@ const rateLimiters: Record<RateLimitTarget, Ratelimit> | null = redis
           RATE_LIMIT_CONFIG.newsletter.window,
         ),
         prefix: RATE_LIMIT_CONFIG.newsletter.prefix,
+      }),
+      health: new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(
+          RATE_LIMIT_CONFIG.health.limit,
+          RATE_LIMIT_CONFIG.health.window,
+        ),
+        prefix: RATE_LIMIT_CONFIG.health.prefix,
       }),
     }
   : null;

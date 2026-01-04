@@ -43,6 +43,20 @@ import { SecurityPlayground as PlaygroundComponent } from "../components/feature
       <p>
         Check out my <a href="/projects/llm-security-playbook">LLM Security Playbook</a> for defense strategies.
       </p>
+
+      <h3>Visualizing the Defense Layer</h3>
+      <p>
+        The <strong>Shield Visualizer</strong> demonstrates how modern AI defense systems work in layers. 
+        It is not just about one check; it is about a defense-in-depth strategy:
+      </p>
+      <ul>
+         <li><strong>Input Sanitization:</strong> The outer ring, filtering malicious patterns before they reach the model.</li>
+         <li><strong>Instruction Hierarchy:</strong> The core logic that ensures system rules override user prompts.</li>
+         <li><strong>Output Filtering:</strong> The final safety net to catch any leakage.</li>
+      </ul>
+      <p>
+        In the "Context Poisoning" challenge (Hard), you can see how attacks try to bypass these layers by targeting the model's memory rather than its immediate input processing.
+      </p>
     </div>
   </div>
 </BaseLayout>

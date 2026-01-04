@@ -103,8 +103,13 @@ export const evaluateSimulation = (
   const matchedSignals = Array.from(
     new Set([...matchedBase, ...matchedChallenge]),
   );
-  const defenseScore = defenseMechanisms.reduce((acc, defense) => {
-    return acc + (enabledDefenses[defense.id] ? defense.strength : 0);
+  
+  const activeDefenses = defenseMechanisms.filter(
+    (defense) => enabledDefenses[defense.id],
+  );
+
+  const defenseScore = activeDefenses.reduce((acc, defense) => {
+    return acc + defense.strength;
   }, 0);
 
   const difficultyWeight = difficultyWeights[challenge.difficulty];
@@ -148,5 +153,8 @@ export const evaluateSimulation = (
     reasoning,
     recommendedDefenses,
     riskScore,
+    attackPower: rawScore,
+    defensePower: defenseScore,
+    activeDefenses,
   };
 };

@@ -77,7 +77,7 @@ describe("MobileNav", () => {
     });
 
     const navLinkElements = Array.from(
-      nav.querySelectorAll('a[href^="/"]'),
+      nav.querySelectorAll("a"),
     ) as HTMLAnchorElement[];
 
     expect(navLinkElements.length).toBeGreaterThan(1);
@@ -102,7 +102,7 @@ describe("MobileNav", () => {
     });
 
     const navLinkElements = Array.from(
-      nav.querySelectorAll('a[href^="/"]'),
+      nav.querySelectorAll("a"),
     ) as HTMLAnchorElement[];
 
     navLinkElements[1].focus();

@@ -29,6 +29,7 @@ import { EducationalPanel } from "./security/EducationalPanel";
 import { ProgressTracker } from "./security/ProgressTracker";
 import { SimulationConsole } from "./security/SimulationConsole";
 import { SimulationResultDisplay } from "./security/SimulationResultDisplay";
+import { ShieldVisualizer } from "./security/ShieldVisualizer";
 
 const challengeIds = challenges.map(
   (challenge) => challenge.id,
@@ -160,6 +161,8 @@ export const SecurityPlayground: FC<SecurityPlaygroundProps> = () => {
         </aside>
 
         <div className="space-y-6">
+          <ShieldVisualizer result={result} isAnalyzing={isAnalyzing} />
+
           <SimulationConsole
             activeChallenge={activeChallenge}
             promptInput={promptInput}
