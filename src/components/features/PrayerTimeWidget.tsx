@@ -36,7 +36,7 @@ export const PrayerTimeWidget: React.FC = () => {
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
         </span>
-        <span className="opacity-70">NEXT PRAYER:</span>
+        <span className="opacity-70">NEXT CRON:</span>
         <span className="font-bold">{nextPrayer.name.toUpperCase()} {nextPrayer.time}</span>
         <span className="ml-2 text-[10px] opacity-0 group-hover:opacity-50 transition-opacity">
           [CLICK TO HIDE]
