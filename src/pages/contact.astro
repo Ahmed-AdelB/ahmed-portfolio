@@ -4,9 +4,10 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/Footer.astro';
 import { Github, Linkedin, Twitter, Mail, MapPin, Clock, Calendar } from 'lucide-react';
 import { CalendlyEmbed } from '../components/features/CalendlyEmbed';
+import { SITE_CONFIG } from '../site.config';
 
 // Calendly configuration - Update this URL after setting up your Calendly account
-const CALENDLY_URL = 'https://calendly.com/ahmedadel/coffee-chat';
+const CALENDLY_URL = SITE_CONFIG.urls.calendly;
 
 const title = "Contact | Ahmed Adel";
 const description = "Get in touch with Ahmed Adel for security audits, collaborations, or speaking engagements.";
@@ -14,13 +15,13 @@ const description = "Get in touch with Ahmed Adel for security audits, collabora
 const socialLinks = [
   {
     name: 'GitHub',
-    url: 'https://github.com/Ahmed-AdelB',
+    url: SITE_CONFIG.urls.github,
     icon: Github,
     color: 'hover:text-gray-900 dark:hover:text-white'
   },
   {
     name: 'LinkedIn',
-    url: 'https://linkedin.com/in/ahmedadel1991',
+    url: SITE_CONFIG.urls.linkedin,
     icon: Linkedin,
     color: 'hover:text-[#0077b5]'
   },
@@ -79,12 +80,12 @@ const faqs = [
 
           <!--
             Email Destination Configuration:
-            - Form submissions go to Formspree (https://formspree.io/f/xpwzgkdl)
+            - Form submissions go to Formspree (${SITE_CONFIG.urls.formspree})
             - Formspree forwards notifications to the account owner's email
             - For domain email setup (contact@ahmedaderai.dev), see: docs/EMAIL_SETUP.md
             - Direct email link uses: ahmedalderai25@gmail.com
           -->
-          <form class="space-y-6" id="contact-form" action="https://formspree.io/f/xpwzgkdl" method="POST">
+          <form class="space-y-6" id="contact-form" action={SITE_CONFIG.urls.formspree} method="POST">
             <div class="grid md:grid-cols-2 gap-6">
               <div class="space-y-2">
                 <label for="name" class="text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
@@ -229,7 +230,7 @@ const faqs = [
               <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Schedule a Coffee Chat</h3>
             </div>
             <CalendlyEmbed
-              client:load
+              client:visible
               url={CALENDLY_URL}
               mode="inline"
               height={400}
@@ -247,7 +248,7 @@ const faqs = [
               Click below to open the scheduler in a popup window.
             </p>
             <CalendlyEmbed
-              client:load
+              client:visible
               url={CALENDLY_URL}
               mode="popup"
               buttonText="Schedule a Coffee Chat"

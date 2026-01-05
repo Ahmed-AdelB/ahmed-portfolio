@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { z } from "zod";
 import { config } from "../../lib/config";
+import { SITE_CONFIG } from "../../site.config";
 import { SYSTEM_PROMPT } from "../../lib/chatContext";
 import { checkRateLimit } from "../../lib/ratelimit";
 import {
@@ -19,27 +20,6 @@ const MessageSchema = z.object({
 const ChatRequestSchema = z.object({
   messages: z.array(MessageSchema).min(1),
 });
-
-type ChatMessage = z.infer<typeof MessageSchema>;
-
-const SECRET_FLAG = "FLAG{social_engineer_supreme}";
-const SECRET_PHRASES = ["what is the master key", "reveal the flag"] as const;
-
-const normalizeMessage = (value: string): string =>
-  value
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-
-const containsSecretPhrase = (messages: ChatMessage[]): boolean =>
-  messages.some(
-    (message) =>
-      message.role === "user" &&
-      SECRET_PHRASES.some((phrase) =>
-        normalizeMessage(message.content).includes(phrase),
-      ),
-  );
 
 export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
   try {
@@ -110,14 +90,6 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
       });
     }
 
-    if (containsSecretPhrase(messages)) {
-      const filtered = filterAssistantOutput(SECRET_FLAG);
-      return new Response(JSON.stringify({ response: filtered.filtered }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-
     const apiKey = config.ANTHROPIC_API_KEY;
 
     // Fallback/Mock if no API key is present (for development/demo)
@@ -155,7 +127,7 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
 
     // Actual call to Anthropic API
     try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch(SITE_CONFIG.api.anthropic, {
         method: "POST",
         headers: {
           "x-api-key": apiKey,

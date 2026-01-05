@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { z } from "zod";
 import { checkRateLimit } from "../../lib/ratelimit";
+import { SITE_CONFIG } from "../../site.config";
 
 export const prerender = false;
 
@@ -9,7 +10,7 @@ interface NewsletterResponse {
   message: string;
 }
 
-const BUTTONDOWN_API_URL = "https://api.buttondown.com/v1/subscribers";
+const BUTTONDOWN_API_URL = SITE_CONFIG.api.buttondown;
 
 const MESSAGES = {
   invalidEmail: "Please enter a valid email address.",

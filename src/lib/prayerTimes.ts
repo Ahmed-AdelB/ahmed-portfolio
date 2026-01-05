@@ -1,9 +1,11 @@
+import { SITE_CONFIG } from '../site.config';
+
 export interface PrayerTime {
   name: string;
   time: string; // HH:MM format
 }
 
-const API_URL = 'https://api.aladhan.com/v1/timingsByCity';
+const API_URL = SITE_CONFIG.api.aladhan;
 const DEFAULT_CITY = 'Cairo';
 const DEFAULT_COUNTRY = 'Egypt';
 const CACHE_KEY = 'prayer_times_cache';

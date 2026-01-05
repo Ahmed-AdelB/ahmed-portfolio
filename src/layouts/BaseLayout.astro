@@ -16,6 +16,7 @@ import WhoisProfile from '../components/features/WhoisProfile';
 import EasterEggManager from '../components/features/EasterEggManager';
 import BackToTop from '../components/features/BackToTop.astro';
 import CopyCodeButton from '../components/features/CopyCodeButton.astro';
+import { SITE_CONFIG } from '../site.config';
 // Self-hosted fonts - Optimized: reduced weights for better performance
 // Primary weights: 400 (body), 500 (medium), 700 (bold)
 import '@fontsource/space-grotesk/400.css';
@@ -52,7 +53,7 @@ const dir = isRtl ? 'rtl' : 'ltr';
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(image, Astro.site);
 const umamiWebsiteId = import.meta.env.UMAMI_WEBSITE_ID;
-const umamiScriptSrc = 'https://analytics.umami.is/script.js';
+const umamiScriptSrc = SITE_CONFIG.api.umamiScript;
 
 // Meta tag truncation
 const metaTitle = title.length > 60 ? title.substring(0, 57) + '...' : title;
@@ -235,10 +236,10 @@ const metaDescription = description.length > 200 ? description.substring(0, 197)
     <TerminalMode client:idle />
 
     <!-- Keyboard Shortcuts Help -->
-    <ShortcutsHelp client:load />
+    <ShortcutsHelp client:idle />
     
     <!-- New Action Components -->
-    <BootSequence client:load />
+    <BootSequence client:idle />
     <MatrixRain client:idle />
     <SecurityScan client:idle />
     <WhoisProfile client:idle />
