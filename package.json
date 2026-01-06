@@ -37,7 +37,7 @@
     "@upstash/redis": "^1.36.0",
     "astro": "^5.16.6",
     "cmdk": "^1.1.1",
-    "framer-motion": "^12.23.26",
+    "framer-motion": "^12.24.1",
     "lucide-react": "^0.562.0",
     "nanostores": "^1.1.0",
     "react": "^19.2.3",
