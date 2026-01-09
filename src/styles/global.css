@@ -153,7 +153,7 @@ html.hacker {
   --crt-boot-dim: var(--hacker-dim);
   --crt-off-name: crt-off;
   --crt-off-duration: 0.85s;
-  
+
   background-color: var(--hacker-bg);
   color: var(--hacker-text);
   font-family: var(--font-mono);
@@ -216,15 +216,17 @@ html.hacker h6,
 html.hacker strong,
 html.hacker b,
 html.hacker a:hover {
-  text-shadow: 0 0 5px var(--hacker-dim), 0 0 10px var(--hacker-dim);
+  text-shadow:
+    0 0 5px var(--hacker-dim),
+    0 0 10px var(--hacker-dim);
 }
 
-html.hacker p, 
-html.hacker span, 
-html.hacker li, 
-html.hacker td, 
+html.hacker p,
+html.hacker span,
+html.hacker li,
+html.hacker td,
 html.hacker div {
-   text-shadow: 0.4px 0 0.5px rgba(0, 255, 65, 0.5); /* Slight chromatic aberration-ish blur */
+  text-shadow: 0.4px 0 0.5px rgba(0, 255, 65, 0.5); /* Slight chromatic aberration-ish blur */
 }
 
 /* Button Overrides */
@@ -246,7 +248,8 @@ html.hacker button:hover {
 /* Image/Media Filter */
 html.hacker img,
 html.hacker video {
-  filter: grayscale(100%) sepia(100%) hue-rotate(90deg) contrast(1.2) brightness(0.9);
+  filter: grayscale(100%) sepia(100%) hue-rotate(90deg) contrast(1.2)
+    brightness(0.9);
   opacity: 0.9;
 }
 
@@ -256,46 +259,92 @@ html.hacker ::-webkit-scrollbar {
 }
 
 html.hacker ::-webkit-scrollbar-track {
-  background: var(--hacker-bg); 
+  background: var(--hacker-bg);
 }
- 
+
 html.hacker ::-webkit-scrollbar-thumb {
-  background: var(--hacker-dim); 
+  background: var(--hacker-dim);
   border: 1px solid var(--hacker-text);
 }
 
 html.hacker ::-webkit-scrollbar-thumb:hover {
-  background: var(--hacker-text); 
+  background: var(--hacker-text);
 }
 
 /* Animations */
 @keyframes scanline {
-  0% { background-position: 0 0; }
-  100% { background-position: 0 100%; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
 }
 
 @keyframes flicker {
-  0% { opacity: 0.02; }
-  5% { opacity: 0.05; }
-  10% { opacity: 0.01; }
-  15% { opacity: 0.06; }
-  20% { opacity: 0.02; }
-  25% { opacity: 0.03; }
-  30% { opacity: 0.01; }
-  35% { opacity: 0.05; }
-  40% { opacity: 0.02; }
-  45% { opacity: 0.03; }
-  50% { opacity: 0.01; }
-  55% { opacity: 0.05; }
-  60% { opacity: 0.02; }
-  65% { opacity: 0.05; }
-  70% { opacity: 0.01; }
-  75% { opacity: 0.03; }
-  80% { opacity: 0.02; }
-  85% { opacity: 0.01; }
-  90% { opacity: 0.05; }
-  95% { opacity: 0.02; }
-  100% { opacity: 0.04; }
+  0% {
+    opacity: 0.02;
+  }
+  5% {
+    opacity: 0.05;
+  }
+  10% {
+    opacity: 0.01;
+  }
+  15% {
+    opacity: 0.06;
+  }
+  20% {
+    opacity: 0.02;
+  }
+  25% {
+    opacity: 0.03;
+  }
+  30% {
+    opacity: 0.01;
+  }
+  35% {
+    opacity: 0.05;
+  }
+  40% {
+    opacity: 0.02;
+  }
+  45% {
+    opacity: 0.03;
+  }
+  50% {
+    opacity: 0.01;
+  }
+  55% {
+    opacity: 0.05;
+  }
+  60% {
+    opacity: 0.02;
+  }
+  65% {
+    opacity: 0.05;
+  }
+  70% {
+    opacity: 0.01;
+  }
+  75% {
+    opacity: 0.03;
+  }
+  80% {
+    opacity: 0.02;
+  }
+  85% {
+    opacity: 0.01;
+  }
+  90% {
+    opacity: 0.05;
+  }
+  95% {
+    opacity: 0.02;
+  }
+  100% {
+    opacity: 0.04;
+  }
 }
 
 /* Selection Color */
