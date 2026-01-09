@@ -1,0 +1,18 @@
+---
+import LinkedInBadgeReact from './LinkedInBadge';
+
+interface Props {
+  variant?: 'compact' | 'expanded';
+  profileUrl?: string;
+  className?: string;
+}
+
+const { variant = 'expanded', profileUrl, className } = Astro.props;
+---
+
+<LinkedInBadgeReact
+  client:visible
+  variant={variant}
+  profileUrl={profileUrl}
+  className={className}
+/>

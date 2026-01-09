@@ -5,6 +5,7 @@ import Hero from '../components/features/Hero.astro';
 import RolePathways from '../components/features/RolePathways.astro';
 import SkillsSection from '../components/features/SkillsSection.astro';
 import GitHubStats from '../components/features/GitHubStats.astro';
+import LinkedInBadge from '../components/features/LinkedInBadge.astro';
 import ProjectCard from '../components/features/ProjectCard.astro';
 import LogoWall from '../components/features/LogoWall.astro';
 import Footer from '../components/Footer.astro';
@@ -46,6 +47,23 @@ const description = "Portfolio of Ahmed Adel, an AI Security Researcher and Open
 
   <!-- GitHub Stats Section -->
   <GitHubStats />
+
+  <!-- Professional Network Section -->
+  <section id="professional-network" class="py-16 bg-white dark:bg-background">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <h2 class="text-2xl md:text-3xl font-bold mb-3 text-gray-900 dark:text-white">
+          Professional Network
+        </h2>
+        <p class="text-gray-600 dark:text-gray-400 max-w-xl mx-auto">
+          Connect with me on LinkedIn for professional updates and opportunities.
+        </p>
+      </div>
+      <div class="max-w-2xl mx-auto">
+        <LinkedInBadge variant="expanded" profileUrl="https://linkedin.com/in/ahmedadel1991" />
+      </div>
+    </div>
+  </section>
 
   <!-- Featured Projects Section -->
   <section id="projects" class="py-20 bg-gray-50 dark:bg-black/50">
