@@ -12,7 +12,7 @@ interface LinkedInBadgeProps {
 const LinkedInBadge: React.FC<LinkedInBadgeProps> = ({
   className = "",
   variant = "expanded",
-  profileUrl = "https://linkedin.com/in/ahmedadelb",
+  profileUrl = "https://linkedin.com/in/ahmedadel1991",
 }) => {
   const { connections, followers, endorsements, recommendations, topSkills, headline, loading } =
     useLinkedInStats();
