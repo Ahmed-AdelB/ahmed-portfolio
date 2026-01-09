@@ -222,7 +222,7 @@ export const useVoice = (options: UseVoiceOptions = {}): UseVoiceReturn => {
 
       window.speechSynthesis.speak(utterance);
     },
-    [lang]
+    [lang],
   );
 
   const cancelSpeech = useCallback(() => {

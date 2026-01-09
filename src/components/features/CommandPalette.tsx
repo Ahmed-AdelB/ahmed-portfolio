@@ -8,7 +8,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useStore } from "@nanostores/react";
 import { Command } from "cmdk";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Search,
   Home,
@@ -25,7 +25,7 @@ import {
   Check,
   ArrowRight,
   Terminal as TerminalIcon,
-  Github,
+  GithubIcon,
   Shield,
   Fingerprint,
   Code,
@@ -329,7 +329,7 @@ export default function CommandPalette() {
         id: "open-github",
         label: "Open GitHub",
         description: "Visit my GitHub profile",
-        icon: Github,
+        icon: GithubIcon,
         category: "action",
         keywords: ["github", "git", "profile", "code"],
         action: () => {

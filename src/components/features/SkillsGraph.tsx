@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useMemo, useRef } from 'react';
-import { skills } from '../../data/resume';
+import React, { useEffect, useState, useMemo, useRef } from "react";
+import { skills } from "../../data/resume";
 
 interface Node {
   id: string;
@@ -40,18 +40,23 @@ const SkillsGraph: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
   const [isDark, setIsDark] = useState(false);
-  const [ForceGraph, setForceGraph] = useState<ForceGraphComponent | null>(null);
+  const [ForceGraph, setForceGraph] = useState<ForceGraphComponent | null>(
+    null,
+  );
 
   useEffect(() => {
     // specific logic to detect theme
     const checkTheme = () => {
-      const isDarkMode = document.documentElement.classList.contains('dark');
+      const isDarkMode = document.documentElement.classList.contains("dark");
       setIsDark(isDarkMode);
     };
 
     checkTheme();
     const observer = new MutationObserver(checkTheme);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
 
     const handleResize = () => {
       if (containerRef.current) {
@@ -62,18 +67,18 @@ const SkillsGraph: React.FC = () => {
       }
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     handleResize();
 
     return () => {
       observer.disconnect();
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   useEffect(() => {
     let isMounted = true;
-    import('react-force-graph-2d')
+    import("react-force-graph-2d")
       .then((mod) => {
         if (isMounted) {
           setForceGraph(() => mod.default as ForceGraphComponent);
@@ -94,46 +99,60 @@ const SkillsGraph: React.FC = () => {
     const links: Link[] = [];
 
     // Central Node
-    nodes.push({ id: 'Ahmed', name: 'Ahmed', group: 'root', val: 20, color: isDark ? '#10b981' : '#059669' });
+    nodes.push({
+      id: "Ahmed",
+      name: "Ahmed",
+      group: "root",
+      val: 20,
+      color: isDark ? "#10b981" : "#059669",
+    });
 
     const categories = Object.keys(skills) as Array<keyof typeof skills>;
-    
+
     const categoryColors: Record<string, string> = {
-      leadership: '#f59e0b', // Amber
-      technical: '#3b82f6', // Blue
-      tools: '#8b5cf6', // Violet
-      cloud: '#06b6d4', // Cyan
-      frameworks: '#ec4899', // Pink
+      leadership: "#f59e0b", // Amber
+      technical: "#3b82f6", // Blue
+      tools: "#8b5cf6", // Violet
+      cloud: "#06b6d4", // Cyan
+      frameworks: "#ec4899", // Pink
     };
 
     categories.forEach((category) => {
       const catId = category.charAt(0).toUpperCase() + category.slice(1);
-      const color = categoryColors[category] || '#6b7280';
-      
+      const color = categoryColors[category] || "#6b7280";
+
       // Category Node
-      nodes.push({ 
-        id: catId, 
-        name: catId, 
-        group: 'category', 
+      nodes.push({
+        id: catId,
+        name: catId,
+        group: "category",
         val: 10,
-        color: color 
+        color: color,
       });
-      
+
       // Link Root -> Category
-      links.push({ source: 'Ahmed', target: catId, color: isDark ? '#334155' : '#cbd5e1' });
+      links.push({
+        source: "Ahmed",
+        target: catId,
+        color: isDark ? "#334155" : "#cbd5e1",
+      });
 
       // Skill Nodes
       skills[category].forEach((skill) => {
-        nodes.push({ 
-          id: skill, 
-          name: skill, 
-          group: 'skill', 
+        nodes.push({
+          id: skill,
+          name: skill,
+          group: "skill",
           val: 5,
-          color: isDark ? '#e2e8f0' : '#1e293b'
+          color: isDark ? "#e2e8f0" : "#1e293b",
         });
-        
+
         // Link Category -> Skill
-        links.push({ source: catId, target: skill, color: isDark ? '#1e293b' : '#e2e8f0' });
+        links.push({
+          source: catId,
+          target: skill,
+          color: isDark ? "#1e293b" : "#e2e8f0",
+        });
       });
     });
 
@@ -155,7 +174,7 @@ const SkillsGraph: React.FC = () => {
           nodeColor={(node) => node.color}
           linkColor={(link) => link.color}
           backgroundColor={
-            isDark ? 'rgba(15, 23, 42, 0)' : 'rgba(255, 255, 255, 0)'
+            isDark ? "rgba(15, 23, 42, 0)" : "rgba(255, 255, 255, 0)"
           }
           d3VelocityDecay={0.3}
           cooldownTicks={100}

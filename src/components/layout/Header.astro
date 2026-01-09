@@ -163,7 +163,7 @@ const navLinks = isArabic ? arLinks : enLinks;
           <LanguageSwitcher />
 
           <!-- Theme Toggle -->
-          <ThemeToggle client:load />
+          <ThemeToggle client:idle />
 
           <!-- Mobile Menu Button -->
           <button
@@ -217,7 +217,7 @@ const navLinks = isArabic ? arLinks : enLinks;
 
   <!-- Mobile Navigation -->
   <MobileNav
-    client:load
+    client:media="(max-width: 1023px)"
     navLinks={navLinks}
     currentPath={currentPath}
   />

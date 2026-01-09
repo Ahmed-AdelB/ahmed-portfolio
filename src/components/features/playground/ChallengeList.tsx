@@ -1,10 +1,9 @@
 import type { FC } from "react";
-import { Sparkles, Shield, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import type {
   Challenge,
   ChallengeId,
   ProgressState,
-  SimulationStatus,
 } from "../../../data/security-challenges";
 
 interface ChallengeListProps {

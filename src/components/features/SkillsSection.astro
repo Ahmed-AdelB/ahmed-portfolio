@@ -67,12 +67,17 @@ const {
 
     <!-- Graph Container -->
     <div class="mb-12 relative z-10">
-      <SkillsGraph client:visible />
+      <div class="flex h-[320px] items-center justify-center rounded-2xl border border-dashed border-emerald-200/70 bg-white/70 text-sm text-emerald-600 dark:border-emerald-500/30 dark:bg-slate-900/40 dark:text-emerald-200 lg:hidden">
+        Interactive skills graph is available on larger screens.
+      </div>
+      <div class="hidden lg:block">
+        <SkillsGraph client:visible />
+      </div>
     </div>
 
     <!-- Stats Grid -->
     <div class="grid gap-6 sm:grid-cols-3" role="list" aria-label="Impact stats">
-      {stats.map((stat, index) => (
+      {stats.map((stat) => (
         <div
           class="group relative overflow-hidden rounded-xl border border-gray-200/70 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:shadow-lg hover:shadow-emerald-500/10 dark:border-slate-700/60 dark:bg-slate-900/80 dark:hover:border-emerald-500/50"
           role="listitem"

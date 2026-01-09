@@ -35,7 +35,6 @@ interface Props {
   image?: string;
   article?: boolean;
   lang?: string;
-  data?: any;
   project?: boolean;
 }
 
@@ -183,6 +182,7 @@ const metaDescription = description.length > 200 ? description.substring(0, 197)
 
     {umamiWebsiteId ? (
       <script
+        is:inline
         defer
         src={umamiScriptSrc}
         data-website-id={umamiWebsiteId}

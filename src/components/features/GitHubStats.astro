@@ -1,11 +1,8 @@
 ---
 import GitHubStatsReact from './GitHubStats';
 
-interface Props {
-  className?: string;
-}
-
-const { className = '' } = Astro.props;
+---
+import GitHubStatsReact from './GitHubStats';
 ---
 
 <GitHubStatsReact client:visible />

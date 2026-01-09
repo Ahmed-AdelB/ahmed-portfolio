@@ -1,8 +1,8 @@
-import { useStore } from '@nanostores/react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, X, Copy, Check } from 'lucide-react';
-import { useState } from 'react';
-import { isWhoisOpen, closeWhois } from '../../stores/portfolioActions';
+import { useStore } from "@nanostores/react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Terminal, X, Copy, Check } from "lucide-react";
+import { useState } from "react";
+import { isWhoisOpen, closeWhois } from "../../stores/portfolioActions";
 
 export default function WhoisProfile() {
   const isOpen = useStore(isWhoisOpen);
@@ -16,10 +16,10 @@ export default function WhoisProfile() {
     stack: {
       languages: ["Python", "TypeScript", "Go"],
       security: ["AppSec", "CloudSec", "AI Safety"],
-      frameworks: ["FastAPI", "Next.js", "LangChain"]
+      frameworks: ["FastAPI", "Next.js", "LangChain"],
     },
     status: "Open for opportunities",
-    email: "contact@ahmedalderai.com"
+    email: "contact@ahmedalderai.com",
   };
 
   const handleCopy = () => {
@@ -58,7 +58,11 @@ export default function WhoisProfile() {
                   className="rounded p-1 text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
                   title="Copy JSON"
                 >
-                  {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+                  {copied ? (
+                    <Check className="h-4 w-4 text-green-500" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}
                 </button>
                 <button
                   onClick={closeWhois}
@@ -74,25 +78,27 @@ export default function WhoisProfile() {
               <pre className="font-mono text-sm leading-relaxed">
                 <code className="text-gray-300">
                   <span className="text-purple-400">{"{"}</span>
-                  
-                  <span className="text-blue-400">  "name"</span>: <span className="text-green-400">"{profile.name}"</span>,
-                  
-                  <span className="text-blue-400">  "role"</span>: <span className="text-green-400">"{profile.role}"</span>,
-                  
-                  <span className="text-blue-400">  "location"</span>: <span className="text-green-400">"{profile.location}"</span>,
-                  
-                  <span className="text-blue-400">  "status"</span>: <span className="text-yellow-400">"{profile.status}"</span>,
-                  
-                  <span className="text-blue-400">  "stack"</span>: <span className="text-purple-400">{"{"}</span>
-                  
-                    <span className="text-blue-400">    "languages"</span>: [<span className="text-green-400">"Python"</span>, <span className="text-green-400">"TypeScript"</span>, <span className="text-green-400">"Go"</span>],
-                  
-                    <span className="text-blue-400">    "security"</span>: [<span className="text-green-400">"AppSec"</span>, <span className="text-green-400">"CloudSec"</span>, <span className="text-green-400">"AI Safety"</span>]
-                  
-                  <span className="text-purple-400">  {"}"}</span>,
-                  
-                  <span className="text-blue-400">  "contact"</span>: <span className="text-green-400">"{profile.email}"</span>
-                  
+                  <span className="text-blue-400"> "name"</span>:{" "}
+                  <span className="text-green-400">"{profile.name}"</span>,
+                  <span className="text-blue-400"> "role"</span>:{" "}
+                  <span className="text-green-400">"{profile.role}"</span>,
+                  <span className="text-blue-400"> "location"</span>:{" "}
+                  <span className="text-green-400">"{profile.location}"</span>,
+                  <span className="text-blue-400"> "status"</span>:{" "}
+                  <span className="text-yellow-400">"{profile.status}"</span>,
+                  <span className="text-blue-400"> "stack"</span>:{" "}
+                  <span className="text-purple-400">{"{"}</span>
+                  <span className="text-blue-400"> "languages"</span>: [
+                  <span className="text-green-400">"Python"</span>,{" "}
+                  <span className="text-green-400">"TypeScript"</span>,{" "}
+                  <span className="text-green-400">"Go"</span>],
+                  <span className="text-blue-400"> "security"</span>: [
+                  <span className="text-green-400">"AppSec"</span>,{" "}
+                  <span className="text-green-400">"CloudSec"</span>,{" "}
+                  <span className="text-green-400">"AI Safety"</span>]
+                  <span className="text-purple-400"> {"}"}</span>,
+                  <span className="text-blue-400"> "contact"</span>:{" "}
+                  <span className="text-green-400">"{profile.email}"</span>
                   <span className="text-purple-400">{"}"}</span>
                 </code>
               </pre>

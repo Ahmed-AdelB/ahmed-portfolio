@@ -58,7 +58,18 @@ const websiteSchema = {
   }
 };
 
-const schema: any = {
+type SchemaItem = {
+  "@type": string;
+  "@id": string;
+  [key: string]: any;
+};
+
+type SchemaGraph = {
+  "@context": string;
+  "@graph": SchemaItem[];
+};
+
+const schema: SchemaGraph = {
   "@context": "https://schema.org",
   "@graph": [
     personSchema,
@@ -134,4 +145,4 @@ if (project) {
 }
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+<script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />

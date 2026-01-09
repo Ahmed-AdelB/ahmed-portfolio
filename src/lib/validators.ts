@@ -1,9 +1,21 @@
 export const BLOCKED_PATTERNS: ReadonlyArray<RegExp> = [
   /ignore\s+previous\s+instructions/i,
+  /\b(ignore|disregard|forget|bypass|override)\b.{0,40}\b(previous|prior|earlier)\b.{0,40}\b(instructions?|rules?)\b/i,
+  /\b(ignore|disregard|forget|bypass|override)\b.{0,40}\b(system|developer|assistant)\b/i,
   /\byou\s+are\s+now\s+dan\b/i,
   /\bpretend\s+you\s+are\b/i,
+  /\bdo\s+anything\s+now\b/i,
+  /\bdeveloper\s+mode\b/i,
+  /\b(jailbreak|prompt\s*injection|instruction\s*injection)\b/i,
+  /\b(system\s*prompt|developer\s*message|hidden\s*prompt)\b/i,
+  /\b(reveal|show|print|leak|expose)\b.{0,40}\b(system|developer|hidden|confidential|internal|instructions?|prompt)\b/i,
+  /\bact\s+as\b.{0,30}\b(system|developer|assistant|tool|policy)\b/i,
   /\bsystem:\s*you\s+are\b/i,
   /\[inst\]/i,
+  /<\s*system\s*>/i,
+  /<\s*\/\s*system\s*>/i,
+  /\bbegin\s+system\s+prompt\b/i,
+  /\bend\s+system\s+prompt\b/i,
   /<\|im_start\|>/i,
 ];
 

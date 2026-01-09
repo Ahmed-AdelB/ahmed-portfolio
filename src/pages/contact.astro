@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/Footer.astro';
-import { Github, Linkedin, Twitter, Mail, MapPin, Clock, Calendar } from 'lucide-react';
+import { GithubIcon, LinkedinIcon, Mail, MapPin, Clock, Calendar } from 'lucide-react';
 import { CalendlyEmbed } from '../components/features/CalendlyEmbed';
 import { SITE_CONFIG } from '../site.config';
 
@@ -16,13 +16,13 @@ const socialLinks = [
   {
     name: 'GitHub',
     url: SITE_CONFIG.urls.github,
-    icon: Github,
+    icon: GithubIcon,
     color: 'hover:text-gray-900 dark:hover:text-white'
   },
   {
     name: 'LinkedIn',
     url: SITE_CONFIG.urls.linkedin,
-    icon: Linkedin,
+    icon: LinkedinIcon,
     color: 'hover:text-[#0077b5]'
   },
   {

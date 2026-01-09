@@ -21,9 +21,15 @@ const getDefaultStats = (): LinkedInStats => ({
   followers: parseInt(import.meta.env.LINKEDIN_FOLLOWERS || "750"),
   endorsements: parseInt(import.meta.env.LINKEDIN_ENDORSEMENTS || "45"),
   recommendations: parseInt(import.meta.env.LINKEDIN_RECOMMENDATIONS || "8"),
-  topSkills: (import.meta.env.LINKEDIN_TOP_SKILLS || "Python,TypeScript,Security,AI/ML,Cloud Architecture").split(","),
-  headline: import.meta.env.LINKEDIN_HEADLINE || "Security Engineer & AI Developer",
-  profileUrl: import.meta.env.LINKEDIN_PROFILE_URL || "https://linkedin.com/in/ahmedadel1991",
+  topSkills: (
+    import.meta.env.LINKEDIN_TOP_SKILLS ||
+    "Python,TypeScript,Security,AI/ML,Cloud Architecture"
+  ).split(","),
+  headline:
+    import.meta.env.LINKEDIN_HEADLINE || "Security Engineer & AI Developer",
+  profileUrl:
+    import.meta.env.LINKEDIN_PROFILE_URL ||
+    "https://linkedin.com/in/ahmedadel1991",
   lastUpdated: new Date().toISOString(),
 });
 
@@ -92,7 +98,7 @@ export const GET: APIRoute = async ({ request }) => {
       {
         status: 200, // Return 200 with fallback data
         headers,
-      }
+      },
     );
   }
 };

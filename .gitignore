@@ -26,4 +26,4 @@ pnpm-debug.log*
 # Testing artifacts
 test-results/
 playwright-report/
-blob-report/
+blob-report/.vercel/

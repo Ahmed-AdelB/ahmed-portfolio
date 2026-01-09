@@ -13,6 +13,12 @@ export const themeStore = atom<Theme>(getInitialTheme());
 
 export const toggleTheme = () => {
   const current = themeStore.get();
+  // Cycle: light -> dark -> system -> light (or just light/dark for simple toggle)
+  // If hacker, switch to system or default
+  if (current === "hacker") {
+    setTheme("system");
+    return;
+  }
   const next = current === "light" ? "dark" : "light";
   setTheme(next);
 };
@@ -22,12 +28,13 @@ export const setTheme = (theme: Theme) => {
   if (typeof localStorage !== "undefined") {
     localStorage.setItem("theme", theme);
 
-    const effectiveTheme =
-      theme === "system"
-        ? window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light"
-        : theme;
+    let effectiveTheme = theme;
+
+    if (theme === "system") {
+      effectiveTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
 
     const isDark = effectiveTheme === "dark" || theme === "hacker";
 

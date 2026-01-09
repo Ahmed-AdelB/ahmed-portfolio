@@ -39,9 +39,12 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
   );
 };
 
-const GitHubStats: React.FC = () => {
-  const { repos, commits, prs, contributions, loading, error } =
-    useGitHubStats();
+interface GitHubStatsProps {
+  className?: string;
+}
+
+const GitHubStats: React.FC<GitHubStatsProps> = ({ className }) => {
+  const { repos, commits, prs, contributions, loading } = useGitHubStats();
 
   const statItems = [
     {
@@ -103,7 +106,7 @@ const GitHubStats: React.FC = () => {
 
   return (
     <section
-      className="relative py-16 md:py-20 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950"
+      className={`relative py-16 md:py-20 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 ${className || ""}`}
       id="github-stats"
     >
       {/* Background decoration */}

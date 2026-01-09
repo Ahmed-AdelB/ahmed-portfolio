@@ -6,24 +6,42 @@ import {
   unlockEgg,
   getFoundEggs,
   EASTER_EGG_DETAILS,
-  type EasterEggId
+  type EasterEggId,
 } from "../../stores/easter-eggs";
 import { setTheme } from "../../stores/theme";
-import { enableMatrix, intensifyMatrix, isMatrixEnabled } from "../../stores/matrix";
+import {
+  enableMatrix,
+  intensifyMatrix,
+  isMatrixEnabled,
+} from "../../stores/matrix";
 import { Trophy, X } from "lucide-react";
 
 export const EasterEggManager: React.FC = () => {
   const eggs = useStore(easterEggs);
-  const [toast, setToast] = useState<{ id: EasterEggId; visible: boolean } | null>(null);
+  const [toast, setToast] = useState<{
+    id: EasterEggId;
+    visible: boolean;
+  } | null>(null);
   const [showCollection, setShowCollection] = useState(false);
-  
+
   // Key buffers
   const konamiBuffer = useRef<string[]>([]);
   const matrixBuffer = useRef<string[]>([]);
   const hackBuffer = useRef<string[]>([]);
   const logoClicks = useRef(0);
 
-  const KONAMI_CODE = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+  const KONAMI_CODE = [
+    "ArrowUp",
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowRight",
+    "b",
+    "a",
+  ];
   const MATRIX_CODE = ["m", "a", "t", "r", "i", "x"];
 
   const handleUnlock = (id: EasterEggId) => {
@@ -49,15 +67,15 @@ export const EasterEggManager: React.FC = () => {
         const handleClick = (e: Event) => {
           e.preventDefault(); // Prevent navigation during clicks
           logoClicks.current += 1;
-          
+
           if (logoClicks.current === 10) {
             handleUnlock("logo_click");
             logoClicks.current = 0;
-            // Allow navigation after unlock or reset? 
+            // Allow navigation after unlock or reset?
             // Better to let them navigate if they click once, but preventing default makes it hard.
-            // Let's NOT prevent default, just count clicks. 
+            // Let's NOT prevent default, just count clicks.
             // If they navigate away, state is lost, which is fine (harder challenge).
-            // Actually, if they navigate, the component unmounts. 
+            // Actually, if they navigate, the component unmounts.
             // So they have to click 10 times fast or without navigating.
             // To make it possible without navigating, users usually Ctrl+Click or just click fast.
             // Or maybe the logo prevents default if it's the current page.
@@ -68,8 +86,8 @@ export const EasterEggManager: React.FC = () => {
       }
       return () => {};
     };
-    
-    // We might need to wait for DOM or use MutationObserver if logo isn't there yet, 
+
+    // We might need to wait for DOM or use MutationObserver if logo isn't there yet,
     // but usually it is.
     const removeLogoListener = attachLogoListener();
 
@@ -78,20 +96,28 @@ export const EasterEggManager: React.FC = () => {
       const key = e.key;
 
       // Konami
-      konamiBuffer.current = [...konamiBuffer.current, key].slice(-KONAMI_CODE.length);
-      if (JSON.stringify(konamiBuffer.current) === JSON.stringify(KONAMI_CODE)) {
+      konamiBuffer.current = [...konamiBuffer.current, key].slice(
+        -KONAMI_CODE.length,
+      );
+      if (
+        JSON.stringify(konamiBuffer.current) === JSON.stringify(KONAMI_CODE)
+      ) {
         if (handleUnlock("konami")) {
-           setTheme("hacker");
+          setTheme("hacker");
         } else {
-           // Already found, just toggle trigger
-           setTheme("hacker");
+          // Already found, just toggle trigger
+          setTheme("hacker");
         }
         konamiBuffer.current = [];
       }
 
       // Matrix
-      matrixBuffer.current = [...matrixBuffer.current, key.toLowerCase()].slice(-MATRIX_CODE.length);
-      if (JSON.stringify(matrixBuffer.current) === JSON.stringify(MATRIX_CODE)) {
+      matrixBuffer.current = [...matrixBuffer.current, key.toLowerCase()].slice(
+        -MATRIX_CODE.length,
+      );
+      if (
+        JSON.stringify(matrixBuffer.current) === JSON.stringify(MATRIX_CODE)
+      ) {
         if (handleUnlock("matrix")) {
           enableMatrix();
         } else {
@@ -109,14 +135,14 @@ export const EasterEggManager: React.FC = () => {
       // If user types "hack the planet", spaces are " " key.
       const normalizedKey = key.toLowerCase();
       if (normalizedKey.length === 1 || normalizedKey === " ") {
-          hackBuffer.current = [...hackBuffer.current, normalizedKey].slice(-20); // Keep enough buffer
-          const bufferString = hackBuffer.current.join("").replace(/ /g, "");
-          const targetString = "hacktheplanet";
-          
-          if (bufferString.endsWith(targetString)) {
-             handleUnlock("hack_the_planet");
-             hackBuffer.current = [];
-          }
+        hackBuffer.current = [...hackBuffer.current, normalizedKey].slice(-20); // Keep enough buffer
+        const bufferString = hackBuffer.current.join("").replace(/ /g, "");
+        const targetString = "hacktheplanet";
+
+        if (bufferString.endsWith(targetString)) {
+          handleUnlock("hack_the_planet");
+          hackBuffer.current = [];
+        }
       }
     };
 
@@ -144,9 +170,15 @@ export const EasterEggManager: React.FC = () => {
                 <Trophy size={20} />
               </div>
               <div>
-                <h3 className="font-bold text-emerald-400">Achievement Unlocked!</h3>
-                <p className="font-medium">{EASTER_EGG_DETAILS[toast.id].title}</p>
-                <p className="text-sm text-zinc-400 mt-1">{EASTER_EGG_DETAILS[toast.id].description}</p>
+                <h3 className="font-bold text-emerald-400">
+                  Achievement Unlocked!
+                </h3>
+                <p className="font-medium">
+                  {EASTER_EGG_DETAILS[toast.id].title}
+                </p>
+                <p className="text-sm text-zinc-400 mt-1">
+                  {EASTER_EGG_DETAILS[toast.id].description}
+                </p>
               </div>
             </div>
           </motion.div>
@@ -167,7 +199,7 @@ export const EasterEggManager: React.FC = () => {
                   <Trophy size={20} />
                   Secrets Collection
                 </h2>
-                <button 
+                <button
                   onClick={() => setShowCollection(false)}
                   className="text-zinc-400 hover:text-white transition-colors"
                 >
@@ -175,29 +207,40 @@ export const EasterEggManager: React.FC = () => {
                 </button>
               </div>
               <div className="p-4 space-y-3">
-                {(Object.keys(EASTER_EGG_DETAILS) as EasterEggId[]).map((id) => {
-                  const isFound = !!eggs[id];
-                  const details = EASTER_EGG_DETAILS[id];
-                  return (
-                    <div 
-                      key={id} 
-                      className={`p-3 rounded-lg border ${isFound ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-zinc-800/50 border-white/5'}`}
-                    >
-                      <div className="flex items-center justify-between mb-1">
-                        <span className={`font-mono font-bold ${isFound ? 'text-emerald-400' : 'text-zinc-500'}`}>
-                          {isFound ? details.title : '???'}
-                        </span>
-                        {isFound && <span className="text-xs text-emerald-500/70">FOUND</span>}
+                {(Object.keys(EASTER_EGG_DETAILS) as EasterEggId[]).map(
+                  (id) => {
+                    const isFound = !!eggs[id];
+                    const details = EASTER_EGG_DETAILS[id];
+                    return (
+                      <div
+                        key={id}
+                        className={`p-3 rounded-lg border ${isFound ? "bg-emerald-500/10 border-emerald-500/30" : "bg-zinc-800/50 border-white/5"}`}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <span
+                            className={`font-mono font-bold ${isFound ? "text-emerald-400" : "text-zinc-500"}`}
+                          >
+                            {isFound ? details.title : "???"}
+                          </span>
+                          {isFound && (
+                            <span className="text-xs text-emerald-500/70">
+                              FOUND
+                            </span>
+                          )}
+                        </div>
+                        <p
+                          className={`text-sm ${isFound ? "text-zinc-300" : "text-zinc-600"}`}
+                        >
+                          {isFound ? details.description : details.hint}
+                        </p>
                       </div>
-                      <p className={`text-sm ${isFound ? 'text-zinc-300' : 'text-zinc-600'}`}>
-                        {isFound ? details.description : details.hint}
-                      </p>
-                    </div>
-                  );
-                })}
+                    );
+                  },
+                )}
               </div>
               <div className="p-4 bg-zinc-950/50 border-t border-white/5 text-center text-xs text-zinc-500 font-mono">
-                {getFoundEggs().length} / {Object.keys(EASTER_EGG_DETAILS).length} SECRETS FOUND
+                {getFoundEggs().length} /{" "}
+                {Object.keys(EASTER_EGG_DETAILS).length} SECRETS FOUND
               </div>
             </motion.div>
           </div>

@@ -38,7 +38,12 @@ class MemoryRateLimiter {
     this.windowMs = windowMs;
   }
 
-  limit(identifier: string): { success: boolean; limit: number; remaining: number; reset: number } {
+  limit(identifier: string): {
+    success: boolean;
+    limit: number;
+    remaining: number;
+    reset: number;
+  } {
     const now = Date.now();
     const windowStart = now - this.windowMs;
 
@@ -71,26 +76,31 @@ const parseWindowToMs = (window: string): number => {
   const [value, unit] = window.split(" ");
   const v = parseInt(value, 10);
   switch (unit) {
-    case "s": return v * 1000;
-    case "m": return v * 60000;
-    case "h": return v * 3600000;
-    case "d": return v * 86400000;
-    default: return 60000;
+    case "s":
+      return v * 1000;
+    case "m":
+      return v * 60000;
+    case "h":
+      return v * 3600000;
+    case "d":
+      return v * 86400000;
+    default:
+      return 60000;
   }
 };
 
 const memoryLimiters: Record<RateLimitTarget, MemoryRateLimiter> = {
   chat: new MemoryRateLimiter(
     RATE_LIMIT_CONFIG.chat.limit,
-    parseWindowToMs(RATE_LIMIT_CONFIG.chat.window)
+    parseWindowToMs(RATE_LIMIT_CONFIG.chat.window),
   ),
   newsletter: new MemoryRateLimiter(
     RATE_LIMIT_CONFIG.newsletter.limit,
-    parseWindowToMs(RATE_LIMIT_CONFIG.newsletter.window)
+    parseWindowToMs(RATE_LIMIT_CONFIG.newsletter.window),
   ),
   health: new MemoryRateLimiter(
     RATE_LIMIT_CONFIG.health.limit,
-    parseWindowToMs(RATE_LIMIT_CONFIG.health.window)
+    parseWindowToMs(RATE_LIMIT_CONFIG.health.window),
   ),
 };
 // --------------------------
@@ -182,7 +192,7 @@ export const checkRateLimit = async (
     options.ip?.trim() || getClientIp(options.request, options.clientAddress);
 
   const redisLimiter = rateLimiters?.[options.type];
-  
+
   // Try Redis first
   if (redisLimiter) {
     try {
@@ -207,7 +217,10 @@ export const checkRateLimit = async (
 
       return { allowed: false, retryAfterSeconds, headers };
     } catch (error) {
-      console.error("Redis rate limit check failed, falling back to memory:", error);
+      console.error(
+        "Redis rate limit check failed, falling back to memory:",
+        error,
+      );
       // Fall through to memory limiter
     }
   } else {
@@ -234,7 +247,7 @@ export const checkRateLimit = async (
     "RateLimit-Limit": result.limit.toString(),
     "RateLimit-Remaining": result.remaining.toString(),
     "RateLimit-Reset": Math.ceil(result.reset / 1000).toString(),
-    "X-RateLimit-Type": "memory-fallback" // useful for debugging
+    "X-RateLimit-Type": "memory-fallback", // useful for debugging
   });
 
   return { allowed: false, retryAfterSeconds, headers };

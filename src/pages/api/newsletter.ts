@@ -87,24 +87,24 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
     }
 
     const apiKey = import.meta.env.BUTTONDOWN_API_KEY;
-    
+
     // Mock backend if API key is missing
     if (!apiKey) {
       const body = await request.json().catch(() => null);
       const result = SubscribeSchema.safeParse(body);
-      
+
       if (!result.success) {
         return jsonResponse(400, {
           success: false,
           message: result.error.errors[0]?.message || MESSAGES.invalidEmail,
         });
       }
-      
-      console.log("[MOCK EMAIL STORAGE]", result.data.email);
-      
+
+      // console.log("[MOCK EMAIL STORAGE]", result.data.email);
+
       // Simulate network delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       return jsonResponse(200, {
         success: true,
         message: MESSAGES.subscribeSuccess,

@@ -74,7 +74,7 @@ const projectsCount = new Set(contributions.map((c) => c.project)).size;
       </div>
 
       <!-- Interactive Timeline -->
-      <ContributionTimeline client:load data={contributions} />
+      <ContributionTimeline client:visible data={contributions} />
 
     </div>
   </div>

@@ -1,12 +1,5 @@
-import React from "react";
 import { motion } from "framer-motion";
-import {
-  Briefcase,
-  Code,
-  Shield,
-  Terminal,
-  GitPullRequest,
-} from "lucide-react";
+import { Briefcase, Code, Shield, GitPullRequest } from "lucide-react";
 
 interface ExperienceItem {
   role: string;

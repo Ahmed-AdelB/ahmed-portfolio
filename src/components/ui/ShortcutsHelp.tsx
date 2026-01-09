@@ -1,4 +1,11 @@
-import { type FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Keyboard, Search, X } from "lucide-react";
 import { useKeyboardShortcuts } from "../../hooks/useKeyboardShortcuts";

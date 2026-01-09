@@ -19,7 +19,13 @@ const FALLBACK_STATS: Omit<LinkedInStats, "loading" | "error"> = {
   followers: 750,
   endorsements: 45,
   recommendations: 8,
-  topSkills: ["Python", "TypeScript", "Security", "AI/ML", "Cloud Architecture"],
+  topSkills: [
+    "Python",
+    "TypeScript",
+    "Security",
+    "AI/ML",
+    "Cloud Architecture",
+  ],
   headline: "Security Engineer & AI Developer",
 };
 
@@ -51,12 +57,23 @@ export const useLinkedInStats = () => {
       // If no endpoint configured, use fallback with env overrides
       if (!statsEndpoint) {
         const envStats = {
-          connections: parseInt(import.meta.env.PUBLIC_LINKEDIN_CONNECTIONS || "0") || FALLBACK_STATS.connections,
-          followers: parseInt(import.meta.env.PUBLIC_LINKEDIN_FOLLOWERS || "0") || FALLBACK_STATS.followers,
-          endorsements: parseInt(import.meta.env.PUBLIC_LINKEDIN_ENDORSEMENTS || "0") || FALLBACK_STATS.endorsements,
-          recommendations: parseInt(import.meta.env.PUBLIC_LINKEDIN_RECOMMENDATIONS || "0") || FALLBACK_STATS.recommendations,
-          topSkills: import.meta.env.PUBLIC_LINKEDIN_TOP_SKILLS?.split(",") || FALLBACK_STATS.topSkills,
-          headline: import.meta.env.PUBLIC_LINKEDIN_HEADLINE || FALLBACK_STATS.headline,
+          connections:
+            parseInt(import.meta.env.PUBLIC_LINKEDIN_CONNECTIONS || "0") ||
+            FALLBACK_STATS.connections,
+          followers:
+            parseInt(import.meta.env.PUBLIC_LINKEDIN_FOLLOWERS || "0") ||
+            FALLBACK_STATS.followers,
+          endorsements:
+            parseInt(import.meta.env.PUBLIC_LINKEDIN_ENDORSEMENTS || "0") ||
+            FALLBACK_STATS.endorsements,
+          recommendations:
+            parseInt(import.meta.env.PUBLIC_LINKEDIN_RECOMMENDATIONS || "0") ||
+            FALLBACK_STATS.recommendations,
+          topSkills:
+            import.meta.env.PUBLIC_LINKEDIN_TOP_SKILLS?.split(",") ||
+            FALLBACK_STATS.topSkills,
+          headline:
+            import.meta.env.PUBLIC_LINKEDIN_HEADLINE || FALLBACK_STATS.headline,
         };
 
         setStats({
@@ -76,12 +93,13 @@ export const useLinkedInStats = () => {
           throw new Error("LinkedIn stats endpoint error");
         }
 
-        const data = await response.json() as Partial<LinkedInStats>;
+        const data = (await response.json()) as Partial<LinkedInStats>;
         const newStats = {
           connections: data.connections ?? FALLBACK_STATS.connections,
           followers: data.followers ?? FALLBACK_STATS.followers,
           endorsements: data.endorsements ?? FALLBACK_STATS.endorsements,
-          recommendations: data.recommendations ?? FALLBACK_STATS.recommendations,
+          recommendations:
+            data.recommendations ?? FALLBACK_STATS.recommendations,
           topSkills: data.topSkills ?? FALLBACK_STATS.topSkills,
           headline: data.headline ?? FALLBACK_STATS.headline,
         };

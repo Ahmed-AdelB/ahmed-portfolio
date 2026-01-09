@@ -8,7 +8,9 @@ const emailSchema = z.string().email("Please enter a valid email address.");
 export const NewsletterSignup = () => {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
   const [message, setMessage] = useState("");
   const [isVisible, setIsVisible] = useState(true);
 
@@ -74,14 +76,15 @@ export const NewsletterSignup = () => {
           className="relative overflow-hidden rounded-xl border border-green-900/50 bg-black/80 p-6 backdrop-blur-md shadow-[0_0_15px_rgba(0,255,65,0.1)] max-w-md mx-auto"
         >
           <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(0,255,65,0.05)_50%,transparent_75%,transparent_100%)] bg-[length:250%_250%] animate-[shine_4s_linear_infinite] pointer-events-none" />
-          
+
           <div className="relative z-10">
             <h3 className="text-xl font-bold text-green-400 mb-2 font-mono flex items-center gap-2">
               <span className="inline-block w-2 h-4 bg-green-500 animate-pulse" />
               NEWSLETTER_SIGNUP
             </h3>
             <p className="text-green-300/80 text-sm mb-6 font-mono">
-              Join the network. Get the latest security research and Python protocols delivered encrypted to your inbox.
+              Join the network. Get the latest security research and Python
+              protocols delivered encrypted to your inbox.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -105,15 +108,21 @@ export const NewsletterSignup = () => {
                   disabled={status === "loading" || status === "success"}
                   className="mt-1 h-4 w-4 rounded border-green-800 bg-black/50 text-green-500 focus:ring-green-500/50 focus:ring-offset-0"
                 />
-                <label htmlFor="consent" className="text-xs text-green-300/60 cursor-pointer select-none font-mono">
-                  I agree to process my data for the newsletter. Unsubscribe at any time. No spam, purely signals.
+                <label
+                  htmlFor="consent"
+                  className="text-xs text-green-300/60 cursor-pointer select-none font-mono"
+                >
+                  I agree to process my data for the newsletter. Unsubscribe at
+                  any time. No spam, purely signals.
                 </label>
               </div>
 
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                disabled={status === "loading" || status === "success" || !consent}
+                disabled={
+                  status === "loading" || status === "success" || !consent
+                }
                 className={`w-full flex items-center justify-center gap-2 py-3 rounded-md font-mono font-bold transition-all ${
                   status === "success"
                     ? "bg-green-600 text-black border border-green-500"
@@ -143,10 +152,16 @@ export const NewsletterSignup = () => {
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   className={`mt-4 flex items-center gap-2 text-xs font-mono p-2 rounded ${
-                    status === "error" ? "bg-red-900/20 text-red-400 border border-red-900/50" : "bg-green-900/20 text-green-400 border border-green-900/50"
+                    status === "error"
+                      ? "bg-red-900/20 text-red-400 border border-red-900/50"
+                      : "bg-green-900/20 text-green-400 border border-green-900/50"
                   }`}
                 >
-                  {status === "error" ? <AlertCircle className="w-4 h-4" /> : <CheckCircle2 className="w-4 h-4" />}
+                  {status === "error" ? (
+                    <AlertCircle className="w-4 h-4" />
+                  ) : (
+                    <CheckCircle2 className="w-4 h-4" />
+                  )}
                   {message}
                 </motion.div>
               )}

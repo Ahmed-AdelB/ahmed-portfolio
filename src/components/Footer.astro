@@ -1,8 +1,7 @@
 ---
-import { Github, Linkedin, Twitter, Rss } from 'lucide-react';
+import { GithubIcon, LinkedinIcon, TwitterIcon, RssIcon } from 'lucide-react';
 import { NewsletterForm } from './features/NewsletterForm';
 import { IslamicDateDisplay } from './ui/IslamicDateDisplay';
-import { getHijriDate } from '../lib/hijriDate';
 import { SITE_CONFIG } from '../site.config';
 
 interface Props {
@@ -73,22 +72,22 @@ const socialLinks = [
   {
     name: t.github,
     url: SITE_CONFIG.urls.github,
-    icon: Github,
+    icon: GithubIcon,
   },
   {
     name: t.linkedin,
     url: SITE_CONFIG.urls.linkedin,
-    icon: Linkedin,
+    icon: LinkedinIcon,
   },
   {
     name: t.twitter,
     url: SITE_CONFIG.urls.twitter,
-    icon: Twitter,
+    icon: TwitterIcon,
   },
   {
     name: t.rss,
     url: '/rss.xml', // RSS usually doesn't have localized version unless generated separately
-    icon: Rss,
+    icon: RssIcon,
     isInternal: true,
   },
 ];

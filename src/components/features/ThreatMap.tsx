@@ -9,7 +9,12 @@ import {
   useState,
 } from "react";
 
-type ThreatTypeId = "ddos" | "malware" | "phishing" | "ransomware" | "intrusion";
+type ThreatTypeId =
+  | "ddos"
+  | "malware"
+  | "phishing"
+  | "ransomware"
+  | "intrusion";
 
 interface ThreatType {
   id: ThreatTypeId;

@@ -9,6 +9,7 @@ import {
   filterAssistantOutput,
   validateUserInput,
 } from "../../lib/validators";
+import { getMockChatResponse } from "../../lib/mockChat";
 
 export const prerender = false;
 
@@ -30,10 +31,13 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
       : new URL(request.url).origin;
 
     if (origin && origin !== allowedOrigin) {
-      return new Response(JSON.stringify({ error: "Cross-site requests are not allowed" }), {
-        status: 403,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ error: "Cross-site requests are not allowed" }),
+        {
+          status: 403,
+          headers: { "Content-Type": "application/json" },
+        },
+      );
     }
 
     const rateLimit = await checkRateLimit({
@@ -94,29 +98,7 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
 
     // Fallback/Mock if no API key is present (for development/demo)
     if (!apiKey) {
-      // Simulate network delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Simple keyword matching for demo purposes when no API key
-      const lastUserMessage =
-        messages[messages.length - 1].content.toLowerCase();
-      let mockResponse =
-        "I am currently running in demo mode (no API key configured). I can tell you that Ahmed is an AI Security Researcher based in Ireland. Please add an ANTHROPIC_API_KEY to see my full capabilities!";
-
-      if (lastUserMessage.includes("skill")) {
-        mockResponse =
-          "Ahmed's skills include Python, TypeScript, AI Security, and DevSecOps. He is also proficient with tools like Git, Docker, and Linux.";
-      } else if (lastUserMessage.includes("contact")) {
-        mockResponse =
-          "You can contact Ahmed via email or LinkedIn. (Note: Real contact details would be provided here with the live API).";
-      } else if (
-        lastUserMessage.includes("oss") ||
-        lastUserMessage.includes("open source")
-      ) {
-        mockResponse =
-          "Ahmed has contributed to several Python projects and authored the 'github-reputation-toolkit'. He has over 7 PRs to major repositories.";
-      }
-
+      const mockResponse = await getMockChatResponse(messages);
       const filtered = filterAssistantOutput(mockResponse);
 
       return new Response(JSON.stringify({ response: filtered.filtered }), {
@@ -144,7 +126,10 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("Anthropic API Error:", errorData);
+        console.error(
+          "Anthropic API Error:",
+          errorData.error?.message || "Unknown error",
+        );
         throw new Error("Anthropic API request failed");
       }
 

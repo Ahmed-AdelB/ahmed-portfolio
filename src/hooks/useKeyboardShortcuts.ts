@@ -48,7 +48,9 @@ const toggleHackerTheme = (): void => {
     let fallback: Theme = "system";
 
     try {
-      fallback = coerceTheme(localStorage.getItem(HACKER_THEME_PREVIOUS_KEY)) ?? fallback;
+      fallback =
+        coerceTheme(localStorage.getItem(HACKER_THEME_PREVIOUS_KEY)) ??
+        fallback;
     } catch {
       fallback = "system";
     }
@@ -102,7 +104,8 @@ export const useKeyboardShortcuts = (
       const isModifier = event.ctrlKey || event.metaKey;
       const hasNoExtraModifiers = !event.shiftKey && !event.altKey;
       const normalizedKey = event.key.toLowerCase();
-      const isHelpKey = event.key === "?" || (event.key === "/" && event.shiftKey);
+      const isHelpKey =
+        event.key === "?" || (event.key === "/" && event.shiftKey);
 
       if (!isModifier && isHelpKey) {
         onOpenHelp?.();

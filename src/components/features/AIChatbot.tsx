@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useStore } from "@nanostores/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Sparkles, Loader2, Mic } from "lucide-react";
-import { ChatMessage, type Message, type MessageRole } from "./ChatMessage";
+import { ChatMessage, type Message } from "./ChatMessage";
 import { INITIAL_QUESTIONS } from "../../lib/chatContext";
 import {
   BLOCKED_RESPONSE,
@@ -16,9 +16,8 @@ import {
   isChatbotOpen,
   toggleChatbot,
 } from "../../stores/aiChatbot";
+import { CHATBOT_STRINGS } from "../../lib/translations";
 
-const SALAAM_GREETING =
-  "وعليكم السلام ورحمة الله وبركاته - Welcome, brother/sister!";
 const SALAAM_PATTERN = /\b(salaam|salam)\b/i;
 
 export const AIChatbot = () => {
@@ -90,7 +89,9 @@ export const AIChatbot = () => {
     const guardrailResult = validateUserInput(normalizedContent);
     const shouldPrependSalaam = SALAAM_PATTERN.test(normalizedContent);
     const withSalaam = (message: string) =>
-      shouldPrependSalaam ? `${SALAAM_GREETING}\n${message}` : message;
+      shouldPrependSalaam
+        ? `${CHATBOT_STRINGS.SALAAM_GREETING}\n${message}`
+        : message;
 
     const userMsg: Message = {
       id: Date.now().toString(),
@@ -140,8 +141,8 @@ export const AIChatbot = () => {
       const responseText =
         data.response ||
         (isRtl
-          ? "أواجه مشكلة في الاتصال الآن. يرجى المحاولة مرة أخرى لاحقًا."
-          : "I'm having trouble connecting right now. Please try again later.");
+          ? CHATBOT_STRINGS.errors.connection.ar
+          : CHATBOT_STRINGS.errors.connection.en);
 
       const botMsg: Message = {
         id: (Date.now() + 1).toString(),
@@ -152,16 +153,16 @@ export const AIChatbot = () => {
 
       setMessages((prev) => [...prev, botMsg]);
       speak(botMsg.content);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Chat error:", error);
       let errorMessage = isRtl
-        ? "عذراً، واجهت خطأ. يرجى المحاولة مرة أخرى."
-        : "Sorry, I encountered an error. Please try again.";
+        ? CHATBOT_STRINGS.errors.generic.ar
+        : CHATBOT_STRINGS.errors.generic.en;
 
-      if (error.message === "Too Many Requests") {
+      if (error instanceof Error && error.message === "Too Many Requests") {
         errorMessage = isRtl
-          ? "أنت ترسل الرسائل بسرعة كبيرة. يرجى الانتظار لحظة."
-          : "You are sending messages too fast. Please wait a moment.";
+          ? CHATBOT_STRINGS.errors.rateLimit.ar
+          : CHATBOT_STRINGS.errors.rateLimit.en;
       }
 
       const errorMsg: Message = {

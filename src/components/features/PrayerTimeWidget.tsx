@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { getNextPrayer, type PrayerTime } from '../../lib/prayerTimes';
+import React, { useState, useEffect } from "react";
+import { getNextPrayer, type PrayerTime } from "../../lib/prayerTimes";
 
 export const PrayerTimeWidget: React.FC = () => {
   const [nextPrayer, setNextPrayer] = useState<PrayerTime | null>(null);
@@ -12,7 +12,7 @@ export const PrayerTimeWidget: React.FC = () => {
         const prayer = await getNextPrayer();
         setNextPrayer(prayer);
       } catch (error) {
-        console.error('Failed to load prayer times', error);
+        console.error("Failed to load prayer times", error);
       } finally {
         setLoading(false);
       }
@@ -20,14 +20,14 @@ export const PrayerTimeWidget: React.FC = () => {
 
     fetchPrayer();
     // Refresh every minute to check if "next" has changed
-    const interval = setInterval(fetchPrayer, 60000); 
+    const interval = setInterval(fetchPrayer, 60000);
     return () => clearInterval(interval);
   }, []);
 
   if (!isVisible || loading || !nextPrayer) return null;
 
   return (
-    <div 
+    <div
       className="fixed bottom-4 left-4 z-40 font-mono text-xs cursor-pointer group"
       onClick={() => setIsVisible(false)}
     >
@@ -37,7 +37,9 @@ export const PrayerTimeWidget: React.FC = () => {
           <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
         </span>
         <span className="opacity-70">NEXT CRON:</span>
-        <span className="font-bold">{nextPrayer.name.toUpperCase()} {nextPrayer.time}</span>
+        <span className="font-bold">
+          {nextPrayer.name.toUpperCase()} {nextPrayer.time}
+        </span>
         <span className="ml-2 text-[10px] opacity-0 group-hover:opacity-50 transition-opacity">
           [CLICK TO HIDE]
         </span>

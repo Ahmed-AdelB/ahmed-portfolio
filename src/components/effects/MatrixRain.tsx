@@ -1,4 +1,10 @@
-import { type CSSProperties, type FC, useEffect, useRef, useState } from "react";
+import {
+  type CSSProperties,
+  type FC,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useStore } from "@nanostores/react";
 import {
   disableMatrix,
@@ -51,7 +57,9 @@ const usePrefersReducedMotion = (): boolean => {
       return () => mediaQuery.removeEventListener("change", handleChange);
     }
 
+    // @ts-ignore
     mediaQuery.addListener(handleChange);
+    // @ts-ignore
     return () => mediaQuery.removeListener(handleChange);
   }, []);
 
@@ -118,7 +126,10 @@ export const MatrixRain: FC<MatrixRainProps> = ({
 
     const fontSize = DEFAULT_FONT_SIZE;
     const fadeAlpha = Math.max(0.01, DEFAULT_FADE_ALPHA / intensity); // Slower fade for more trails
-    const resetThreshold = Math.max(0.8, DEFAULT_RESET_THRESHOLD - (intensity - 1) * 0.05);
+    const resetThreshold = Math.max(
+      0.8,
+      DEFAULT_RESET_THRESHOLD - (intensity - 1) * 0.05,
+    );
     const headHighlightChance = DEFAULT_HEAD_HIGHLIGHT_CHANCE * intensity;
     const speedMultiplier = (prefersReducedMotion ? 0.5 : 1) * intensity;
 
@@ -128,10 +139,12 @@ export const MatrixRain: FC<MatrixRainProps> = ({
       dropsRef.current = Array.from({ length: columns }, () =>
         randomBetween(-height, 0),
       );
-      speedsRef.current = Array.from({ length: columns }, () =>
-        randomBetween(DEFAULT_MIN_SPEED, DEFAULT_MAX_SPEED) *
-        fontSize *
-        speedMultiplier,
+      speedsRef.current = Array.from(
+        { length: columns },
+        () =>
+          randomBetween(DEFAULT_MIN_SPEED, DEFAULT_MAX_SPEED) *
+          fontSize *
+          speedMultiplier,
       );
     };
 

@@ -37,7 +37,11 @@ const jsonResponse = (status: number, payload: HealthResponse): Response =>
 
 export const GET: APIRoute = async ({ request, clientAddress }) => {
   // Rate limiting for health endpoint (more lenient than other endpoints)
-  const rateLimitResult = await checkRateLimit({ request, clientAddress, type: "health" });
+  const rateLimitResult = await checkRateLimit({
+    request,
+    clientAddress,
+    type: "health",
+  });
   if (!rateLimitResult.allowed) {
     return new Response(JSON.stringify({ error: "Too many requests" }), {
       status: 429,

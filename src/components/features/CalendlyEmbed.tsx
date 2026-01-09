@@ -1,4 +1,4 @@
-import React, { type FC, useCallback, useEffect, useId, useState } from "react";
+import { type FC, useCallback, useEffect, useId, useState } from "react";
 import { Calendar, ExternalLink, Loader2 } from "lucide-react";
 
 /**

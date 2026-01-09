@@ -14,8 +14,15 @@ const LinkedInBadge: React.FC<LinkedInBadgeProps> = ({
   variant = "expanded",
   profileUrl = "https://linkedin.com/in/ahmedadel1991",
 }) => {
-  const { connections, followers, endorsements, recommendations, topSkills, headline, loading } =
-    useLinkedInStats();
+  const {
+    connections,
+    followers,
+    endorsements,
+    recommendations,
+    topSkills,
+    headline,
+    loading,
+  } = useLinkedInStats();
 
   const formatNumber = (num: number): string => {
     if (num >= 1000) {
@@ -107,7 +114,9 @@ const LinkedInBadge: React.FC<LinkedInBadgeProps> = ({
       <div className="relative z-10">
         <div className="flex items-center gap-2 mb-3">
           <Sparkles className="w-4 h-4 text-[#0A66C2]" />
-          <span className="text-sm font-medium text-slate-400">Top Endorsed Skills</span>
+          <span className="text-sm font-medium text-slate-400">
+            Top Endorsed Skills
+          </span>
         </div>
         <div className="flex flex-wrap gap-2">
           {topSkills.map((skill, index) => (
@@ -135,7 +144,13 @@ interface StatCardProps {
   suffix?: string;
 }
 
-const StatCard: React.FC<StatCardProps> = ({ icon: Icon, label, value, loading, suffix = "" }) => {
+const StatCard: React.FC<StatCardProps> = ({
+  icon: Icon,
+  label,
+  value,
+  loading,
+  suffix = "",
+}) => {
   const formatValue = (num: number): string => {
     if (num >= 1000) {
       return `${(num / 1000).toFixed(1)}k`;

@@ -121,7 +121,10 @@ export default function HeroStats() {
         const statsData = (await statsResponse.json()) as Partial<GitHubStats>;
 
         setStats({
-          prsmerged: Math.max(statsData.prsmerged ?? 0, fallbackStats.prsmerged),
+          prsmerged: Math.max(
+            statsData.prsmerged ?? 0,
+            fallbackStats.prsmerged,
+          ),
           reposContributed: Math.max(
             statsData.reposContributed ?? 0,
             fallbackStats.reposContributed,

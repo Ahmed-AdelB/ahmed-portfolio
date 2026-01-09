@@ -63,7 +63,11 @@ const STORAGE_KEY = "analytics:dashboard:v1";
 const DAYS_TO_SHOW = 7;
 const REFRESH_INTERVAL_MS = 3200;
 
-const TRAFFIC_SOURCES: Array<{ label: string; color: string; dotClass: string }> = [
+const TRAFFIC_SOURCES: Array<{
+  label: string;
+  color: string;
+  dotClass: string;
+}> = [
   { label: "Direct", color: "#22d3ee", dotClass: "bg-cyan-400" },
   { label: "Search", color: "#22c55e", dotClass: "bg-emerald-500" },
   { label: "Social", color: "#f97316", dotClass: "bg-orange-500" },
@@ -98,7 +102,10 @@ const parseDateKey = (key: string): Date => {
 
 const formatShortDate = (key: string): string => {
   const date = parseDateKey(key);
-  return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(date);
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+  }).format(date);
 };
 
 const formatTime = (isoString: string): string => {
@@ -144,7 +151,11 @@ const createPageStats = (pageViews: number): PageStat[] => {
 };
 
 const createMockDay = (date: Date, baseViews: number): DailyMetric => {
-  const pageViews = clamp(Math.round(baseViews + randomBetween(-20, 40)), 120, 1200);
+  const pageViews = clamp(
+    Math.round(baseViews + randomBetween(-20, 40)),
+    120,
+    1200,
+  );
   const uniqueVisitors = clamp(
     Math.round(pageViews * (0.42 + Math.random() * 0.18)),
     40,
@@ -222,7 +233,9 @@ const normalizeStore = (store: AnalyticsStore): AnalyticsStore => {
     const nextDate = new Date(cursorDate);
     nextDate.setDate(cursorDate.getDate() + 1);
     const previous = days[days.length - 1];
-    const nextBase = previous ? Math.round(previous.pageViews * (0.9 + Math.random() * 0.2)) : 320;
+    const nextBase = previous
+      ? Math.round(previous.pageViews * (0.9 + Math.random() * 0.2))
+      : 320;
     days = [...days, createMockDay(nextDate, nextBase)];
     cursorDate = nextDate;
   }
@@ -298,7 +311,10 @@ const bumpTodayMetrics = (store: AnalyticsStore): AnalyticsStore => {
 
   const updatedReferrers = today.referrers.map((source, index) => {
     if (index !== referrerIndex) return source;
-    return { ...source, count: source.count + Math.max(1, Math.round(pageBump * 0.7)) };
+    return {
+      ...source,
+      count: source.count + Math.max(1, Math.round(pageBump * 0.7)),
+    };
   });
 
   const updatedPages = today.pages.map((page, index) => {
@@ -307,7 +323,11 @@ const bumpTodayMetrics = (store: AnalyticsStore): AnalyticsStore => {
   });
 
   const nextPageViews = today.pageViews + pageBump;
-  const nextUnique = clamp(today.uniqueVisitors + uniqueBump, today.uniqueVisitors, nextPageViews - 2);
+  const nextUnique = clamp(
+    today.uniqueVisitors + uniqueBump,
+    today.uniqueVisitors,
+    nextPageViews - 2,
+  );
 
   days[todayIndex] = {
     ...today,
@@ -338,14 +358,19 @@ const buildAggregates = (store: AnalyticsStore): AnalyticsAggregates => {
   }));
 
   const pageViewsTotal = sumValues(store.days.map((day) => day.pageViews));
-  const uniqueVisitorsTotal = sumValues(store.days.map((day) => day.uniqueVisitors));
+  const uniqueVisitorsTotal = sumValues(
+    store.days.map((day) => day.uniqueVisitors),
+  );
 
   const referrerMap = new Map<string, number>();
   const pageMap = new Map<string, number>();
 
   store.days.forEach((day) => {
     day.referrers.forEach((source) => {
-      referrerMap.set(source.label, (referrerMap.get(source.label) ?? 0) + source.count);
+      referrerMap.set(
+        source.label,
+        (referrerMap.get(source.label) ?? 0) + source.count,
+      );
     });
 
     day.pages.forEach((page) => {
@@ -356,7 +381,9 @@ const buildAggregates = (store: AnalyticsStore): AnalyticsAggregates => {
   const referrerTotal = sumValues(Array.from(referrerMap.values()));
   const sources: AggregatedSource[] = Array.from(referrerMap.entries())
     .map(([label, count]) => {
-      const config = TRAFFIC_SOURCES.find((source) => source.label === label) ?? {
+      const config = TRAFFIC_SOURCES.find(
+        (source) => source.label === label,
+      ) ?? {
         label,
         color: "#94a3b8",
         dotClass: "bg-slate-400",
@@ -364,7 +391,8 @@ const buildAggregates = (store: AnalyticsStore): AnalyticsAggregates => {
       return {
         label,
         count,
-        percent: referrerTotal === 0 ? 0 : Math.round((count / referrerTotal) * 100),
+        percent:
+          referrerTotal === 0 ? 0 : Math.round((count / referrerTotal) * 100),
         color: config.color,
         dotClass: config.dotClass,
       };
@@ -424,11 +452,22 @@ interface StatCardProps {
   ariaLive?: "off" | "polite" | "assertive";
 }
 
-const StatCard: FC<StatCardProps> = ({ label, value, helper, accentClass, ariaLive = "off" }) => {
+const StatCard: FC<StatCardProps> = ({
+  label,
+  value,
+  helper,
+  accentClass,
+  ariaLive = "off",
+}) => {
   return (
     <div className="rounded-lg border bg-background/50 p-4">
-      <p className="text-xs uppercase tracking-widest text-muted-foreground">{label}</p>
-      <p className={`mt-2 text-2xl font-semibold ${accentClass ?? ""}`.trim()} aria-live={ariaLive}>
+      <p className="text-xs uppercase tracking-widest text-muted-foreground">
+        {label}
+      </p>
+      <p
+        className={`mt-2 text-2xl font-semibold ${accentClass ?? ""}`.trim()}
+        aria-live={ariaLive}
+      >
         {value}
       </p>
       <p className="mt-1 text-xs text-muted-foreground">{helper}</p>
@@ -457,7 +496,9 @@ const LineChart: FC<LineChartProps> = ({ values, labels }) => {
 
   const maxValue = Math.max(...values, 1);
   const points = values.map((value, index) => {
-    const x = padding + (index / Math.max(values.length - 1, 1)) * (width - padding * 2);
+    const x =
+      padding +
+      (index / Math.max(values.length - 1, 1)) * (width - padding * 2);
     const y = height - padding - (value / maxValue) * (height - padding * 2);
     return { x, y };
   });
@@ -486,7 +527,12 @@ const LineChart: FC<LineChartProps> = ({ values, labels }) => {
         </defs>
         <g className="text-primary">
           <path d={areaPath} fill={`url(#${gradientId})`} />
-          <path d={linePath} fill="none" stroke="currentColor" strokeWidth="2" />
+          <path
+            d={linePath}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
           {points.map((point) => (
             <circle
               key={`${point.x}-${point.y}`}
@@ -567,7 +613,9 @@ const PieChart: FC<PieChartProps> = ({ sources }) => {
 /**
  * Analytics dashboard with localStorage-powered mock data and SVG charts.
  */
-export const AnalyticsDashboard: FC<AnalyticsDashboardProps> = ({ className }) => {
+export const AnalyticsDashboard: FC<AnalyticsDashboardProps> = ({
+  className,
+}) => {
   const { store, liveVisitors } = useAnalyticsStore();
 
   const aggregates = useMemo(() => {
@@ -596,7 +644,9 @@ export const AnalyticsDashboard: FC<AnalyticsDashboardProps> = ({ className }) =
 
   const latest = store.days[store.days.length - 1];
   const topSource = aggregates.sources[0];
-  const timelineLabels = aggregates.timeline.map((point) => formatShortDate(point.date));
+  const timelineLabels = aggregates.timeline.map((point) =>
+    formatShortDate(point.date),
+  );
   const timelineValues = aggregates.timeline.map((point) => point.pageViews);
   const maxPageViews = aggregates.pages[0]?.views ?? 1;
 
@@ -605,13 +655,18 @@ export const AnalyticsDashboard: FC<AnalyticsDashboardProps> = ({ className }) =
       <div className="rounded-xl border bg-card/80 p-6 shadow-sm">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold font-mono tracking-tight">Visitor Analytics</h2>
+            <h2 className="text-2xl font-bold font-mono tracking-tight">
+              Visitor Analytics
+            </h2>
             <p className="text-sm text-muted-foreground">
               Last 7 days - Updated {formatTime(store.lastUpdated)}
             </p>
           </div>
           <div className="flex items-center gap-2 text-xs font-mono text-emerald-400">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
+            <span
+              className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"
+              aria-hidden="true"
+            />
             LIVE FEED
           </div>
         </div>
@@ -666,9 +721,15 @@ export const AnalyticsDashboard: FC<AnalyticsDashboardProps> = ({ className }) =
               <PieChart sources={aggregates.sources} />
               <div className="flex-1 space-y-3">
                 {aggregates.sources.map((source) => (
-                  <div key={source.label} className="flex items-center justify-between text-sm">
+                  <div
+                    key={source.label}
+                    className="flex items-center justify-between text-sm"
+                  >
                     <div className="flex items-center gap-2">
-                      <span className={`h-2 w-2 rounded-full ${source.dotClass}`} aria-hidden="true" />
+                      <span
+                        className={`h-2 w-2 rounded-full ${source.dotClass}`}
+                        aria-hidden="true"
+                      />
                       <span>{source.label}</span>
                     </div>
                     <div className="text-right text-xs text-muted-foreground">
@@ -680,7 +741,8 @@ export const AnalyticsDashboard: FC<AnalyticsDashboardProps> = ({ className }) =
             </div>
             {topSource && (
               <p className="mt-4 text-xs text-muted-foreground">
-                Top referrer: <span className="text-foreground">{topSource.label}</span>
+                Top referrer:{" "}
+                <span className="text-foreground">{topSource.label}</span>
               </p>
             )}
           </div>
@@ -697,8 +759,12 @@ export const AnalyticsDashboard: FC<AnalyticsDashboardProps> = ({ className }) =
             {aggregates.pages.map((page) => (
               <div key={page.path} className="space-y-1">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="font-mono text-xs text-muted-foreground">{page.path}</span>
-                  <span className="text-xs text-muted-foreground">{formatNumber(page.views)}</span>
+                  <span className="font-mono text-xs text-muted-foreground">
+                    {page.path}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {formatNumber(page.views)}
+                  </span>
                 </div>
                 <div className="h-1.5 w-full rounded-full bg-muted">
                   <div

@@ -495,7 +495,9 @@ export const TerminalMode: FC<TerminalModeProps> = ({ className }) => {
           "SYSTEM OVERRIDE INITIATED...",
           "Access granted... You found the secret flag!",
           "FLAG{terminal_hacker_elite}",
-          isNew ? ">> Achievement Unlocked: Terminal Access <<" : ">> Flag already claimed <<",
+          isNew
+            ? ">> Achievement Unlocked: Terminal Access <<"
+            : ">> Flag already claimed <<",
           "Tip: Submit this flag with `submit <flag>` or check /root",
         ]);
         return;
@@ -509,28 +511,34 @@ export const TerminalMode: FC<TerminalModeProps> = ({ className }) => {
         }
 
         if (flagValue === "FLAG{ahmed_recon_master_2026}") {
-           const isNew = foundFlag("flag1_robots");
-           enqueueLines([
-             "Success! Robots Protocol flag accepted.",
-             isNew ? ">> Achievement Unlocked: Robots Protocol <<" : ">> Flag already claimed <<",
-             "Tip: View your hacker profile at /root",
-           ]);
+          const isNew = foundFlag("flag1_robots");
+          enqueueLines([
+            "Success! Robots Protocol flag accepted.",
+            isNew
+              ? ">> Achievement Unlocked: Robots Protocol <<"
+              : ">> Flag already claimed <<",
+            "Tip: View your hacker profile at /root",
+          ]);
         } else if (flagValue === "FLAG{terminal_hacker_elite}") {
-           const isNew = foundFlag("flag2_terminal");
-           enqueueLines([
-             "Success! Terminal Access flag accepted.",
-             isNew ? ">> Achievement Unlocked: Terminal Access <<" : ">> Flag already claimed <<",
-             "Tip: View your hacker profile at /root",
-           ]);
+          const isNew = foundFlag("flag2_terminal");
+          enqueueLines([
+            "Success! Terminal Access flag accepted.",
+            isNew
+              ? ">> Achievement Unlocked: Terminal Access <<"
+              : ">> Flag already claimed <<",
+            "Tip: View your hacker profile at /root",
+          ]);
         } else if (flagValue === "FLAG{social_engineer_supreme}") {
-           const isNew = foundFlag("flag3_chatbot");
-           enqueueLines([
-             "Success! AI Injection flag accepted.",
-             isNew ? ">> Achievement Unlocked: AI Injection <<" : ">> Flag already claimed <<",
-             "Tip: View your hacker profile at /root",
-           ]);
+          const isNew = foundFlag("flag3_chatbot");
+          enqueueLines([
+            "Success! AI Injection flag accepted.",
+            isNew
+              ? ">> Achievement Unlocked: AI Injection <<"
+              : ">> Flag already claimed <<",
+            "Tip: View your hacker profile at /root",
+          ]);
         } else {
-           enqueueLines(["Error: Invalid flag."]);
+          enqueueLines(["Error: Invalid flag."]);
         }
         return;
       }
