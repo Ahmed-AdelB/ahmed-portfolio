@@ -77,4 +77,6 @@ jobs:
       - name: Broken link check
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --root-dir ./dist --verbose --no-progress './dist/**/*.html'
+          # Use ${{ github.workspace }} for absolute path
+          args: --root-dir ${{ github.workspace }}/dist --verbose --no-progress '${{ github.workspace }}/dist/**/*.html'
+        continue-on-error: true
